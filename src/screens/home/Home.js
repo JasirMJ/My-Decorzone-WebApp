@@ -20,82 +20,82 @@ import PurchasePopup from '../../components/PurchasePopup';
 import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
+import { useState } from 'react';
 
 function Home() {
+  const [open, setopen] = useState(false)
   return (
     <>
       <div id="ec-overlay"><span className="loader_img" /></div>
       {/* Header start  */}
-      <Header />
+      <Header open={open} setopen={() => setopen(!open)} />
       {/* Header End  */}
-      {/* ekka Cart Start */}
-      <CartComponent/>
-      {/* ekka Cart End */}
+
 
       {/* Main Slider Start */}
-      <MainSlider/>
+      <MainSlider />
       {/* Main Slider End */}
 
       {/* Product tab Area Start */}
       {/* <ProductTabArea/> */}
       <NewProduct
-        title={"Our Top Collection"} 
+        title={"Our Top Collection"}
         subtitle={"Browse The Collection of Top Products"}
-        Data={[{},{},{},{},{},{},{},{}]}
+        Data={[{}, {}, {}, {}, {}, {}, {}, {}]}
       />
 
       {/* ec Product tab Area End */}
 
       {/* ec Banner Section Start */}
-      <BannerSection/>
+      <BannerSection />
       {/* ec Banner Section End */}
 
       {/*  Category Section Start */}
-      <CategorySection/>
+      <CategorySection />
       {/* Category Section End */}
 
       {/*  Feature & Special Section Start */}
-      <FeatureSection/>
+      <FeatureSection />
       {/* Feature & Special Section End */}
 
       {/*  services Section Start */}
-      <ServiceSection/>
+      <ServiceSection />
       {/*services Section End */}
 
       {/*  offer Section Start */}
-      <OfferSection/>
+      <OfferSection />
       {/* offer Section End */}
       {/* New Product Start */}
       <NewProduct
-        title={"New Arrivals"} 
+        title={"New Arrivals"}
         subtitle={"Browse The Collection of Top Products"}
-        Data={[{},{},{},{},{},{},{},{}]}
+        Data={[{}, {}, {}, {}, {}, {}, {}, {}]}
       />
       {/* New Product end */}
       {/* ec testmonial Start */}
-      <Testimonial/>
+      <Testimonial />
       {/* ec testmonial end */}
       {/* Ec Brand Section Start */}
-      <BrandSection/>
+      <BrandSection />
       {/* Ec Brand Section End */}
       {/* Ec Instagram Start */}
-      <InstagramSection/>
+      <InstagramSection />
       {/* Ec Instagram End */}
       {/* Footer Start */}
       <Footer />
       {/* Footer Area End */}
 
       {/* Modal */}
-      <TemplateModal/>
+      <TemplateModal />
       {/* Modal end */}
       {/* Newsletter Modal Start */}
       {/* <Newsletter/> */}
       {/* Newsletter Modal end */}
 
       {/* Footer navigation panel for responsive display */}
-      <FooterNav/>
+      <FooterNav setopen={() => setopen(!open)} />
       {/* Footer navigation panel for responsive display end */}
-      
+
       {/* Recent Purchase Popup  */}
       {/* Recent Purchase Popup end */}
       {/* Cart Floating Button */}

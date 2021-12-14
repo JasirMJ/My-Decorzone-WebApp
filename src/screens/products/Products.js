@@ -20,62 +20,65 @@ import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
 import GridProduct from '../../components/GridProduct'
-
+import { useState } from 'react';
 const Products = () => {
-    return (
-        <div>
-<div>
-  <div id="ec-overlay"><span className="loader_img" /></div>
-  {/* ekka Cart Start */}
-  <Header/>
-  <div className="ec-side-cart-overlay" />
-  
-  {/* Ec Shop page */}
-  <section className="ec-page-content section-space-p">
-    <div className="container">
-      <div className="row">
-        <div className="ec-shop-rightside col-lg-12 col-md-12">
-        
-          {/* Shop content Start */}
-          <div className="shop-pro-content">
-            <div className="shop-pro-inner">
-              <div className="row">
-               <GridProduct />
-               <GridProduct />
-               <GridProduct />
-               <GridProduct />
-               <GridProduct />
-               <GridProduct />
-               <GridProduct />
-               <GridProduct />
-               <GridProduct />
-               <GridProduct />
-               <GridProduct />
-               <GridProduct />
-            
+  const [open, setopen] = useState(false)
+  return (
+    <div>
+      <div>
+        <div id="ec-overlay"><span className="loader_img" /></div>
+        {/* ekka Cart Start */}
+        <Header open={open} setopen={() => setopen(!open)} />
+
+        <div className="ec-side-cart-overlay" />
+
+        {/* Ec Shop page */}
+        <section className="ec-page-content section-space-p">
+          <div className="container">
+            <div className="row">
+              <div className="ec-shop-rightside col-lg-12 col-md-12">
+
+                {/* Shop content Start */}
+                <div className="shop-pro-content">
+                  <div className="shop-pro-inner">
+                    <div className="row">
+                      <GridProduct />
+                      <GridProduct />
+                      <GridProduct />
+                      <GridProduct />
+                      <GridProduct />
+                      <GridProduct />
+                      <GridProduct />
+                      <GridProduct />
+                      <GridProduct />
+                      <GridProduct />
+                      <GridProduct />
+                      <GridProduct />
+
+                    </div>
+                  </div>
+                  {/* Ec Pagination Start */}
+                  <div className="ec-pro-pagination">
+                    <span></span>
+                    <ul className="ec-pro-pagination-inner">
+                      <li><a className="next" href="#"><i className="ecicon eci-angle-left" /> Previous</a></li>
+                      <li><a className="next" href="#">Next <i className="ecicon eci-angle-right" /></a></li>
+                    </ul>
+                  </div>
+                  {/* Ec Pagination End */}
+                </div>
               </div>
+
             </div>
-            {/* Ec Pagination Start */}
-            <div className="ec-pro-pagination">
-              <span></span>
-              <ul className="ec-pro-pagination-inner">
-                <li><a className="next" href="#"><i className="ecicon eci-angle-left" /> Previous</a></li>
-                <li><a className="next" href="#">Next <i className="ecicon eci-angle-right" /></a></li>
-              </ul>
-            </div>
-            {/* Ec Pagination End */}
           </div>
-        </div>
- 
+        </section>
       </div>
+      <Footer />
+      {/* Footer navigation panel for responsive display */}
+      <FooterNav setopen={() => setopen(!open)} />
+
     </div>
-  </section>
-</div>
-   <Footer/>
-            {/* Footer navigation panel for responsive display */}
-            <FooterNav/>
-        </div>
-    )
+  )
 }
 
 export default Products

@@ -21,14 +21,16 @@ import PurchasePopup from '../../components/PurchasePopup';
 import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
-
+import { useState } from 'react';
 const OrderDetails = () => {
+  const [open, setopen] = useState(false)
     return (
         <div>
            <div>
                 {/* ekka Cart Start */}
                 <div className="ec-side-cart-overlay" />
-                <Header/>
+                        <Header open={open} setopen={() => setopen(!open)} />
+
                 {/* ekka Cart End */}
                 {/* Ec Track Order section */}
                 <section className="ec-page-content section-space-p">

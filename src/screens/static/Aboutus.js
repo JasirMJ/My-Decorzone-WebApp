@@ -19,8 +19,9 @@ import PurchasePopup from '../../components/PurchasePopup';
 import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
-
+import { useState } from 'react';
 function Aboutus() {
+  const [open, setopen] = useState(false)
   return (
     <>
       <div id="ec-overlay"><span className="loader_img" /></div>
@@ -68,7 +69,8 @@ function Aboutus() {
 
 
       <Footer />
-      <FooterNav/>
+      <FooterNav setopen={() => setopen(!open)} />
+
       <FeatureTools/>
 
 

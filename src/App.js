@@ -22,12 +22,20 @@ import CartFloatingButton from './components/CartFloatingButton';
 import WhatsappButton from './components/WhatsappButton';
 import FeatureTools from './components/FeatureTools';
 
+import { useState } from 'react';
+
 function App() {
+  const [open, setopen] = useState(false)
+
+  const [test, settest] = useState("initialState")
+
+
+
   return (
     <>
       <div id="ec-overlay"><span className="loader_img" /></div>
       {/* Header start  */}
-      <Header />
+      <Header open={open} />
       {/* Header End  */}
       {/* ekka Cart Start */}
       <CartComponent/>
@@ -84,7 +92,13 @@ function App() {
       {/* Newsletter Modal end */}
 
       {/* Footer navigation panel for responsive display */}
-      <FooterNav/>
+      <FooterNav 
+      data={"data"}
+      // setopen={()=>setopen(!open)}
+      testdata = {test}
+      clicked={(e)=>{console.log("open ",e)}}
+      
+      />
       {/* Footer navigation panel for responsive display end */}
       
       {/* Recent Purchase Popup  */}

@@ -1,13 +1,16 @@
 import React from 'react'
 
-function FooterNav() {
+function FooterNav(data) {
+  console.log("props ",data)
     return (
         <>
           <div className="ec-nav-toolbar">
         <div className="container">
           <div className="ec-nav-panel">
             <div className="ec-nav-panel-icons">
-              <a href="#ec-mobile-menu" className="navbar-toggler-btn ec-header-btn ec-side-toggle"><img src="assets/images/icons/menu.svg" className="svg_img header_svg" alt="icon" /></a>
+              <button  
+              onClick={()=>data.setopen()} 
+              ><img src="assets/images/icons/menu.svg" className="svg_img header_svg" alt="icon" /></button>
             </div>
             <div className="ec-nav-panel-icons">
               <a href="/cart" className="toggle-cart ec-header-btn ec-side-toggle"><img src="assets/images/icons/cart.svg" className="svg_img header_svg" alt="icon" /><span className="ec-cart-noti ec-header-count cart-count-lable">3</span></a>

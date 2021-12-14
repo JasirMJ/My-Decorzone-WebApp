@@ -1,9 +1,11 @@
 import React from 'react'
 
 function CartComponent() {
-    return (
-        <>
-         <div className="ec-side-cart-overlay" />
+  return (
+    <>
+      <div className="ec-side-cart-overlay" 
+      // style={{display:'block'}}
+      />
       <div id="ec-side-cart" className="ec-side-cart">
         <div className="ec-cart-inner">
           <div className="ec-cart-top">
@@ -72,9 +74,9 @@ function CartComponent() {
             </div>
           </div>
         </div>
-      </div>   
-        </>
-    )
+      </div>
+    </>
+  )
 }
 
 export default CartComponent
