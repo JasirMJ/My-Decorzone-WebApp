@@ -1,5 +1,4 @@
-import React from 'react'
-
+import React, { useState , useContext , useEffect } from 'react'
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
 import MainSlider from '../../components/MainSlider';
@@ -21,8 +20,45 @@ import PurchasePopup from '../../components/PurchasePopup';
 import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
+import {baseurl , protocol , AppContext} from '../../common/Constants'
+import {setDataOnCookie} from '../../common/Functions'
 
 const Login = () => {
+
+  const { userToken , localStorageName } = useContext(AppContext)
+
+  const [username, setusername] = useState("adsalihac")
+  const [password, setpassword] = useState("123123")
+
+  const login = () => {
+    alert("ok")
+    // var axios = require('axios');
+    // var FormData = require('form-data');
+    // var data = new FormData();
+    // data.append('username', username);
+    // data.append('password', password);
+
+    // var config = {
+    //   method: 'post',
+    //   url: 'https://api.mydecorzone.com/users/login/',
+    //   headers: { 
+    //   },
+    //   data : data
+    // };
+
+    // axios(config)
+    // .then(function (response) {
+    //   console.log(JSON.stringify(response.data));
+    //   if (response.data.Status === true) {
+    //     setDataOnCookie(localStorageName, response.data.token);
+    //     window.location.replace('/')
+    //   }
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
+  }
+
     return (
         <div>
 <div>
@@ -50,18 +86,19 @@ const Login = () => {
               <form action="#" method="post">
                 <span className="ec-login-wrap">
                   <label>Email Address*</label>
-                  <input type="text" name="name" placeholder="Enter your email add..." required />
+                  <input type="text" value={username} name="name" placeholder="Enter your email add..." required />
                 </span>
                 <span className="ec-login-wrap">
                   <label>Password*</label>
-                  <input type="password" name="password" placeholder="Enter your password" required />
+                  <input type="password" value={password} name="password" placeholder="Enter your password" required />
                 </span>
-                <span className="ec-login-wrap ec-login-fp">
+                {/* <span className="ec-login-wrap ec-login-fp">
                   <label><a href="#">Forgot Password?</a></label>
-                </span>
+                </span> */}
                 <span className="ec-login-wrap ec-login-btn">
-                  <button className="btn btn-primary" type="submit">Login</button>
-                  <a href="register.html" className="btn btn-secondary">Register</a>
+                  {/* <a href={()=>login()} className="btn btn-primary">Login</a> */}
+                  <button  onClick={(e) => login(e)} className="btn btn-primary" >Login</button>
+                  <button  className="btn btn-secondary" type="submit">Register</button>
                 </span>
               </form>
             </div>

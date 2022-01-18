@@ -1,23 +1,24 @@
+import Cookies from "js-cookie";
 import React, {Component} from 'react';
 const AppContext = React.createContext()
 
-// server
-const protocol = 'https://' //live
-// const host = '52.66.143.157';
-const host = 'ctm.codedady.com'; // debug
-// const host = 'api.lemagnolia.org'; //live
+//  const protocol = 'http://'
+//  const host = "localhost:8000";
 
-// local
-// const protocol = 'http://'
-// const host = '192.168.0.142:80';
-// const host = '192.168.0.148:80';
+const protocol = 'https://'
+const host = "api.mydecorzone.com";
 
-const baseurl = `${protocol}${host}`; 
+const baseurl = protocol + host
 
-const version = "1.2"
+// const localStorageName = "onlinecart_token"
+
+// const token = Cookies.getJSON(localStorageName) ? Cookies.getJSON(localStorageName).token : "";
+
+const version = "1.0"
 
 export {
   AppContext,
    baseurl , 
    version ,
+   protocol ,
   };

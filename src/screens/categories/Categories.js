@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useContext , useEffect } from 'react'
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
 import MainSlider from '../../components/MainSlider';
@@ -20,9 +20,99 @@ import PurchasePopup from '../../components/PurchasePopup';
 import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
+import {baseurl , protocol , AppContext} from '../../common/Constants'
+import {addDomainInImage} from '../../common/Functions'
+import axios from 'axios'
 
 const Categories = () => {
+
+    const { userToken } = useContext(AppContext)
+
     const [open, setopen] = useState(false)
+
+    const [data, setData] = useState([])
+    const [next, setNext] = useState("");
+    const [prev, setPrev] = useState("");
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const getData = () => {
+        var axios = require('axios');
+        var FormData = require('form-data');
+        var data = new FormData();
+
+        var config = {
+        method: 'get',
+        url: baseurl + '/items/category/',
+        headers: { 
+        },
+        data : data
+        };
+
+        axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            setData(response.data.results);
+            setNext(response.data.next);
+            setPrev(response.data.previous);
+        })
+        .catch(function (error) {
+        console.log(error);
+        });
+
+    }
+
+    const handlePrev = () => {
+        // alert("prev");
+
+        var config = {
+            method: "get",
+            url: prev.replace("http:", protocol.replace('//', "")),
+            // url: prev + "/?" + params,
+
+            headers: {
+                Authorization: userToken,
+            },
+        };
+        // console.log("Caed previousssssssssssssssss ", prev);
+        axios(config)
+            .then(function (response) {
+                // console.log(JSON.stringify(response.data.results));
+                setData(response.data.results);
+                setNext(response.data.next);
+                setPrev(response.data.previous);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    };
+
+    const handleNext = () => {
+        // alert("next")
+        var config = {
+            method: "get",
+            url: next.replace("http:", protocol.replace('//', "")),
+            // url: next + "/?" + params,
+
+            headers: {
+                Authorization: userToken,
+            },
+        };
+        // console.log(config.url)
+        axios(config)
+            .then(function (response) {
+                // console.log((response));
+                setData(response.data.results);
+                setNext(response.data.next);
+                setPrev(response.data.previous);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    };
+
     return (
         <div>
             <div id="ec-overlay"><span className="loader_img" /></div>
@@ -106,76 +196,7 @@ const Categories = () => {
 
             {/*category Section End */}
             {/*  Category Section Start */}
-            <section className="section ec-category-section ec-category-wrapper-2 section-space-p">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12 text-center">
-                            <div className="section-title">
-                                <h2 className="ec-bg-title">vertical tabs</h2>
-                                <h2 className="ec-title">vertical tabs</h2>
-                                <p className="sub-title">Browse The Collection of Top Categories</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        {/*Category Nav Start */}
-                        <div className="col-lg-3">
-                            <ul className="ec-cat-tab-nav nav">
-                                <li className="cat-item"><a className="cat-link active" data-bs-toggle="tab" href="#tab-cat-1">
-                                    <div className="cat-icons"><img className="cat-icon" src="assets/images/icons/cat_1.png" alt="cat-icon" /><img className="cat-icon-hover" src="assets/images/icons/cat_1_1.png" alt="cat-icon" /></div>
-                                    <div className="cat-desc"><span>Clothes</span><span>440 Products</span></div>
-                                </a></li>
-                                <li className="cat-item"><a className="cat-link" data-bs-toggle="tab" href="#tab-cat-2">
-                                    <div className="cat-icons"><img className="cat-icon" src="assets/images/icons/cat_2.png" alt="cat-icon" /><img className="cat-icon-hover" src="assets/images/icons/cat_2_1.png" alt="cat-icon" /></div>
-                                    <div className="cat-desc"><span>Watches</span><span>510 Products</span></div>
-                                </a></li>
-                                <li className="cat-item"><a className="cat-link" data-bs-toggle="tab" href="#tab-cat-3">
-                                    <div className="cat-icons"><img className="cat-icon" src="assets/images/icons/cat_3.png" alt="cat-icon" /><img className="cat-icon-hover" src="assets/images/icons/cat_3_1.png" alt="cat-icon" /></div>
-                                    <div className="cat-desc"><span>Bags</span><span>620 Products</span></div>
-                                </a></li>
-                                <li className="cat-item"><a className="cat-link" data-bs-toggle="tab" href="#tab-cat-4">
-                                    <div className="cat-icons"><img className="cat-icon" src="assets/images/icons/cat_4.png" alt="cat-icon" /><img className="cat-icon-hover" src="assets/images/icons/cat_4_1.png" alt="cat-icon" /></div>
-                                    <div className="cat-desc"><span>Shoes</span><span>320 Products</span></div>
-                                </a></li>
-                            </ul>
-                        </div>
-                        {/* Category Nav End */}
-                        {/*Category Tab Start */}
-                        <div className="col-lg-9">
-                            <div className="tab-content">
-                                {/* 1st Category tab end */}
-                                <div className="tab-pane fade show active" id="tab-cat-1">
-                                    <div className="row">
-                                        <img src="assets/images/cat-banner/1.jpg" alt />
-                                    </div>
-                                </div>
-                                {/* 1st Category tab end */}
-                                <div className="tab-pane fade" id="tab-cat-2">
-                                    <div className="row">
-                                        <img src="assets/images/cat-banner/2.jpg" alt />
-                                    </div>
-                                </div>
-                                {/* 2nd Category tab end */}
-                                {/* 3rd Category tab start */}
-                                <div className="tab-pane fade" id="tab-cat-3">
-                                    <div className="row">
-                                        <img src="assets/images/cat-banner/3.jpg" alt />
-                                    </div>
-                                </div>
-                                {/* 3rd Category tab end */}
-                                {/* 4th Category tab start */}
-                                <div className="tab-pane fade" id="tab-cat-4">
-                                    <div className="row">
-                                        <img src="assets/images/cat-banner/4.jpg" alt />
-                                    </div>
-                                </div>
-                                {/* 4th Category tab end */}
-                            </div>
-                            {/* Category Tab End */}
-                        </div>
-                    </div>
-                </div>
-            </section>
+        
             {/* Category Section End */}
             {/*  Category Section Start */}
             <section className="section ec-category-section ec-category-wrapper-3 section-space-p">
@@ -183,212 +204,34 @@ const Categories = () => {
                     <div className="row">
                         <div className="col-md-12 text-center">
                             <div className="section-title">
-                                <h2 className="ec-bg-title">Classic</h2>
-                                <h2 className="ec-title">Classic</h2>
+                                <h2 className="ec-bg-title">Categories</h2>
+                                <h2 className="ec-title">Categories</h2>
                                 <p className="sub-title">Browse The Collection of Top Categories</p>
                             </div>
                         </div>
                     </div>
+                  
                     <div className="row cat-space-2 margin-minus-tb-15">
-                        <div className="col-lg-3 col-md-6 col-sm-12">
-                            <div className="cat-card">
-                                <img className="cat-icon" src="assets/images/cat-banner/5.jpg" alt="cat-icon" />
-                                <div className="cat-detail">
-                                    <h4>Watches</h4>
-                                    <h5>Starting at <br />$79.00</h5>
-                                    <a className="btn-primary" href="#">shop now</a>
+                       {
+                           data.map((item, index) => 
+                            <div className="col-lg-3 col-md-6 col-sm-12">
+                                <div className="cat-card">
+                                    <img className="cat-icon"src={addDomainInImage(item.image)} alt="cat-icon" />
+                                    <div className="cat-detail">
+                                        <h4 style={{color:"#fff"}}>{item.name}</h4><br/>
+                                        <a className="btn-primary" href="#" >Shop now</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-12">
-                            <div className="cat-card">
-                                <img className="cat-icon" src="assets/images/cat-banner/6.jpg" alt="cat-icon" />
-                                <div className="cat-detail">
-                                    <h4>Bags</h4>
-                                    <h5>Starting at <br />$93.00</h5>
-                                    <a className="btn-primary" href="#">shop now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-12">
-                            <div className="cat-card">
-                                <img className="cat-icon" src="assets/images/cat-banner/7.jpg" alt="cat-icon" />
-                                <div className="cat-detail">
-                                    <h4>Head Phones</h4>
-                                    <h5>Starting at <br />$60.00</h5>
-                                    <a className="btn-primary" href="#">shop now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-12">
-                            <div className="cat-card">
-                                <img className="cat-icon" src="assets/images/cat-banner/8.jpg" alt="cat-icon" />
-                                <div className="cat-detail">
-                                    <h4>Hats</h4>
-                                    <h5>Starting at <br />$80.00</h5>
-                                    <a className="btn-primary" href="#">shop now</a>
-                                </div>
-                            </div>
-                        </div>
+                           )
+                       }
+
                     </div>
                 </div>
             </section>
-            {/*  Category Section Start */}
-            <section className="section ec-category-section ec-category-wrapper-4 section-space-p">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12 text-center">
-                            <div className="section-title">
-                                <h2 className="ec-bg-title">Classic</h2>
-                                <h2 className="ec-title">Classic</h2>
-                                <p className="sub-title">Browse The Collection of Top Categories</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row cat-space-3 cat-auto margin-minus-tb-15">
-                        <div className="col-lg-2 col-md-4 col-sm-12">
-                            <div className="cat-card">
-                                <div className="card-img">
-                                    <img className="cat-icon" src="assets/images/cat-banner/9.jpg" alt="cat-icon" />
-                                </div>
-                                <div className="cat-detail">
-                                    <h4>Bags</h4>
-                                    <h5>Starting at <br />$110.00</h5>
-                                    <a className="btn-primary" href="#">shop now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-2 col-md-4 col-sm-12">
-                            <div className="cat-card">
-                                <div className="card-img">
-                                    <img className="cat-icon" src="assets/images/cat-banner/10.jpg" alt="cat-icon" />
-                                </div>
-                                <div className="cat-detail">
-                                    <h4>Hats</h4>
-                                    <h5>Starting at <br />$100.00</h5>
-                                    <a className="btn-primary" href="#">shop now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-2 col-md-4 col-sm-12">
-                            <div className="cat-card">
-                                <div className="card-img">
-                                    <img className="cat-icon" src="assets/images/cat-banner/11.jpg" alt="cat-icon" />
-                                </div>
-                                <div className="cat-detail">
-                                    <h4>Watches</h4>
-                                    <h5>Starting at <br />$80.00</h5>
-                                    <a className="btn-primary" href="#">shop now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-2 col-md-4 col-sm-12">
-                            <div className="cat-card">
-                                <div className="card-img">
-                                    <img className="cat-icon" src="assets/images/cat-banner/12.jpg" alt="cat-icon" />
-                                </div>
-                                <div className="cat-detail">
-                                    <h4>Head Phones</h4>
-                                    <h5>Starting at <br />$150.00</h5>
-                                    <a className="btn-primary" href="#">shop now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-2 col-md-4 col-sm-12">
-                            <div className="cat-card">
-                                <div className="card-img">
-                                    <img className="cat-icon" src="assets/images/cat-banner/13.jpg" alt="cat-icon" />
-                                </div>
-                                <div className="cat-detail">
-                                    <h4>Shoes</h4>
-                                    <h5>Starting at <br />$79.00</h5>
-                                    <a className="btn-primary" href="#">shop now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-2 col-md-4 col-sm-12">
-                            <div className="cat-card">
-                                <div className="card-img">
-                                    <img className="cat-icon" src="assets/images/cat-banner/14.jpg" alt="cat-icon" />
-                                </div>
-                                <div className="cat-detail">
-                                    <h4>Belts</h4>
-                                    <h5>Starting at <br />$20.00</h5>
-                                    <a className="btn-primary" href="#">shop now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/*  Category Section Start */}
-            <section className="section ec-category-section ec-category-wrapper-5 section-space-p">
-                <div className="container ec-category-wrapper-5">
-                    <div className="row">
-                        <div className="col-md-12 text-center">
-                            <div className="section-title">
-                                <h2 className="ec-bg-title">Classic</h2>
-                                <h2 className="ec-title">Classic</h2>
-                                <p className="sub-title">Browse The Collection of Top Categories</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row cat-space-2 margin-minus-tb-15">
-                        <div className="col-lg-3 col-md-6 col-sm-12">
-                            <div className="cat-card">
-                                <img className="cat-icon" src="assets/images/cat-banner/11.jpg" alt="cat-icon" />
-                                <a className="btn-primary btn-primary-1" href={`/category/1`}>shop now</a>
-                                <div className="cat-detail">
-                                    <div className="cat-detail-block">
-                                        <h4>Watches</h4>
-                                        <h5>Starting at <br />$79.00</h5>
-                                        <a href={`/category/1`} className="btn-primary" >shop now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-12">
-                            <div className="cat-card">
-                                <img className="cat-icon" src="assets/images/cat-banner/12.jpg" alt="cat-icon" />
-                                <a className="btn-primary btn-primary-1" href="javacript:void(0)">shop now</a>
-                                <div className="cat-detail">
-                                    <div className="cat-detail-block">
-                                        <h4>Head Phones</h4>
-                                        <h5>Starting at <br />$93.00</h5>
-                                        <a className="btn-primary" href="#">shop now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-12">
-                            <div className="cat-card">
-                                <img className="cat-icon" src="assets/images/cat-banner/13.jpg" alt="cat-icon" />
-                                <a className="btn-primary btn-primary-1" href="javacript:void(0)">shop now</a>
-                                <div className="cat-detail">
-                                    <div className="cat-detail-block">
-                                        <h4>Shoes</h4>
-                                        <h5>Starting at <br />$60.00</h5>
-                                        <a className="btn-primary" href="#">shop now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-12">
-                            <div className="cat-card">
-                                <img className="cat-icon" src="assets/images/cat-banner/14.jpg" alt="cat-icon" />
-                                <a className="btn-primary btn-primary-1" href="javacript:void(0)">shop now</a>
-                                <div className="cat-detail">
-                                    <div className="cat-detail-block">
-                                        <h4>Belts</h4>
-                                        <h5>Starting at <br />$80.00</h5>
-                                        <a className="btn-primary" href="#">shop now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            
+
+        
             <Footer />
             <FooterNav setopen={() => setopen(!open)} />
 
