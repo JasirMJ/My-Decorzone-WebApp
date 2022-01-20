@@ -35,7 +35,7 @@ const Contactus = () => {
                     <div className="container">
                     <div className="row">
                         <div className="ec-common-wrapper">
-                        <div className="ec-contact-leftside">
+                        {/* <div className="ec-contact-leftside">
                             <div className="ec-contact-container">
                             <div className="ec-contact-form">
                                 <form action="#" method="post">
@@ -70,7 +70,7 @@ const Contactus = () => {
                                 </form>
                             </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="ec-contact-rightside">
                             <div className="ec_contact_map">
                             <div className="ec_map_canvas">

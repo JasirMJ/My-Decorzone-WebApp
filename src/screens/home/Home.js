@@ -69,10 +69,10 @@ function Home() {
       />
       {/* New Product end */}
       {/* ec testmonial Start */}
-      <Testimonial />
+      {/* <Testimonial /> */}
       {/* ec testmonial end */}
       {/* Ec Brand Section Start */}
-      <BrandSection />
+      {/* <BrandSection /> */}
       {/* Ec Brand Section End */}
       {/* Ec Instagram Start */}
       <InstagramSection />

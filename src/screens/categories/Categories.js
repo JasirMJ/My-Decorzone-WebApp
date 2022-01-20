@@ -219,7 +219,7 @@ const Categories = () => {
                                     <img className="cat-icon"src={addDomainInImage(item.image)} alt="cat-icon" />
                                     <div className="cat-detail">
                                         <h4 style={{color:"#fff"}}>{item.name}</h4><br/>
-                                        <a className="btn-primary" href="#" >Shop now</a>
+                                        <a className="btn-primary"  href={`/category/${item.id}`} >Shop now</a>
                                     </div>
                                 </div>
                             </div>

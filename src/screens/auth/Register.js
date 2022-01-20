@@ -1,5 +1,4 @@
-import React from 'react'
-
+import React, { useState , useContext , useEffect } from 'react'
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
 import MainSlider from '../../components/MainSlider';
@@ -21,8 +20,72 @@ import PurchasePopup from '../../components/PurchasePopup';
 import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
+import {baseurl , protocol , AppContext} from '../../common/Constants'
+import {setDataOnCookie , showMessage} from '../../common/Functions'
 
 const Register = () => {
+
+  const { userToken , localStorageName , setUserToken } = useContext(AppContext)
+
+  const [data, setData] = useState({
+    name: "",
+    password: "",
+    mobile: "",
+    username: '',
+    email: "",
+  });
+
+  const register = () => {
+      var axios = require('axios');
+      var FormData = require('form-data');
+      var fdata = new FormData();
+      fdata.append('first_name', data.name);
+      fdata.append('password', data.password);
+      fdata.append('mobile', data.mobile);
+      fdata.append('username', data.username);
+      fdata.append('email', data.email);
+      
+      var config = {
+        method: 'post',
+        url: baseurl + '/users/',
+        headers: { 
+       
+        },
+        data : fdata
+      };
+      
+      axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+          setUserToken(response.data.token)
+          setDataOnCookie(localStorageName, response.data);
+          window.location.replace('/')
+      })
+      .catch(function (error) {
+        console.log(error);
+        showMessage(
+          "Login Failed , Check Username / Password",
+          "danger",
+          "Loading error",
+          "top",
+          "top-right",
+          0
+        );
+      });
+  }
+
+  const onChangeFun = (e) => {
+    console.log("Target ", e.target)
+    let field_name = e.target.name
+
+    if (field_name === "is_active") {
+        console.log("Check box : " + field_name + " - " + e.target.checked);
+        setData({ ...data, [e.target.name]: e.target.checked })
+    } else {
+        setData({ ...data, [e.target.name]: e.target.value })
+    }
+}
+
     return (
         <div>
 <div>
@@ -47,79 +110,36 @@ const Register = () => {
       <div className="ec-register-wrapper">
         <div className="ec-register-container">
           <div className="ec-register-form">
-            <form action="#" method="post">
               <span className="ec-register-wrap ec-register-half">
-                <label>First Name*</label>
-                <input type="text" name="firstname" placeholder="Enter your first name" required />
+                <label>Name*</label>
+                <input type="text" name="name" value={data.name} onChange={(e) => onChangeFun(e)}  placeholder="Enter your name" required />
               </span>
+
               <span className="ec-register-wrap ec-register-half">
-                <label>Last Name*</label>
-                <input type="text" name="lastname" placeholder="Enter your last name" required />
+                <label>Username*</label>
+                <input type="text" name="username" value={data.username} onChange={(e) => onChangeFun(e)}  placeholder="Enter your username" required />
               </span>
+            
               <span className="ec-register-wrap ec-register-half">
                 <label>Email*</label>
-                <input type="email" name="email" placeholder="Enter your email add..." required />
+                <input type="email" name="email" value={data.email} onChange={(e) => onChangeFun(e)}  placeholder="Enter your email" required />
               </span>
+              
               <span className="ec-register-wrap ec-register-half">
                 <label>Phone Number*</label>
-                <input type="text" name="phonenumber" placeholder="Enter your phone number" required />
+                <input type="number" name="mobile" value={data.mobile}  onChange={(e) => onChangeFun(e)}  placeholder="Enter your phone number" required />
               </span>
-              <span className="ec-register-wrap">
-                <label>Address</label>
-                <input type="text" name="address" placeholder="Address Line 1" />
-              </span>
+
               <span className="ec-register-wrap ec-register-half">
-                <label>City *</label>
-                <span className="ec-rg-select-inner">
-                  <select name="ec_select_city" id="ec-select-city" className="ec-register-select">
-                    <option selected disabled>City</option>
-                    <option value={1}>City 1</option>
-                    <option value={2}>City 2</option>
-                    <option value={3}>City 3</option>
-                    <option value={4}>City 4</option>
-                    <option value={5}>City 5</option>
-                  </select>
-                </span>
+                <label>Password*</label>
+                <input type="text" name="password" value={data.password} onChange={(e) => onChangeFun(e)}   placeholder="Enter your password" required />
               </span>
-              <span className="ec-register-wrap ec-register-half">
-                <label>Post Code</label>
-                <input type="text" name="postalcode" placeholder="Post Code" />
-              </span>
-              <span className="ec-register-wrap ec-register-half">
-                <label>Country *</label>
-                <span className="ec-rg-select-inner">
-                  <select name="ec_select_country" id="ec-select-country" className="ec-register-select">
-                    <option selected disabled>Country</option>
-                    <option value={1}>Country 1</option>
-                    <option value={2}>Country 2</option>
-                    <option value={3}>Country 3</option>
-                    <option value={4}>Country 4</option>
-                    <option value={5}>Country 5</option>
-                  </select>
-                </span>
-              </span>
-              <span className="ec-register-wrap ec-register-half">
-                <label>Region State</label>
-                <span className="ec-rg-select-inner">
-                  <select name="ec_select_state" id="ec-select-state" className="ec-register-select">
-                    <option selected disabled>Region/State</option>
-                    <option value={1}>Region/State 1</option>
-                    <option value={2}>Region/State 2</option>
-                    <option value={3}>Region/State 3</option>
-                    <option value={4}>Region/State 4</option>
-                    <option value={5}>Region/State 5</option>
-                  </select>
-                </span>
-              </span>
-              <span className="ec-register-wrap ec-recaptcha">
-                <span className="g-recaptcha" data-sitekey="6LfKURIUAAAAAO50vlwWZkyK_G2ywqE52NU7YO0S" data-callback="verifyRecaptchaCallback" data-expired-callback="expiredRecaptchaCallback" />
-                <input className="form-control d-none" data-recaptcha="true" required data-error="Please complete the Captcha" />
-                <span className="help-block with-errors" />
-              </span>
+             
+           
+             
               <span className="ec-register-wrap ec-register-btn">
-                <button className="btn btn-primary" type="submit">Register</button>
+              <button  onClick={(e) => register(e)} className="btn btn-primary" >Register</button>
               </span>
-            </form>
           </div>
         </div>
       </div>

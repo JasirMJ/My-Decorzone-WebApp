@@ -21,26 +21,29 @@ import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
 import {baseurl , protocol , AppContext} from '../../common/Constants'
-import {setDataOnCookie} from '../../common/Functions'
+import {setDataOnCookie , showMessage} from '../../common/Functions'
 
 const Login = () => {
 
   const { userToken , localStorageName , setUserToken } = useContext(AppContext)
 
-  const [username, setusername] = useState("adsalihac")
-  const [password, setpassword] = useState("123123")
+
+  const [data, setData] = useState({
+    username: "adsalihac",
+    password: "123123",
+  });
 
   const login = () => {
     // alert("ok")
     var axios = require('axios');
     var FormData = require('form-data');
     var data = new FormData();
-    data.append('username', username);
-    data.append('password', password);
+    data.append('username', data.username);
+    data.append('password', data.password);
 
     var config = {
       method: 'post',
-      url: 'https://api.mydecorzone.com/users/login/',
+      url: baseurl + '/users/login/',
       headers: { 
       },
       data : data
@@ -53,12 +56,41 @@ const Login = () => {
         setUserToken(response.data.token)
         setDataOnCookie(localStorageName, response.data);
         window.location.replace('/')
+      } else {
+        showMessage(
+          "Login Failed , Check Username / Password",
+          "danger",
+          "Loading error",
+          "top",
+          "top-right",
+          0
+        );
       }
     })
     .catch(function (error) {
-      console.log(error);
+        console.log(error);
+        showMessage(
+          "Login Failed , Check Username / Password",
+          "danger",
+          "Loading error",
+          "top",
+          "top-right",
+          0
+        );
     });
   }
+
+  const onChangeFun = (e) => {
+    console.log("Target ", e.target)
+    let field_name = e.target.name
+
+    if (field_name === "is_active") {
+        console.log("Check box : " + field_name + " - " + e.target.checked);
+        setData({ ...data, [e.target.name]: e.target.checked })
+    } else {
+        setData({ ...data, [e.target.name]: e.target.value })
+    }
+}
 
     return (
         <div>
@@ -86,11 +118,11 @@ const Login = () => {
             <div className="ec-login-form">
                 <span className="ec-login-wrap">
                   <label>Email Address*</label>
-                  <input type="text" value={username} name="name" placeholder="Enter your email add..." required />
+                  <input type="text" value={data.username} onChange={(e) => onChangeFun(e)} name="username" placeholder="Enter your username" required />
                 </span>
                 <span className="ec-login-wrap">
                   <label>Password*</label>
-                  <input type="password" value={password} name="password" placeholder="Enter your password" required />
+                  <input type="password"  value={data.password} onChange={(e) => onChangeFun(e)} name="password" placeholder="Enter your password" required />
                 </span>
                 {/* <span className="ec-login-wrap ec-login-fp">
                   <label><a href="#">Forgot Password?</a></label>
