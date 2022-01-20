@@ -16,10 +16,6 @@ import Footer from '../../components/Footer';
 import TemplateModal from '../../components/TemplateModal';
 import Newsletter from '../../components/Newsletter';
 import FooterNav from '../../components/FooterNav';
-import PurchasePopup from '../../components/PurchasePopup';
-import CartFloatingButton from '../../components/CartFloatingButton';
-import WhatsappButton from '../../components/WhatsappButton';
-import FeatureTools from '../../components/FeatureTools';
 import { useState } from 'react';
 
 function Home() {

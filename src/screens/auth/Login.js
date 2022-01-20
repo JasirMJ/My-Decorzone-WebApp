@@ -25,38 +25,39 @@ import {setDataOnCookie} from '../../common/Functions'
 
 const Login = () => {
 
-  const { userToken , localStorageName } = useContext(AppContext)
+  const { userToken , localStorageName , setUserToken } = useContext(AppContext)
 
   const [username, setusername] = useState("adsalihac")
   const [password, setpassword] = useState("123123")
 
   const login = () => {
-    alert("ok")
-    // var axios = require('axios');
-    // var FormData = require('form-data');
-    // var data = new FormData();
-    // data.append('username', username);
-    // data.append('password', password);
+    // alert("ok")
+    var axios = require('axios');
+    var FormData = require('form-data');
+    var data = new FormData();
+    data.append('username', username);
+    data.append('password', password);
 
-    // var config = {
-    //   method: 'post',
-    //   url: 'https://api.mydecorzone.com/users/login/',
-    //   headers: { 
-    //   },
-    //   data : data
-    // };
+    var config = {
+      method: 'post',
+      url: 'https://api.mydecorzone.com/users/login/',
+      headers: { 
+      },
+      data : data
+    };
 
-    // axios(config)
-    // .then(function (response) {
-    //   console.log(JSON.stringify(response.data));
-    //   if (response.data.Status === true) {
-    //     setDataOnCookie(localStorageName, response.data.token);
-    //     window.location.replace('/')
-    //   }
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      if (response.data.Status === true) {
+        setUserToken(response.data.token)
+        setDataOnCookie(localStorageName, response.data);
+        window.location.replace('/')
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
     return (
@@ -83,7 +84,6 @@ const Login = () => {
         <div className="ec-login-wrapper">
           <div className="ec-login-container">
             <div className="ec-login-form">
-              <form action="#" method="post">
                 <span className="ec-login-wrap">
                   <label>Email Address*</label>
                   <input type="text" value={username} name="name" placeholder="Enter your email add..." required />
@@ -98,9 +98,8 @@ const Login = () => {
                 <span className="ec-login-wrap ec-login-btn">
                   {/* <a href={()=>login()} className="btn btn-primary">Login</a> */}
                   <button  onClick={(e) => login(e)} className="btn btn-primary" >Login</button>
-                  <button  className="btn btn-secondary" type="submit">Register</button>
+                  <a href="/register"  className="btn btn-secondary" type="submit">Register</a>
                 </span>
-              </form>
             </div>
           </div>
         </div>

@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import React from 'react'
 import SideCard from './components/SideCard'
 
@@ -24,6 +26,10 @@ import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
 
 const MyOrders = () => {
+
+  const [open, setopen] = useState(false)
+
+
     return (
         <div>
           <div>
@@ -134,6 +140,9 @@ const MyOrders = () => {
               </div>
             </section>
         <Footer />
+
+      <FooterNav setopen={() => setopen(!open)} />
+
 
             {/* End User history section */}
           </div>
