@@ -5,7 +5,7 @@ import {unsetDataOnCookie} from '../common/Functions'
 function FooterNav(data) {
   console.log("props ",data)
 
-  const { userToken , localStorageName } = useContext(AppContext)
+  const { userToken , localStorageName ,  cartObjs } = useContext(AppContext)
 
     return (
         <>
@@ -18,7 +18,7 @@ function FooterNav(data) {
               ><img src="assets/images/icons/menu.svg" className="svg_img header_svg" alt="icon" /></button>
             </div>
             <div className="ec-nav-panel-icons">
-              <a href={userToken == '' ? "/login" : "/cart"}  className="toggle-cart ec-header-btn ec-side-toggle"><img src="assets/images/icons/cart.svg" className="svg_img header_svg" alt="icon" /><span className="ec-cart-noti ec-header-count cart-count-lable">3</span></a>
+              <a href={userToken == '' ? "/login" : "/cart"}  className="toggle-cart ec-header-btn ec-side-toggle"><img src="assets/images/icons/cart.svg" className="svg_img header_svg" alt="icon" /><span className="ec-cart-noti ec-header-count cart-count-lable">{cartObjs.length}</span></a>
             </div>
             <div className="ec-nav-panel-icons">
               <a href="/" className="ec-header-btn"><img src="assets/images/icons/home.svg" className="svg_img header_svg" alt="icon" /></a>

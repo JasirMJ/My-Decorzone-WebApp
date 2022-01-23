@@ -4,7 +4,7 @@ import {unsetDataOnCookie} from '../common/Functions'
 
 function Header({open,setopen}) {
 
-  const { userToken , localStorageName } = useContext(AppContext)
+  const { userToken , localStorageName , cartObjs } = useContext(AppContext)
 
   console.log("TOKEN" , userToken);
 
@@ -68,7 +68,7 @@ function Header({open,setopen}) {
                   {/* Header Cart Start */}
                   <a href="/cart" className="ec-header-btn ec-side-toggle">
                     <div className="header-icon"><img src="assets/images/icons/cart.svg" className="svg_img header_svg" alt /></div>
-                    <span className="ec-header-count cart-count-lable">3</span>
+                    <span className="ec-header-count cart-count-lable">{cartObjs.length}</span>
                   </a>
                   {/* Header Cart End */}
                 </div>
