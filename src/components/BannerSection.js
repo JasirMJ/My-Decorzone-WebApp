@@ -1,6 +1,7 @@
 import React from 'react'
 
 function BannerSection() {
+  
     return (
         <>
          <section className="ec-banner section section-space-p">
@@ -13,7 +14,7 @@ function BannerSection() {
               <div className="row">
                 <div className="banner-block col-lg-6 col-md-12 margin-b-30" data-animation="slideInRight">
                   <div className="bnr-overlay">
-                    <img src="assets/images/banner/2.jpg" alt />
+                    <img src="../assets/images/banner/2.jpg" alt />
                     <div className="banner-text">
                       <span className="ec-banner-stitle">New Arrivals</span>
                       <span className="ec-banner-title">mens<br /> Sport shoes</span>

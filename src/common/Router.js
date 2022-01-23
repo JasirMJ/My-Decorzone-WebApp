@@ -14,6 +14,7 @@ import Cart from './../screens/cart/Cart'
 import OrderDetails from './../screens/myaccount/OrderDetails'
 import Aboutus from './../screens/static/Aboutus'
 import Contactus from './../screens/static/Contactus'
+import Checkout from '../screens/Checkout/checkout';
 
 function RouterSet() {
     return (
@@ -26,6 +27,7 @@ function RouterSet() {
             <Route exact path={`/register`}><Register /></Route>
             <Route exact path={`/myaccount`}><MyAccount /></Route>
             <Route exact path={`/myorders`}><MyOrders /></Route>
+            <Route exact path={`/checkout`}><Checkout /></Route>
             <Route exact path={`/orderdetails`}><OrderDetails /></Route>
             <Route exact path={`/product/:id`}><ProductDetails /></Route>
             <Route exact path={`/cart`}><Cart /></Route>

@@ -99,7 +99,7 @@ const Cart = () => {
                         <div className="row">
                           <div className="col-lg-12">
                             <div className="ec-single-cart " style={{ marginTop: 10 }}>
-                              <a href="/myorders" className="btn btn-primary">Confirm Order</a>
+                              <a href="/checkout" className="btn btn-primary">Checkout</a>
                             </div>
                           </div>
                         </div>

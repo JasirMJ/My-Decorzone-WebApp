@@ -19309,7 +19309,7 @@ body.ec-open:before {
 ---------------------------------------------------*/
 .ec-slide-item {
   width: 100%;
-  height: 90vh;
+  height: 70vh;
   position: relative;
 }
 
@@ -19319,13 +19319,24 @@ body.ec-open:before {
 
 .ec-slide-1 {
   width: 100%;
-  background-image: url("../images/main-slider-banner/1.jpg");
+  /* background-image: url("../images/main-slider-banner/1.jpg"); */
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   overflow-y: hidden;
 }
 
+@media screen and (max-width:600px) {
+  .ec-slide-1 {
+    width: 100%;
+    /* background-image: url("../images/main-slider-banner/1.jpg"); */
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    overflow-y: hidden;
+  }
+  
+}
 .ec-slide-2 {
   background-image: url("../images/main-slider-banner/2.jpg");
   background-repeat: no-repeat;
