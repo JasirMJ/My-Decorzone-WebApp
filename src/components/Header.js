@@ -114,7 +114,7 @@ function Header({open,setopen}) {
                   <li><a href="/categories">Categories</a></li>
                   <li><a href="/products">Products</a></li>
                   <li><a href="/offers">Offers</a></li>
-                  <li><a href="/myorders">My Orders</a></li>
+                  <li><a href={userToken == '' ? "/login" : "/myorders"} >My Orders</a></li>
                   <li><a href="/about">About Us</a></li>
                   <li><a href="contactus">Contact Us</a></li>
                 </ul>

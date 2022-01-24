@@ -24,6 +24,36 @@ export const showMessage = (message, type, title, insert, container, duration) =
   });
 };
 
+ // Get Offer Price max offer % in product
+ export const getOffer = (Varients) => {
+  if(Varients) {
+    var offeravailable = false
+
+    Varients.map(item=>{
+        if(item.offer_enabled) {
+            offeravailable = true
+        }
+    })
+
+    if(offeravailable){
+        var discounts = []
+        Varients.map(item=>{
+            if(item.offer_enabled) {
+                var discount = 100 * (item.rate - item.offer_rate) / item.rate
+                discounts.push(discount.toFixed(0))
+            }
+        })
+        var maxDiscount = discounts.reduce(function(a, b) {
+            return Math.max(a, b);
+        }, 0);
+        return maxDiscount !=0 ? maxDiscount : false
+    }else {
+        return false
+    }
+  } else {
+    return false
+}
+}
 
 export const ResponseValidation = (response) => {
   let status_code = null;

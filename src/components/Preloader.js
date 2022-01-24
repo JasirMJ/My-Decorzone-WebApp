@@ -6,7 +6,7 @@ function Preloader() {
     return (
         <div className="se-pre-con">
             <div className="pre-loader">
-                <img className="img-fluid" src={gif} alt="loading" style={{height:"100px"}} />
+                <img className="img-fluid" src={gif} alt="loading"  />
             </div>
         </div>
     )
