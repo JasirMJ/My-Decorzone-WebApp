@@ -23,6 +23,8 @@ import GridProduct from '../../components/GridProduct'
 import { useState } from 'react';
 const ProductDetails = () => {
     const [open, setopen] = useState(false)
+    const [count, setcount] = useState(0);
+    
     return (
         <div>
             <div>
@@ -156,7 +158,9 @@ const ProductDetails = () => {
                                                     </div>
                                                     <div className="ec-single-qty">
                                                         <div className="qty-plus-minus">
-                                                            <input className="qty-input" type="text" name="ec_qtybtn" defaultValue={1} />
+                                                            <button onClick={() => setcount(count - 1)} disabled={!count}><i class="fas fa-minus"></i></button>
+                                                            <input className="qty-input" type="text" name="ec_qtybtn" value={count} />
+                                                            <button onClick={() => setcount(count + 1)}><i class="fas fa-plus"></i></button>
                                                         </div>
                                                         <div className="ec-single-cart ">
                                                             <button className="btn btn-primary">Add To Cart</button>
