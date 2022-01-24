@@ -1,14 +1,87 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AppContext, baseurl } from '../../common/Constants';
 import Header from '../../components/Header';
 
 const Checkout = () => {
     const [AddNewAddress, setAddNewAddress] = useState(false);
     const [Edit, setEdit] = useState();
+    const { userToken } = useContext(AppContext)
+    const [data, setdata] = useState([]);
+    const [addressData, setaddressData] = useState({
+        address1: '',
+        address2: '',
+        land_mark: '',
+        latitude: '',
+        longtitude: '',
+        city: '',
+        pin: '',
+        state: '',
+    });
 
+    useEffect(() => {
+      GetData()
+    }, []);
+    
 
-    // const handleSubmit = () => {
+    const handleSubmit = () => {
+        var axios = require('axios');
+        var FormData = require('form-data');
+        var data = new FormData();
+        data.append('address1',);
+        data.append('address2',);
+        data.append('land_mark',);
+        data.append('latitude',);
+        data.append('longitude',);
+        data.append('city',);
+        data.append('pin',);
+        data.append('state',);
 
-    // }
+        var config = {
+            method: 'post',
+            url: baseurl + '/users/address/',
+            headers: {
+                'Authorization': userToken,
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
+
+    const GetData = () => {
+        var axios = require('axios');
+        var FormData = require('form-data');
+        var data = new FormData();
+
+        var config = {
+            method: 'get',
+            url: baseurl + '/users/address/',
+            headers: {
+                'Authorization': userToken,
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(response.data);
+
+                if (response.data.results) {
+                    setdata(response.data.results)
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
 
     return <div>
         <Header />
@@ -30,35 +103,34 @@ const Checkout = () => {
                                                 <div className="ec-check-bill-form">
                                                     <form action="#" method="post">
                                                         <span className="ec-bill-wrap ec-bill-half">
-                                                            <label>First Name*</label>
-                                                            <input type="text" name="firstname" placeholder="Enter your first name" required />
+                                                            <label> Name*</label>
+                                                            <input type="text" name="name" placeholder="Enter your name" onChange={e => setaddressData({ ...addressData, address1: e.target.value })} value={addressData.address1} required />
                                                         </span>
-                                                        <span className="ec-bill-wrap ec-bill-half">
+                                                        {/* <span className="ec-bill-wrap ec-bill-half">
                                                             <label>Last Name*</label>
                                                             <input type="text" name="lastname" placeholder="Enter your last name" required />
-                                                        </span>
-                                                        <span className="ec-bill-wrap">
+                                                        </span> */}
+                                                        <span className="ec-bill-wrap ec-bill-half">
                                                             <label>Address</label>
-                                                            <input type="text" name="address" placeholder="Address Line 1" />
+                                                            <input type="text" name="address" placeholder="Address Line 1" onChange={e => setaddressData({ ...addressData, address2: e.target.value })} value={addressData.address2} />
+                                                        </span>
+                                                        <span className="ec-bill-wrap ec-bill-half">
+                                                            <label>Landmark *</label>
+
+                                                            <input type="text" name="landmark" id="" placeholder='Landmark' onChange={e => setaddressData({ ...addressData, land_mark: e.target.value })} value={addressData.land_mark} />
+
                                                         </span>
                                                         <span className="ec-bill-wrap ec-bill-half">
                                                             <label>City *</label>
-                                                            <span className="ec-bl-select-inner">
-                                                                <select name="ec_select_city" id="ec-select-city" className="ec-bill-select">
-                                                                    <option selected disabled>City</option>
-                                                                    <option value={1}>City 1</option>
-                                                                    <option value={2}>City 2</option>
-                                                                    <option value={3}>City 3</option>
-                                                                    <option value={4}>City 4</option>
-                                                                    <option value={5}>City 5</option>
-                                                                </select>
-                                                            </span>
+
+                                                            <input type="text" name="city" id="" placeholder='Enter your city' onChange={e => setaddressData({ ...addressData, city: e.target.value })} value={addressData.city} />
+
                                                         </span>
                                                         <span className="ec-bill-wrap ec-bill-half">
-                                                            <label>Post Code</label>
-                                                            <input type="text" name="postalcode" placeholder="Post Code" />
+                                                            <label>Pincode</label>
+                                                            <input type="text" name="postalcode" placeholder="Pincode" onChange={e => setaddressData({ ...addressData, pin: e.target.value })} value={addressData.pin} />
                                                         </span>
-                                                        <span className="ec-bill-wrap ec-bill-half">
+                                                        {/* <span className="ec-bill-wrap ec-bill-half">
                                                             <label>Country *</label>
                                                             <span className="ec-bl-select-inner">
                                                                 <select name="ec_select_country" id="ec-select-country" className="ec-bill-select">
@@ -70,10 +142,11 @@ const Checkout = () => {
                                                                     <option value={5}>Country 5</option>
                                                                 </select>
                                                             </span>
-                                                        </span>
+                                                        </span> */}
                                                         <span className="ec-bill-wrap ec-bill-half">
                                                             <label>Region State</label>
-                                                            <span className="ec-bl-select-inner">
+                                                            <input type="text" name="state" id="" placeholder='Region/State' onChange={e => setaddressData({ ...addressData, state: e.target.value })} value={addressData.state} />
+                                                            {/* <span className="ec-bl-select-inner">
                                                                 <select name="ec_select_state" id="ec-select-state" className="ec-bill-select">
                                                                     <option selected disabled>Region/State</option>
                                                                     <option value={1}>Region/State 1</option>
@@ -82,7 +155,7 @@ const Checkout = () => {
                                                                     <option value={4}>Region/State 4</option>
                                                                     <option value={5}>Region/State 5</option>
                                                                 </select>
-                                                            </span>
+                                                            </span> */}
                                                         </span>
                                                         <div className="d-flex justify-content-end w-100">
 
@@ -149,7 +222,7 @@ const Checkout = () => {
                                         <form action="#">
                                             <span className="ec-pay-option">
                                                 <span className='d-flex '>
-                                                    <input type="radio" style={{height:'15px'}} id="pay1" name="radio-group" />
+                                                    <input type="radio" style={{ height: '15px' }} id="pay1" name="radio-group" />
                                                     <label htmlFor="pay1">Cash On Delivery</label>
                                                 </span>
                                             </span>
