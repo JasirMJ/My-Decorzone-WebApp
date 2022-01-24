@@ -18,7 +18,12 @@ function NewProduct({title, subtitle , Data}) {
           </div>
           <div className="row">
             {/* New Product Content */}
-            <GridProduct />
+            {
+              Data.map((item, index) => {
+                return <GridProduct key={index} Data={item} />
+            })
+            }
+            {/* <GridProduct />
                <GridProduct />
                <GridProduct />
                <GridProduct />
@@ -29,10 +34,9 @@ function NewProduct({title, subtitle , Data}) {
                <GridProduct />
                <GridProduct />
                <GridProduct />
-               <GridProduct />
+               <GridProduct /> */}
         
-            <div className="col-sm-12 shop-all-btn"><a href="/products">Shop All Collection</a>
-            </div>
+      
           </div>
         </div>
       </section>   

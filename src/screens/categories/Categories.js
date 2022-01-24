@@ -64,16 +64,16 @@ const Categories = () => {
 
     }
 
+  
     const handlePrev = () => {
         // alert("prev");
-
+        var axios = require('axios');
         var config = {
             method: "get",
             url: prev.replace("http:", protocol.replace('//', "")),
             // url: prev + "/?" + params,
-
+    
             headers: {
-                Authorization: userToken,
             },
         };
         // console.log("Caed previousssssssssssssssss ", prev);
@@ -88,16 +88,16 @@ const Categories = () => {
                 // console.log(error);
             });
     };
-
+    
     const handleNext = () => {
+      var axios = require('axios');
         // alert("next")
         var config = {
             method: "get",
             url: next.replace("http:", protocol.replace('//', "")),
             // url: next + "/?" + params,
-
+    
             headers: {
-                Authorization: userToken,
             },
         };
         // console.log(config.url)
@@ -227,6 +227,23 @@ const Categories = () => {
                        }
 
                     </div>
+
+                        {/* Ec Pagination Start */}
+                  <div className="ec-pro-pagination">
+                    <span></span>
+                    <ul className="ec-pro-pagination-inner">
+                    {
+                      prev != null &&
+                      <li><a className="next" href="#" onClick={()=>{handlePrev()}}><i className="ecicon eci-angle-left" /> Previous</a></li>
+                    }
+
+                    {
+                      next != null &&
+                      <li><a className="next" href="#"  onClick={()=>{handleNext()}}>Next <i className="ecicon eci-angle-right" /></a></li>
+                    }
+                    </ul>
+                  </div>
+                  
                 </div>
             </section>
             

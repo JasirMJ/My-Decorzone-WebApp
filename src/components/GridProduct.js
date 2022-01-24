@@ -1,27 +1,148 @@
-import React from 'react'
+import React, { useState , useContext , useEffect } from 'react'
+import {getOffer , addDomainInImage} from '../common/Functions'
+import {baseurl , protocol , AppContext} from '../common/Constants'
 
-const GridProduct = () => {
+const GridProduct = ({Data}) => {
+
+  const { userToken , setCartObjs , cartObjs , isLogined, totalPayAmount , cartDiscountTotalAmount , cartTotalAmount , extraCharges ,  deliveryCharge , userAddressId} = useContext(AppContext)
+
+    const [quantity, setquantity] = useState()
+    const [updateCart, setupdateCart] = useState(false)
+    const [singleItem, setsingleItem] = useState(false)
+  
+    useEffect(() => {
+        if(userToken) {
+            if(updateCart) {
+                const delayDebounceFn = setTimeout(() => {
+                    //   console.log(searchKey)
+                    // Send Axios request here
+                    cartUpdate(quantity)
+                    }, 1000)
+                    return () => clearTimeout(delayDebounceFn)
+            }
+        }
+    }, [quantity])
+
+    useEffect(() => {
+        checkingItemInCart()
+    }, [cartObjs])
+
+      const checkingItemInCart = () =>{
+         if(isLogined) {
+                var itemAvailableInCart = cartObjs.find(data => data.varient.id == Data.variants[0].id)
+                if(itemAvailableInCart) {
+                    console.warn("ITEM AVAILABLE IN CART",itemAvailableInCart);
+                    setquantity(itemAvailableInCart.quantity)
+                    setsingleItem(true)
+                } else {
+                    console.log("NOT AVAILABLE ITEM  IN CART");
+                    setsingleItem(false)
+                }
+         }
+     }
+
+     const checkingVarientSingleOrMultiple = () =>{
+        if(isLogined) {
+            console.log("same branch");
+            setsingleItem(true)  
+            setupdateCart(true)
+            setquantity(1) 
+        } else {
+            window.location.href = '/login';
+        }
+    }
+
+    const cartUpdate = (count) => {
+
+        var item = [{
+            "varient": Data.varients[0].id, 
+            "quantity":count 
+        }]
+ 
+        var axios = require('axios');
+        var FormData = require('form-data');
+        var fdata = new FormData();
+        fdata.append('varient_lst', JSON.stringify(item));
+        fdata.append('keyword', 'add');
+ 
+         var config = {
+        method: 'post',
+        url: baseurl + '/cart/',
+        headers: { 
+            'Authorization': userToken,
+        },
+         data : fdata
+         };
+ 
+         axios(config)
+         .then(function (response) { 
+            setupdateCart(false)
+            if(response.data.Error) {
+                console.log("Sorry , product is unavialable right now" , response.data);
+                // getCart()
+             } else {
+                 setCartObjs(response.data.basket)
+             }
+         })
+         .catch(function (error) {
+             // console.log(error);
+             console.log(error.response.data.Error);
+         });
+    }
+
     return (
         <div className="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
             <div className="ec-product-inner">
                 <div className="ec-pro-image-outer">
                 <div className="ec-pro-image">
                     <a href="/product/1" className="image">
-                    <img className="main-image" src="assets/images/product-image/6_1.jpg" alt="Product" />
-                    <img className="hover-image" src="assets/images/product-image/6_1.jpg" alt="Product" />
+                        <img className="main-image" src={addDomainInImage(Data.images.length != 0 ? Data.images[0].image : "")} alt="Product" />
+                        <img className="hover-image" src={addDomainInImage(Data.images.length != 0 ? Data.images[0].image : "")} alt="Product" />
+
                     </a>
-                    <span className="percentage">20%</span>
-                    <span class="flags"><span class="new">New</span></span>
+
+                    {
+                        getOffer(Data.variants) &&
+                    <span className="percentage">{getOffer(Data.variants)}%</span>
+
+                    }
+                    {/* <span className="percentage">20%</span> */}
+                    {
+                        Data.popular == true &&
+                        <span class="flags"><span class="new">Popular</span></span>
+                    }
+
+                    {
+                        Data.is_recommended == true  &&
+                        <span class="flags"><span class="new">Recommended</span></span>
+                    }
+
+                    {
+                        Data.is_new == true &&
+                        <span class="flags"><span class="new">New</span></span>
+                    }
+
+                    {
+                        Data.is_out_of_stock == true &&
+                        <span class="flags"><span class="new">Out Of Stock</span></span>
+                    }
+
                 </div>
                 </div>
                 <div className="ec-pro-content">
-                <h5 className="ec-pro-title"><a href="/product/1">Round Neck T-Shirt</a></h5>
+                <h5 className="ec-pro-title"><a href="/product/1">{Data.name}</a></h5>
             
                 <div className="ec-pro-list-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dutmmy text ever since the 1500s, when an unknown printer took a galley.</div>
-                <span className="ec-price">
-                    <span className="old-price">$27.00</span>
-                    <span className="new-price">$22.00</span>
-                </span>
+                {
+                    Data.variants.length > 0 &&
+                    <span className="ec-price">
+                        {
+                            Data.variants[0].offer_enabled == true &&
+                            <span className="old-price">₹{Data.variants[0].offer_rate}</span>
+                        }
+                        <span className="new-price">₹{Data.variants[0].rate}</span>
+                    </span>
+                }
                 <div className="ec-pro-option">
                     <div className="ec-pro-size">
                     <span className="ec-pro-opt-label">Size</span>
@@ -31,9 +152,12 @@ const GridProduct = () => {
                         <li><a href="#" className="ec-opt-sz" data-old="$35.00" data-new="$30.00" data-tooltip="Extra Large">XL</a></li>
                     </ul> */}
                     </div>
+                    {
+                        Data.is_out_of_stock == false &&
                     <div className="ec-single-cart ">
                         <button className="btn btn-primary">Add To Cart</button>
                     </div>
+                    }
                 </div>
                 </div>
             </div>

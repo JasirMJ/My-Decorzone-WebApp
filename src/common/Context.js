@@ -65,6 +65,13 @@ useEffect(() => {
   getSettings()
 }, [])
 
+useEffect(() => {
+  if(userToken != "") {
+    getUserDetails(userToken)
+    getCart(userToken)
+  }
+}, [userToken])
+
 const getSettings = () => {
   var axios = require('axios');
 
@@ -103,14 +110,15 @@ const getSettings = () => {
 
 }
 
-const getUserDetails = () => {
+
+const getUserDetails = (token) => {
   var axios = require('axios');
 
   var config = {
     method: 'get',
     url: 'https://api.mydecorzone.com/users/',
     headers: { 
-      'Authorization': userToken,
+      'Authorization': token,
     }
   };
   
@@ -118,9 +126,12 @@ const getUserDetails = () => {
   .then(function (response) {
     console.log(JSON.stringify(response.data));
     if(response.data.results.length!=0) {
+      setLogined(true);
       if(response.data.results[0].address.length!=0) {
         setUserAddressId(response.data.results[0].address[0].id)
       }
+    } else{
+      setLogined(false);
     }
   })
   .catch(function (error) {
@@ -128,6 +139,31 @@ const getUserDetails = () => {
   });
   
 }
+
+const getCart = (value) => {
+  var axios = require('axios');
+
+  var config = {
+    method: 'get',
+    url: baseurl + '/cart/',
+    headers: { 
+      'Authorization': value,
+    },
+  };
+
+  axios(config)
+  .then(function (response) {
+    console.log("CART",JSON.stringify(response.data));
+    if(response.data.results.length !=0) {
+      console.log("CART DATA",JSON.stringify(response.data.results[0].basket));
+      setCartObjs(response.data.results[0].basket)
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
 
   return (
         <AppContext.Provider
