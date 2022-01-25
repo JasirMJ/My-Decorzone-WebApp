@@ -1,4 +1,4 @@
-import React, { useState , useContext , useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
 import MainSlider from '../../components/MainSlider';
@@ -20,17 +20,18 @@ import PurchasePopup from '../../components/PurchasePopup';
 import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
-import {baseurl , protocol , AppContext} from '../../common/Constants'
+import { baseurl, protocol, AppContext } from '../../common/Constants'
 import CartProduct from './components/CartProduct';
 
 const Cart = () => {
   const [open, setopen] = useState(false)
+  // const [cartTotal, setcartTotal] = useState('');
 
-  const { userToken , setCartObjs , cartObjs , totalPayAmount , cartDiscountTotalAmount , cartTotalAmount , extraCharges ,  deliveryCharge , userAddressId} = useContext(AppContext)
+  const { userToken, setCartObjs, cartObjs, totalPayAmount, cartDiscountTotalAmount, cartTotalAmount, extraCharges, deliveryCharge, userAddressId } = useContext(AppContext)
 
   useEffect(() => {
     getData()
-}, [])
+  }, [])
 
   const getData = () => {
     var axios = require('axios');
@@ -38,23 +39,39 @@ const Cart = () => {
     var config = {
       method: 'get',
       url: baseurl + '/cart/',
-      headers: { 
+      headers: {
         'Authorization': userToken,
       },
     };
 
     axios(config)
-    .then(function (response) {
-      console.log("CART",JSON.stringify(response.data));
-      if(response.data.results.length !=0) {
-        console.log("CART DATA",JSON.stringify(response.data.results[0].basket));
-        setCartObjs(response.data.results[0].basket)
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then(function (response) {
+        console.log("CART", response.data);
+        if (response.data.results.length != 0) {
+          console.log("CART DATA", response.data.results[0].basket);
+          setCartObjs(response.data.results[0].basket)
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
+
+  // useEffect(() => {
+  //   findSum()
+  // }, []);
+
+  // function findSum() {
+  //   for (let i = 0; i < cartObjs.length; i++) {
+  //     const element = cartObjs[i].varient.final_rate;
+  //     // console.log(element + element);
+  //     return setcartTotal(element + element)
+  //   }
+
+  // }
+
+
+  console.log({ cartTotalAmount });
 
   return (
     <div>
@@ -68,48 +85,42 @@ const Cart = () => {
             <div className="row">
               <div className="ec-cart-leftside col-lg-8 col-md-12 ">
                 {/* cart content Start */}
-         {
-           cartObjs.length != 0 ?
-           <div className="ec-cart-content">
-                  <div className="ec-cart-inner">
-                    <div className="row">
-                      <form action="#">
-                        <div className="table-content cart-table-content">
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th style={{ textAlign: 'center' }}>Quantity</th>
-                                <th>Total</th>
-                                <th />
-                              </tr>
-                            </thead>
-                            <tbody>
-                            {
-                           cartObjs.map((item, index) => 
-                              <CartProduct Data={item} />
-                           )
-                       }
-                           
-                       
-                            </tbody>
-                          </table>
-                        </div>
+                {
+                  cartObjs.length != 0 ?
+                    <div className="ec-cart-content">
+                      <div className="ec-cart-inner">
                         <div className="row">
-                          <div className="col-lg-12">
-                            <div className="ec-single-cart " style={{ marginTop: 10 }}>
-                              <a href="/checkout" className="btn btn-primary">Checkout</a>
+                          <form action="#">
+                            <div className="table-content cart-table-content">
+                              <table>
+                                <thead>
+                                  <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th style={{ textAlign: 'center' }}>Quantity</th>
+                                    <th>Total</th>
+                                    <th />
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {
+                                    cartObjs.map((item, index) =>
+                                      <CartProduct Data={item} />
+                                    )
+                                  }
+
+
+                                </tbody>
+                              </table>
                             </div>
-                          </div>
+
+                          </form>
                         </div>
-                      </form>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                :
-                <span>NO Cart Item</span>
-         }
+                    :
+                    <span>NO Cart Item</span>
+                }
                 {/*cart content End */}
               </div>
               {/* Sidebar Area Start */}
@@ -120,14 +131,14 @@ const Cart = () => {
                     <div className="ec-sb-title">
                       <h3 className="ec-sidebar-title">Summary</h3>
                     </div>
-          
+
                     <div className="ec-sb-block-content">
                       <div className="ec-cart-summary-bottom">
                         <div className="ec-cart-summary">
 
                           <div>
                             <span className="text-left">Item Total</span>
-                            <span className="text-right">₹{cartTotalAmount}</span>
+                            <span className="text-right">₹ {cartTotalAmount}</span>
                           </div>
 
                           <div>
@@ -135,7 +146,7 @@ const Cart = () => {
                             <span className="text-right">-₹{cartDiscountTotalAmount}</span>
                           </div>
 
-                     
+
                           <div>
                             <span className="text-left">Delivery Charges</span>
                             <span className="text-right">₹{deliveryCharge}</span>
@@ -150,8 +161,12 @@ const Cart = () => {
                             <span className="text-left">Total Amount</span>
                             <span className="text-right">₹{totalPayAmount}</span>
                           </div>
+
                         </div>
                       </div>
+                    </div>
+                    <div className="ec-single-cart " style={{ marginTop: 10 }}>
+                      <a href="/checkout" className="btn btn-primary w-100">Checkout</a>
                     </div>
                   </div>
                   {/* Sidebar Summary Block */}

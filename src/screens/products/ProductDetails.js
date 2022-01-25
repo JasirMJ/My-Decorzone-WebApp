@@ -20,14 +20,24 @@ import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
 import GridProduct from '../../components/GridProduct'
-import { useState } from 'react';
-import { baseurl } from '../../common/Constants';
+import { useContext, useEffect, useState } from 'react';
+import { AppContext, baseurl } from '../../common/Constants';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 
 const ProductDetails = () => {
     const [open, setopen] = useState(false)
     const [CartData, setCartData] = useState([]);
     const [count, setcount] = useState({ count: 0, varient: '' });
+    const [data, setdata] = useState({});
+    const { id } = useParams()
+
+    const { userToken } = useContext(AppContext)
+
+    useEffect(() => {
+        GetData()
+    }, []);
 
 
     const Addtocart = () => {
@@ -56,6 +66,33 @@ const ProductDetails = () => {
 
     }
 
+    const GetData = () => {
+        var FormData = require('form-data');
+        var data = new FormData();
+
+        var config = {
+            method: 'get',
+            url: baseurl + '/items/items/' + id,
+            headers: {
+                Authorization: userToken
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(response.data);
+                if (response.data) {
+                    setdata(response.data)
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
+
+    console.log({data});
     return (
         <div>
             <div>
@@ -64,7 +101,7 @@ const ProductDetails = () => {
 
                 {/* ekka Cart Start */}
                 <div className="ec-side-cart-overlay" />
-                <div id="ec-side-cart" className="ec-side-cart">
+                {/* <div id="ec-side-cart" className="ec-side-cart">
                     <div className="ec-cart-inner">
                         <div className="ec-cart-top">
                             <div className="ec-cart-title">
@@ -132,7 +169,7 @@ const ProductDetails = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 {/* ekka Cart End */}
                 {/* Ec breadcrumb start */}
 
@@ -150,18 +187,16 @@ const ProductDetails = () => {
                                                 <div className="single-product-scroll">
                                                     <div className="single-product-cover">
                                                         <div className="single-slide zoom-image-hover">
-                                                            <img className="img-responsive" src="assets/images/product-image/9_1.jpg" alt />
+                                                            {/* <img className="img-responsive" src={data.images[0].image} alt /> */}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="single-pro-desc">
                                                 <div className="single-pro-content">
-                                                    <h5 className="ec-single-title">Unisex Cotton Neck Hoodie</h5>
+                                                    <h5 className="ec-single-title">{data.name}</h5>
 
-                                                    <div className="ec-single-desc">Lorem Ipsum is simply dummy text of the printing and
-                                                        typesetting industry. Lorem Ipsum has been the industry's standard dummy
-                                                        text ever since the 1990</div>
+                                                    <div className="ec-single-desc">{data.description}</div>
 
                                                     <div className="ec-single-price-stoke">
                                                         <div className="ec-single-price">
@@ -189,75 +224,75 @@ const ProductDetails = () => {
                                                     </div>
                                                     <div className="ec-single-qty">
                                                         <div className="qty-plus-minus">
-                                                            <button onClick={() => setcount(count - 1)} disabled={!count}><i class="fas fa-minus"></i></button>
-                                                            <input className="qty-input" type="text" name="ec_qtybtn" value={count} />
-                                                            <button onClick={() => setcount(count + 1)}><i class="fas fa-plus"></i></button>
-                                                        </div>
-                                                        <div className="ec-single-cart ">
-                                                            <button className="btn btn-primary">Add To Cart</button>
-                                                        </div>
-
+                                                            <button onClick={() => setcount({ ...count, count: count.count - 1 })} disabled={!count.count}><i class="fas fa-minus"></i></button>
+                                                            <input className="qty-input" type="text" name="ec_qtybtn" value={count.count} />
+                                                            <button onClick={() => setcount({ ...count, count: count.count + 1 })} > <i class="fas fa-plus"></i></button>
+                                                    </div>
+                                                    <div className="ec-single-cart ">
+                                                        <button className="btn btn-primary">Add To Cart</button>
                                                     </div>
 
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/*Single product content End */}
-                                {/* Single product tab start */}
-                                <div className="ec-single-pro-tab">
-                                    <div className="ec-single-pro-tab-wrapper">
-                                        <div className="ec-single-pro-tab-nav">
-                                            <ul className="nav nav-tabs">
-                                                <li className="nav-item">
-                                                    <a className="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-details" role="tablist">Detail</a>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-info" role="tablist">More Information</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div className="tab-content  ec-single-pro-tab-content">
-                                            <div id="ec-spt-nav-details" className="tab-pane fade show active">
-                                                <div className="ec-single-pro-tab-desc">
-                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                        Lorem Ipsum has been the industry's standard dummy text ever since the
-                                                        1500s, when an unknown printer took a galley of type and scrambled it to
-                                                        make a type specimen book. It has survived not only five centuries, but also
-                                                        the leap into electronic typesetting, remaining essentially unchanged.
-                                                    </p>
-                                                    <ul>
-                                                        <li>Any Product types that You want - Simple, Configurable</li>
-                                                        <li>Downloadable/Digital Products, Virtual Products</li>
-                                                        <li>Inventory Management with Backordered items</li>
-                                                        <li>Flatlock seams throughout.</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div id="ec-spt-nav-info" className="tab-pane fade">
-                                                <div className="ec-single-pro-tab-moreinfo">
-                                                    <ul>
-                                                        <li><span>Weight</span> 1000 g</li>
-                                                        <li><span>Dimensions</span> 35 × 30 × 7 cm</li>
-                                                        <li><span>Color</span> Black, Pink, Red, White</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                {/* product details description area end */}
                             </div>
-                            {/* Sidebar Area Start */}
+                            {/*Single product content End */}
+                            {/* Single product tab start */}
+                            <div className="ec-single-pro-tab">
+                                <div className="ec-single-pro-tab-wrapper">
+                                    <div className="ec-single-pro-tab-nav">
+                                        <ul className="nav nav-tabs">
+                                            <li className="nav-item">
+                                                <a className="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-details" role="tablist">Detail</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-info" role="tablist">More Information</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className="tab-content  ec-single-pro-tab-content">
+                                        <div id="ec-spt-nav-details" className="tab-pane fade show active">
+                                            <div className="ec-single-pro-tab-desc">
+                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                                    Lorem Ipsum has been the industry's standard dummy text ever since the
+                                                    1500s, when an unknown printer took a galley of type and scrambled it to
+                                                    make a type specimen book. It has survived not only five centuries, but also
+                                                    the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                                <ul>
+                                                    <li>Any Product types that You want - Simple, Configurable</li>
+                                                    <li>Downloadable/Digital Products, Virtual Products</li>
+                                                    <li>Inventory Management with Backordered items</li>
+                                                    <li>Flatlock seams throughout.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div id="ec-spt-nav-info" className="tab-pane fade">
+                                            <div className="ec-single-pro-tab-moreinfo">
+                                                <ul>
+                                                    <li><span>Weight</span> 1000 g</li>
+                                                    <li><span>Dimensions</span> 35 × 30 × 7 cm</li>
+                                                    <li><span>Color</span> Black, Pink, Red, White</li>
+                                                </ul>
+                                            </div>
+                                        </div>
 
-                            {/* Sidebar Area Start */}
+                                    </div>
+                                </div>
+                            </div>
+                            {/* product details description area end */}
                         </div>
+                        {/* Sidebar Area Start */}
+
+                        {/* Sidebar Area Start */}
                     </div>
-                </section>
-                {/* End Single product */}
-                {/* Related Product Start */}
+            </div>
+        </section>
+                {/* End Single product */ }
+    {/* Related Product Start */ }
                 <section className="section ec-releted-product section-space-p">
                     <div className="container">
                         <div className="row">
@@ -279,12 +314,12 @@ const ProductDetails = () => {
                 </section>
 
                 <Footer />
-                {/* Footer navigation panel for responsive display */}
-                <FooterNav setopen={() => setopen(!open)} />
+    {/* Footer navigation panel for responsive display */ }
+    <FooterNav setopen={() => setopen(!open)} />
 
-                {/* Footer navigation panel for responsive display end */}
-            </div>
-        </div>
+    {/* Footer navigation panel for responsive display end */ }
+            </div >
+        </div >
     )
 }
 

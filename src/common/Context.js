@@ -153,9 +153,9 @@ const getCart = (value) => {
 
   axios(config)
   .then(function (response) {
-    console.log("CART",JSON.stringify(response.data));
+    console.log("CART",response.data);
     if(response.data.results.length !=0) {
-      console.log("CART DATA",JSON.stringify(response.data.results[0].basket));
+      console.log("CART DATA",response.data.results[0].basket);
       setCartObjs(response.data.results[0].basket)
     }
   })

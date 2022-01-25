@@ -97,7 +97,7 @@ const GridProduct = ({ Data }) => {
             <div className="ec-product-inner">
                 <div className="ec-pro-image-outer">
                     <div className="ec-pro-image">
-                        <a href="/product/1" className="image">
+                        <a href={`/product/${Data.id}`} className="image">
                             <img className="main-image" src={addDomainInImage(Data.images?.length != 0 ? Data.images[0]?.image : "")} alt="Product" />
                             <img className="hover-image" src={addDomainInImage(Data.images?.length != 0 ? Data.images[0]?.image : "")} alt="Product" />
 
@@ -132,7 +132,7 @@ const GridProduct = ({ Data }) => {
                     </div>
                 </div>
                 <div className="ec-pro-content">
-                    <h5 className="ec-pro-title"><a href="/product/1">{Data.name}</a></h5>
+                    <h5 className="ec-pro-title"><a href={`/product/${Data.id}`}>{Data.name}</a></h5>
 
                     <div className="ec-pro-list-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dutmmy text ever since the 1500s, when an unknown printer took a galley.</div>
                     {

@@ -45,7 +45,7 @@ export default function CartProduct({ Data }) {
       method: 'post',
       url: baseurl + '/cart/',
       headers: {
-        'Authorization': userToken,
+        'Authorization': 'token ' + userToken,
       },
       data: fdata
     };
@@ -53,12 +53,12 @@ export default function CartProduct({ Data }) {
     axios(config)
       .then(function (response) {
         setupdateCart(false)
-        // console.log(JSON.stringify(response.data));
+        console.log(response.data);
         if (response.data.Error) {
           console.log("Sorry , product is unavialable right now", response.data);
           // getCart()
         } else {
-          setCartObjs(response.data.basket)
+          // setCartObjs(response.data.basket)
         }
       })
       .catch(function (error) {
@@ -77,12 +77,12 @@ export default function CartProduct({ Data }) {
       <td data-label="Product" className="ec-cart-pro-name"><a href="product-left-sidebar.html">
         <img className="ec-cart-pro-img mr-4" src={addDomainInImage(Data.varient.item_status.images.length != 0 ? Data.varient.item_status.images[0].image : "")} alt />
         {Data.varient.item_status.name + "-" + Data.varient.name}</a></td>
-      <td data-label="Price" className="ec-cart-pro-price"><span className="amount">₹{Data.varient.mrp * quantity}</span></td>
+      <td data-label="Price" className="ec-cart-pro-price"><span className="amount">₹{Data.varient.final_rate}</span></td>
       <td data-label="Quantity" className="ec-cart-pro-qty" style={{ textAlign: 'center' }}>
         <div className="cart-qty-plus-minus">
-          <button onClick={() => { setquantity(quantity - 1); setupdateCart(true) }} disabled={!quantity}><i class="fas fa-minus"></i></button>
+          <button type='button' onClick={() => { setquantity(quantity - 1); setupdateCart(true) }} disabled={!quantity}><i class="fas fa-minus"></i></button>
           <input className="qty-input" type="text" name="ec_qtybtn" value={quantity} />
-          <button onClick={() => { setquantity(quantity + 1); setupdateCart(true) }}><i class="fas fa-plus"></i></button>
+          <button type='button' onClick={() => { setquantity(quantity + 1); setupdateCart(true) }}><i class="fas fa-plus"></i></button>
           {/* <input className="cart-plus-minus" type="text" name="quantity" value={quantity} onChange={(e) => update(e)} /> */}
         </div>
       </td>
