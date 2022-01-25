@@ -21,10 +21,41 @@ import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
 import GridProduct from '../../components/GridProduct'
 import { useState } from 'react';
+import { baseurl } from '../../common/Constants';
+
+
 const ProductDetails = () => {
     const [open, setopen] = useState(false)
-    const [count, setcount] = useState(0);
-    
+    const [CartData, setCartData] = useState([]);
+    const [count, setcount] = useState({ count: 0, varient: '' });
+
+
+    const Addtocart = () => {
+        var axios = require('axios');
+        var FormData = require('form-data');
+        var data = new FormData();
+        data.append('keyword', 'add');
+        data.append('varient_lst', '[{"varient":"1", "quantity":"3"},{"varient":"2", "quantity":"3"}]');
+
+        var config = {
+            method: 'post',
+            url: baseurl + '/cart/',
+            headers: {
+                'Authorization': userToken,
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
+
     return (
         <div>
             <div>
@@ -239,10 +270,10 @@ const ProductDetails = () => {
                             </div>
                         </div>
                         <div className="row margin-minus-b-30">
+                            {/* <GridProduct />
                             <GridProduct />
                             <GridProduct />
-                            <GridProduct />
-                            <GridProduct />
+                            <GridProduct /> */}
                         </div>
                     </div>
                 </section>

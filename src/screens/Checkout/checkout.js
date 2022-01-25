@@ -19,22 +19,23 @@ const Checkout = () => {
     });
 
     useEffect(() => {
-      GetData()
+        GetData()
     }, []);
-    
+
 
     const handleSubmit = () => {
         var axios = require('axios');
         var FormData = require('form-data');
         var data = new FormData();
-        data.append('address1',);
-        data.append('address2',);
-        data.append('land_mark',);
-        data.append('latitude',);
-        data.append('longitude',);
-        data.append('city',);
-        data.append('pin',);
-        data.append('state',);
+        data.append('address1', addressData.address1);
+        data.append('address2', addressData.address2);
+        data.append('land_mark', addressData.land_mark);
+        data.append('latitude', addressData.latitude);
+        data.append('longitude', addressData.longtitude);
+        data.append('city', addressData.city);
+        data.append('pin', addressData.pin);
+        data.append('state', addressData.state);
+
 
         var config = {
             method: 'post',
@@ -160,7 +161,7 @@ const Checkout = () => {
                                                         <div className="d-flex justify-content-end w-100">
 
                                                             <button className='btn btn-secondary' onClick={() => setAddNewAddress(false)}>Cancel</button>
-                                                            <button className='btn btn-success ml-5'>Submit</button>
+                                                            <button className='btn btn-success ml-5' onClick={handleSubmit} type='button'>Submit</button>
                                                         </div>
                                                     </form>
                                                 </div>
