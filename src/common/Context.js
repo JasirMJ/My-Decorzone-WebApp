@@ -6,7 +6,7 @@ import {baseurl , protocol , AppContext} from '../common/Constants'
 
 function Context() {
 
-  const localStorageName = "onlinecart_token"
+  const localStorageName = "onlinecartsite_token"
   
   // user Details
   const [userToken, setUserToken] = useState(Cookies.getJSON(localStorageName) ? Cookies.getJSON(localStorageName).token : "");
@@ -135,7 +135,7 @@ const getUserDetails = (token) => {
     }
   })
   .catch(function (error) {
-    console.log(error);
+    console.log("USER DETAILS ERR",error);
   });
   
 }

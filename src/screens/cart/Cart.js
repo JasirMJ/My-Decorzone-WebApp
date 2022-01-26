@@ -30,6 +30,7 @@ const Cart = () => {
   const { userToken, setCartObjs, cartObjs, totalPayAmount, cartDiscountTotalAmount, cartTotalAmount, extraCharges, deliveryCharge, userAddressId } = useContext(AppContext)
 
   useEffect(() => {
+    console.log("userToken CART" ,userToken);
     getData()
   }, [])
 
@@ -40,7 +41,7 @@ const Cart = () => {
       method: 'get',
       url: baseurl + '/cart/',
       headers: {
-        'Authorization': userToken,
+        'Authorization':  userToken,
       },
     };
 
@@ -53,7 +54,7 @@ const Cart = () => {
         }
       })
       .catch(function (error) {
-        console.log(error);
+        console.log("CART LIST",error);
       });
   }
 

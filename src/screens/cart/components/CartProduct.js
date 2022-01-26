@@ -63,7 +63,7 @@ export default function CartProduct({ Data }) {
       })
       .catch(function (error) {
         // console.log(error);
-        console.log(error);
+        console.log("CART UPDATE ERR",error);
       });
   }
 
