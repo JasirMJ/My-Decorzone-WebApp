@@ -58,7 +58,7 @@ export default function CartProduct({ Data }) {
           console.log("Sorry , product is unavialable right now", response.data);
           // getCart()
         } else {
-          // setCartObjs(response.data.basket)
+          setCartObjs(response.data.basket)
         }
       })
       .catch(function (error) {

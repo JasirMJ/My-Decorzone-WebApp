@@ -133,7 +133,7 @@ const Checkout = () => {
         
         axios(config)
         .then(function (response) {
-            if(response.status == 201) {
+            if(response.status == 200) {
                 window.location.replace('/myorders')
             } else {
                 alert("cart is empty")
@@ -142,6 +142,31 @@ const Checkout = () => {
         .catch(function (error) {
           console.log(error);
           alert("cart is empty")
+        });
+    }
+
+    const selectedAddress = (id) => {
+        var axios = require('axios');
+        var FormData = require('form-data');
+        var data = new FormData();
+        data.append('address_id', id);
+        
+        var config = {
+          method: 'post',
+          url: baseurl + '/users/default/',
+          headers: { 
+            'Authorization': userToken, 
+          },
+          data : data
+        };
+        
+        axios(config)
+        .then(function (response) {
+            setselectedAddressid(id)
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+          console.log(error);
         });
     }
  
@@ -251,7 +276,7 @@ const Checkout = () => {
                                                                 <ul>
                                                                     <li><strong>Home : </strong>{item.address1} {item.address2} {item.land_mark} {item.city} {item.pin} {item.state}</li>
                                                                 </ul>
-                                                                <button onClick={()=>{setselectedAddressid(item.id)}} className='btn btn-danger w-100 mt-3'>
+                                                                <button onClick={()=>{selectedAddress(item.id)}} className='btn btn-danger w-100 mt-3'>
                                                                     {selectedAddressid === item.id ? 'Selected' : 'Choose address'}
                                                                 </button>
                                                             </div>
