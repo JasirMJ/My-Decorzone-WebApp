@@ -6,7 +6,7 @@ const GridProduct = ({ Data }) => {
 
     const { userToken, setCartObjs, cartObjs, isLogined, totalPayAmount, cartDiscountTotalAmount, cartTotalAmount, extraCharges, deliveryCharge, userAddressId } = useContext(AppContext)
 
-    const [quantity, setquantity] = useState()
+    const [quantity, setquantity] = useState(1)
     const [updateCart, setupdateCart] = useState(false)
     const [singleItem, setsingleItem] = useState(false)
     const [cartCount, setcartCount] = useState(false);
@@ -32,6 +32,7 @@ const GridProduct = ({ Data }) => {
 
     const checkingItemInCart = () => {
         if (isLogined) {
+           if(Data.variants.length !=0) {
             var itemAvailableInCart = cartObjs.find(data => data.varient.id == Data.variants[0].id)
             if (itemAvailableInCart) {
                 console.warn("ITEM AVAILABLE IN CART", itemAvailableInCart);
@@ -41,6 +42,7 @@ const GridProduct = ({ Data }) => {
                 console.log("NOT AVAILABLE ITEM  IN CART");
                 setsingleItem(false)
             }
+           }
         }
     }
 
@@ -58,7 +60,7 @@ const GridProduct = ({ Data }) => {
     const cartUpdate = (count) => {
 
         var item = [{
-            "varient": Data.varients[0].id,
+            "varient": Data.variants[0].id,
             "quantity": count
         }]
 
@@ -113,7 +115,7 @@ const GridProduct = ({ Data }) => {
                         }
                         {/* <span className="percentage">20%</span> */}
                         {
-                            Data.popular == true &&
+                            Data.is_popular == true &&
                             <span class="flags"><span class="new">Popular</span></span>
                         }
 
@@ -138,15 +140,18 @@ const GridProduct = ({ Data }) => {
                     <h5 className="ec-pro-title"><a href={`/product/${Data.id}`}>{Data.name}</a></h5>
 
                     <div className="ec-pro-list-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dutmmy text ever since the 1500s, when an unknown printer took a galley.</div>
+                 
                     {
                         Data.variants?.length > 0 &&
-                        <span className="ec-price">
-                            {
-                                Data.variants[0]?.offer_enabled == true &&
-                                <span className="old-price">₹{Data.variants[0]?.offer_rate}</span>
-                            }
-                            <span className="new-price">₹{Data.variants[0]?.rate}</span>
-                        </span>
+                        Data.variants[0]?.offer_enabled == true ?
+                        <>
+                        <del>
+                        <span className="old-price" style={{marginRight:'5px'}}>₹{Data.variants[0]?.rate}</span>
+                        </del>
+                        <span className="new-price">₹{Data.variants[0]?.offer_rate}</span>
+                        </>
+                        :
+                        <span className="old-price">₹{Data.variants[0]?.rate}</span>
                     }
                     <div className="ec-pro-option">
                         <div className="ec-pro-size">
@@ -159,40 +164,47 @@ const GridProduct = ({ Data }) => {
                         </div>
                         <div className="ec-single-qty">
                             {
-                                Data.is_out_of_stock == false &&
-                                (cartCount ?
-                                    (cartData.count >= 1 ?
-                                        <div className="qty-plus-minus d-flex justify-content-center">
-                                            <button style={{ height: '2rem' }} onClick={() => setcartData({ ...cartData, count: cartData.count - 1 })} disabled={!cartData.count}><i class="fas fa-minus"></i></button>
-                                            <input className="qty-input" type="text" name="ec_qtybtn" value={cartData.count}
-                                                style={{
-                                                    background: 'transparent none repeat scroll 0 0',
-                                                    border: 'medium none',
-                                                    color: '#444444',
-                                                    // float: 'right',
-                                                    fontSize: '15px',
-                                                    height: '2rem',
-                                                    margin: 0,
-                                                    padding: 0,
-                                                    textAlign: 'center',
-                                                    width: '40px',
-                                                    outline: 'none',
-                                                    fontWeight: 700,
-                                                }}
-                                            />
-                                            <button style={{ height: '2rem' }} onClick={() => setcartData({ ...cartData, count: cartData.count + 1, varient: Data.variants[0] })} > <i class="fas fa-plus"></i></button>
-                                        </div>
-                                        :
-                                        <div className="ec-single-cart ">
-                                            <button className="btn btn-primary" onClick={() => { setcartCount(true); setcartData({ ...cartData, count: 1 }) }}>Add To Cart</button>
-                                        </div>
-                                    )
-                                    :
-
-                                    <div className="ec-single-cart ">
-                                        <button className="btn btn-primary" onClick={() => { setcartCount(true); setcartData({ ...cartData, count: 1 }) }}>Add To Cart</button>
+                                (Data.is_out_of_stock == false ) &&
+                               Data.variants.length !=0 &&
+                                 <>
+                                    <div className="qty-plus-minus d-flex justify-content-center">
+                                        <button style={{ height: '2rem' }} 
+                                        // onClick={() => setcartData({ ...cartData, count: cartData.count - 1 })}
+                                        onClick={()=>{
+                                        setquantity((r) => {
+                                            if (r > 0) {
+                                                return r - 1;
+                                            }
+                                                return r;
+                                        });
+                                    }}
+                                            ><i class="fas fa-minus"></i></button>
+                                        <input className="qty-input" type="text" name="ec_qtybtn" value={quantity}
+                                            style={{
+                                                background: 'transparent none repeat scroll 0 0',
+                                                border: 'medium none',
+                                                color: '#444444',
+                                                // float: 'right',
+                                                fontSize: '15px',
+                                                height: '2rem',
+                                                margin: 0,
+                                                padding: 0,
+                                                textAlign: 'center',
+                                                width: '40px',
+                                                outline: 'none',
+                                                fontWeight: 700,
+                                            }}
+                                        />
+                                        <button style={{ height: '2rem' }} 
+                                        
+                                        onClick={() => 
+                                            setquantity(pre=>pre+1) } > <i class="fas fa-plus"></i></button>
                                     </div>
-                                )
+                                    <div className="ec-single-cart ">
+                                        <button className="btn btn-primary"           
+                                        onClick={() => { cartUpdate(quantity) }}>Add To Cart</button>
+                                    </div>
+                                    </>
                             }
                         </div>
                     </div>

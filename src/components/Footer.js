@@ -30,7 +30,7 @@ function Footer() {
                     </div>
                   </div>
                 </div>
-                <div className="col-sm-12 col-lg-2 ec-footer-info">
+                {/* <div className="col-sm-12 col-lg-2 ec-footer-info">
                   <div className="ec-footer-widget">
                     <h4 className="ec-footer-heading">Information</h4>
                     <div className="ec-footer-links">
@@ -42,8 +42,8 @@ function Footer() {
                       </ul>
                     </div>
                   </div>
-                </div>
-                <div className="col-sm-12 col-lg-2 ec-footer-account">
+                </div> */}
+                {/* <div className="col-sm-12 col-lg-2 ec-footer-account">
                   <div className="ec-footer-widget">
                     <h4 className="ec-footer-heading">Account</h4>
                     <div className="ec-footer-links">
@@ -55,8 +55,8 @@ function Footer() {
                       </ul>
                     </div>
                   </div>
-                </div>
-                <div className="col-sm-12 col-lg-2 ec-footer-service">
+                </div> */}
+                {/* <div className="col-sm-12 col-lg-2 ec-footer-service">
                   <div className="ec-footer-widget">
                     <h4 className="ec-footer-heading">Services</h4>
                     <div className="ec-footer-links">
@@ -69,7 +69,7 @@ function Footer() {
                       </ul>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="col-sm-12 col-lg-3 ec-footer-news">
                   <div className="ec-footer-widget">
                     <div className="ec-footer-links">
@@ -85,33 +85,17 @@ function Footer() {
             <div className="container">
               <div className="row align-items-center">
                 {/* Footer social Start */}
-                <div className="col text-left footer-bottom-left">
-                  <div className="footer-bottom-social">
-                    <span className="social-text text-upper">Follow us on:</span>
-                    <ul className="mb-0">
-                      <li className="list-inline-item"><a className="hdr-facebook" href="#"><i className="ecicon eci-facebook" /></a></li>
-                      <li className="list-inline-item"><a className="hdr-twitter" href="#"><i className="ecicon eci-twitter" /></a></li>
-                      <li className="list-inline-item"><a className="hdr-instagram" href="#"><i className="ecicon eci-instagram" /></a></li>
-                      <li className="list-inline-item"><a className="hdr-linkedin" href="#"><i className="ecicon eci-linkedin" /></a></li>
-                    </ul>
-                  </div>
-                </div>
+              
                 {/* Footer social End */}
                 {/* Footer Copyright Start */}
                 <div className="col text-center footer-copy">
                   <div className="footer-bottom-copy ">
-                    <div className="ec-copy">Copyright © 2021-2022 <a className="site-name text-upper" href="#">ekka<span>.</span></a>. All Rights Reserved</div>
+                    <div className="ec-copy">Copyright © 2022 My Decorzone. All Rights Reserved</div>
                   </div>
                 </div>
                 {/* Footer Copyright End */}
                 {/* Footer payment */}
-                <div className="col footer-bottom-right">
-                  <div className="footer-bottom-payment d-flex justify-content-end">
-                    <div className="payment-link">
-                      <img src="assets/images/icons/payment.png" alt />
-                    </div>
-                  </div>
-                </div>
+              
                 {/* Footer payment */}
               </div>
             </div>

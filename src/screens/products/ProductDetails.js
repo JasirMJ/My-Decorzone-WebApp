@@ -29,62 +29,52 @@ import { ImageSlider } from './ImageSlider';
 
 const ProductDetails = () => {
     const [open, setopen] = useState(false)
-    const [CartData, setCartData] = useState([]);
-    const [count, setcount] = useState({ count: 0, varient: '' });
-    const [data, setdata] = useState({});
+    const { userToken, setCartObjs, cartObjs, isLogined, totalPayAmount, cartDiscountTotalAmount, cartTotalAmount, extraCharges, deliveryCharge, userAddressId } = useContext(AppContext)
     const { id } = useParams()
+    const [quantity, setquantity] = useState(1)
+    const [updateCart, setupdateCart] = useState(false)
+    const [singleItem, setsingleItem] = useState(false)
+    const [cartCount, setcartCount] = useState(false);
+    const [cartData, setcartData] = useState({ count: 0, varient: '' });
+    const [Data, setData] = useState([]);
 
-    const { userToken } = useContext(AppContext)
+    const [price, setprice] = useState("");
+    const [offerprice, setofferprice] = useState("");
+    const [offer_enabled, setoffer_enabled] = useState(false);
+
+    const [products, setproducts] = useState([]);
+
+
+    const [selectVarientId, setselectVarientId] = useState("")
 
     useEffect(() => {
         GetData()
+        getProducts()
     }, []);
-
-
-    const Addtocart = () => {
-        var axios = require('axios');
-        var FormData = require('form-data');
-        var data = new FormData();
-        data.append('keyword', 'add');
-        data.append('varient_lst', '[{"varient":"1", "quantity":"3"},{"varient":"2", "quantity":"3"}]');
-
-        var config = {
-            method: 'post',
-            url: baseurl + '/cart/',
-            headers: {
-                'Authorization': userToken,
-            },
-            data: data
-        };
-
-        axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-
-    }
 
     const GetData = () => {
         var FormData = require('form-data');
-        var data = new FormData();
+        var fdata = new FormData();
 
         var config = {
             method: 'get',
             url: baseurl + '/items/items/' + id,
             headers: {
-                Authorization: userToken
             },
-            data: data
+            data: fdata
         };
 
         axios(config)
             .then(function (response) {
-                console.log(response.data);
+                console.log("PRODUCT DETAILS",response.data);
                 if (response.data) {
-                    setdata(response.data)
+                    setData(response.data)
+                    if(response.data.variants.length > 0){
+                        setselectVarientId(response.data.variants[0].id)
+                        setprice(response.data.variants[0].rate)
+                        setofferprice(response.data.variants[0].offer_rate)
+                        setoffer_enabled(response.data.variants[0].offer_enabled)
+                    }
                 }
             })
             .catch(function (error) {
@@ -93,7 +83,121 @@ const ProductDetails = () => {
 
     }
 
-    console.log({ data });
+    const getProducts= () => {
+        var FormData = require('form-data');
+        var fdata = new FormData();
+
+        var config = {
+            method: 'get',
+            url: baseurl + '/items/items/',
+            headers: {
+            },
+            data: fdata
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log("PRODUCTS",response.data.results);
+                setproducts(response.data.results)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    useEffect(() => {
+        if (userToken) {
+            if (updateCart) {
+                const delayDebounceFn = setTimeout(() => {
+                    //   console.log(searchKey)
+                    // Send Axios request here
+                    cartUpdate(quantity)
+                }, 1000)
+                return () => clearTimeout(delayDebounceFn)
+            }
+        }
+    }, [quantity])
+
+    useEffect(() => {
+        checkingItemInCart(selectVarientId)
+    }, [selectVarientId])
+
+    const checkingItemInCart = (varientid) => {
+        if (isLogined) {
+            if(Data.length!=0) {
+                if(Data.variants.length !=0) {
+                    var itemAvailableInCart = cartObjs.find(data => data.varient.id == varientid)
+                    if (itemAvailableInCart) {
+                        console.warn("ITEM AVAILABLE IN CART", itemAvailableInCart);
+                        setquantity(itemAvailableInCart.quantity)
+                        setsingleItem(true)
+                    } else {
+                        console.log("NOT AVAILABLE ITEM  IN CART");
+                        setsingleItem(false)
+                        setquantity(1)
+                    }
+                   }
+                }
+            }
+    }
+
+    const checkingVarientSingleOrMultiple = () => {
+        if (isLogined) {
+            console.log("same branch");
+            setsingleItem(true)
+            setupdateCart(true)
+            setquantity(1)
+        } else {
+            window.location.href = '/login';
+        }
+    }
+
+    const cartUpdate = (count) => {
+
+        var item = [{
+            "varient": selectVarientId,
+            "quantity": count
+        }]
+
+        var axios = require('axios');
+        var FormData = require('form-data');
+        var fdata = new FormData();
+        fdata.append('varient_lst', JSON.stringify(item));
+        fdata.append('keyword', 'add');
+
+        var config = {
+            method: 'post',
+            url: baseurl + '/cart/',
+            headers: {
+                'Authorization': userToken,
+            },
+            data: fdata
+        };
+
+        axios(config)
+            .then(function (response) {
+                setupdateCart(false)
+                console.log({ response });
+                if (response.data.Error) {
+                    console.log("Sorry , product is unavialable right now", response.data);
+                    // getCart()
+                } else {
+                    setCartObjs(response.data.basket)
+                }
+            })
+            .catch(function (error) {
+                // console.log(error);
+                console.log(error.response.data.Error);
+            });
+    }
+
+    const selectVarient = (item) => {
+        setselectVarientId(item.id)
+        setprice(item.rate)
+        setofferprice(item.offer_rate)
+        setoffer_enabled(item.offer_enabled)
+    }
+
     return (
         <div>
             <div>
@@ -102,75 +206,7 @@ const ProductDetails = () => {
 
                 {/* ekka Cart Start */}
                 <div className="ec-side-cart-overlay" />
-                <div id="ec-side-cart" className="ec-side-cart">
-                    <div className="ec-cart-inner">
-                        <div className="ec-cart-top">
-                            <div className="ec-cart-title">
-                                <span className="cart_title">My Cart</span>
-                                <button className="ec-close">×</button>
-                            </div>
-                            <ul className="eccart-pro-items">
-                                <li>
-                                    <a href="/product" className="sidekka_pro_img"><img src="assets/images/product-image/6_1.jpg" alt="product" /></a>
-                                    <div className="ec-pro-content">
-                                        <a href="/product" className="cart_pro_title">T-shirt For Women</a>
-                                        <span className="cart-price"><span>$76.00</span> x 1</span>
-                                        <div className="qty-plus-minus">
-                                            <input className="qty-input" type="text" name="ec_qtybtn" defaultValue={1} />
-                                        </div>
-                                        <a href="javascript:void(0)" className="remove">×</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="/product" className="sidekka_pro_img"><img src="assets/images/product-image/12_1.jpg" alt="product" /></a>
-                                    <div className="ec-pro-content">
-                                        <a href="/product" className="cart_pro_title">Women Leather Shoes</a>
-                                        <span className="cart-price"><span>$64.00</span> x 1</span>
-                                        <div className="qty-plus-minus">
-                                            <input className="qty-input" type="text" name="ec_qtybtn" defaultValue={1} />
-                                        </div>
-                                        <a href="javascript:void(0)" className="remove">×</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="/product" className="sidekka_pro_img"><img src="assets/images/product-image/3_1.jpg" alt="product" /></a>
-                                    <div className="ec-pro-content">
-                                        <a href="/product" className="cart_pro_title">Girls Nylon Purse</a>
-                                        <span className="cart-price"><span>$59.00</span> x 1</span>
-                                        <div className="qty-plus-minus">
-                                            <input className="qty-input" type="text" name="ec_qtybtn" defaultValue={1} />
-                                        </div>
-                                        <a href="javascript:void(0)" className="remove">×</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="ec-cart-bottom">
-                            <div className="cart-sub-total">
-                                <table className="table cart-table">
-                                    <tbody>
-                                        <tr>
-                                            <td className="text-left">Sub-Total :</td>
-                                            <td className="text-right">$300.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="text-left">VAT (20%) :</td>
-                                            <td className="text-right">$60.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="text-left">Total :</td>
-                                            <td className="text-right primary-color">$360.00</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="cart_btn">
-                                <a href="cart.html" className="btn btn-primary">View Cart</a>
-                                <a href="checkout.html" className="btn btn-secondary">Checkout</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            
                 {/* ekka Cart End */}
                 {/* Ec breadcrumb start */}
 
@@ -189,49 +225,103 @@ const ProductDetails = () => {
                                                     <div className="single-product-cover">
                                                         <div className="single-slide zoom-image-hover">
                                                             {/* <img className="img-responsive" src={data.images[0].image} alt /> */}
-                                                            <ImageSlider images={data.images} />
+                                                            <ImageSlider images={Data.images} />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="single-pro-desc">
                                                 <div className="single-pro-content">
-                                                    <h5 className="ec-single-title">{data.name}</h5>
+                                                    <h5 className="ec-single-title">{Data.name}</h5>
 
-                                                    <div className="ec-single-desc">{data.description}</div>
+                                                    <div className="ec-single-desc">{Data.description}</div>
 
                                                     <div className="ec-single-price-stoke">
                                                         <div className="ec-single-price">
                                                             <span className="ec-single-ps-title">Price</span>
-                                                            <span className="new-price">$97.00</span>
+                                                          
+                                                            {
+                                                                Data.variants?.length > 0 &&
+                                                                <span className="ec-price">
+                                                                    {
+                                                                    }
+                                                                    {
+                                                                        offer_enabled == true ?
+                                                                        <>
+                                                                        <del>
+                                                                        <span className="old-price" style={{marginRight:'5px'}}>₹{price}</span>
+                                                                        </del>
+                                                                        <span className="new-price">₹{offerprice}</span>
+                                                                        </>
+                                                                       :
+                                                                       <span className="old-price">₹{price}</span>
+                                                                    }
+                                                                </span>
+                                                            }
                                                         </div>
+
+                                                        
                                                         <div className="ec-single-stoke">
-                                                            <span className="ec-single-ps-title">IN STOCK</span>
-                                                            <span className="ec-single-sku">SKU#: WH12</span>
+                                                        {
+                                                            Data.is_popular == true &&
+                                                            <span className="ec-single-ps-title">POPULAR</span>
+                                                        }
+
+                                                        {
+                                                            Data.is_recommended == true &&
+                                                            <span className="ec-single-ps-title">RECOMMEDED</span>
+
+                                                        }
+
+                                                        {
+                                                            Data.is_new == true &&
+                                                            <span className="ec-single-ps-title">NEW</span>
+                                                        }
+
+                                                  
+                                                        <span class="flags"><span class="new">{Data.is_out_of_stock == true ? 'OUT OF STOCK' : 'IN STOCK'}</span></span>
+
+                                                           
                                                         </div>
                                                     </div>
                                                     <div className="ec-pro-variation">
                                                         <div className="ec-pro-variation-inner ec-pro-variation-size">
-                                                            <span>SIZE</span>
+                                                            <span>Select Variant</span>
                                                             <div className="ec-pro-variation-content">
                                                                 <ul>
-                                                                    <li className="active"><span>S</span></li>
-                                                                    <li><span>M</span></li>
-                                                                    <li><span>L</span></li>
-                                                                    <li><span>XL</span></li>
+                                                                    {
+
+                                                                        Data.variants?.map((item, index) => 
+                                                                             <li className={selectVarientId == item.id && "active"} onClick={()=>{ selectVarient(item) }}><span>{item.name}</span></li>
+                                                                        )
+                                                                    }
                                                                 </ul>
                                                             </div>
+                                                               
+                                                            
                                                         </div>
 
                                                     </div>
                                                     <div className="ec-single-qty">
                                                         <div className="qty-plus-minus">
-                                                            <button onClick={() => setcount({ ...count, count: count.count - 1 })} disabled={!count.count}><i class="fas fa-minus"></i></button>
-                                                            <input className="qty-input" type="text" name="ec_qtybtn" value={count.count} />
-                                                            <button onClick={() => setcount({ ...count, count: count.count + 1 })} > <i class="fas fa-plus"></i></button>
+                                                            <button 
+                                                              onClick={()=>{
+                                                                setquantity((r) => {
+                                                                    if (r > 0) {
+                                                                        return r - 1;
+                                                                    }
+                                                                        return r;
+                                                                });
+                                                            }}
+                                                            ><i class="fas fa-minus"></i></button>
+                                                            <input className="qty-input" type="text" name="ec_qtybtn" value={quantity} />
+                                                            <button 
+                                                                onClick={() => 
+                                                                setquantity(pre=>pre+1) } 
+                                                            > <i class="fas fa-plus"></i></button>
                                                         </div>
                                                         <div className="ec-single-cart ">
-                                                            <button className="btn btn-primary">Add To Cart</button>
+                                                            <button  onClick={() => { cartUpdate(quantity) }} className="btn btn-primary">Add To Cart</button>
                                                         </div>
 
                                                     </div>
@@ -243,7 +333,7 @@ const ProductDetails = () => {
                                 </div>
                                 {/*Single product content End */}
                                 {/* Single product tab start */}
-                                <div className="ec-single-pro-tab">
+                                {/* <div className="ec-single-pro-tab">
                                     <div className="ec-single-pro-tab-wrapper">
                                         <div className="ec-single-pro-tab-nav">
                                             <ul className="nav nav-tabs">
@@ -284,7 +374,7 @@ const ProductDetails = () => {
 
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 {/* product details description area end */}
                             </div>
                             {/* Sidebar Area Start */}
@@ -307,11 +397,17 @@ const ProductDetails = () => {
                             </div>
                         </div>
                         <div className="row margin-minus-b-30">
-                            {/* <GridProduct />
-                            <GridProduct />
-                            <GridProduct />
-                            <GridProduct /> */}
+                       {
+                        products.length >0 &&
+                        <div className="row">
+                        {
+                            products.map((item, index) => {
+                            return <GridProduct key={index} Data={item} />
+                        })
+                        }
                         </div>
+                       }
+                    </div>
                     </div>
                 </section>
 
@@ -320,8 +416,8 @@ const ProductDetails = () => {
                 <FooterNav setopen={() => setopen(!open)} />
 
                 {/* Footer navigation panel for responsive display end */}
-            </div >
-        </div >
+            </div>
+        </div>
     )
 }
 

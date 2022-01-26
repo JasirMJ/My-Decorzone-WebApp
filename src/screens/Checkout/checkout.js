@@ -26,6 +26,7 @@ const Checkout = () => {
 
     useEffect(() => {
         GetData()
+        getDefaultAddress()
     }, []);
 
 
@@ -114,6 +115,33 @@ const Checkout = () => {
             .catch(function (error) {
                 console.log(error);
             });
+
+    }
+
+    const getDefaultAddress = () => {
+        var axios = require('axios');
+        var FormData = require('form-data');
+        var data = new FormData();
+
+        var config = {
+        method: 'get',
+        url: baseurl + '/users/default/',
+        headers: { 
+            'Authorization': userToken, 
+        },
+        data : data
+        };
+
+        axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            if(response.data.length != 0) {
+                setselectedAddressid(response.data[0].address.id)
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
     }
 
@@ -327,7 +355,7 @@ const Checkout = () => {
                                         <form action="#">
                                             <span className="ec-pay-option">
                                                 <span className='d-flex '>
-                                                    <input value={true} type="radio" style={{ height: '15px' }} id="pay1" name="radio-group" />
+                                                    <input checked type="radio" style={{ height: '15px' }} id="pay1" name="radio-group" />
                                                     <label  htmlFor="pay1">Cash On Delivery</label>
                                                 </span>
                                             </span>
@@ -374,10 +402,7 @@ const Checkout = () => {
                             <span className="text-right">₹{extraCharges}</span>
                           </div>
 
-                          <div className="ec-cart-summary-total">
-                            <span className="text-left">Total Amount</span>
-                            <span className="text-right">₹{totalPayAmount}</span>
-                          </div>
+                        
                                         <div className="ec-checkout-coupan-content">
                                             <form className="ec-checkout-coupan-form" name="ec-checkout-coupan-form" method="post" action="#">
                                                 <input className="ec-coupan" type="text" required placeholder="Enter Your Coupan Code" name="ec-coupan" defaultValue />

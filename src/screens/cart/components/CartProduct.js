@@ -67,10 +67,9 @@ export default function CartProduct({ Data }) {
       });
   }
 
-  // const update = (e) => {
-  //   setupdateCart(true)
-  //   // setquantity(e.target.value)
-  // }
+  const removeItem = (e) => {
+  
+  }
 
   return (
     <tr>
@@ -80,9 +79,22 @@ export default function CartProduct({ Data }) {
       <td data-label="Price" className="ec-cart-pro-price"><span className="amount">₹{Data.varient.final_rate}</span></td>
       <td data-label="Quantity" className="ec-cart-pro-qty" style={{ textAlign: 'center' }}>
         <div className="cart-qty-plus-minus">
-          <button type='button' onClick={() => { setquantity(quantity - 1); setupdateCart(true) }} disabled={!quantity}><i class="fas fa-minus"></i></button>
+          <button type='button' 
+           onClick={()=>{
+            setquantity((r) => {
+              if (r > 0) {
+                      return r - 1;
+                  }
+                      return r;
+              });
+        setupdateCart(true) 
+        }}
+          disabled={!quantity}><i class="fas fa-minus"></i></button>
           <input className="qty-input" type="text" name="ec_qtybtn" value={quantity} />
-          <button type='button' onClick={() => { setquantity(quantity + 1); setupdateCart(true) }}><i class="fas fa-plus"></i></button>
+          <button type='button' 
+          onClick={() => { setquantity(quantity + 1); setupdateCart(true) }}
+         
+          ><i class="fas fa-plus"></i></button>
           {/* <input className="cart-plus-minus" type="text" name="quantity" value={quantity} onChange={(e) => update(e)} /> */}
         </div>
       </td>
