@@ -127,6 +127,7 @@ const getUserDetails = (token) => {
   .then(function (response) {
     console.log(JSON.stringify(response.data));
     if(response.data.results.length!=0) {
+      setUserDetails(response.data.results[0])
       setLogined(true);
       if(response.data.results[0].address.length!=0) {
         setUserAddressId(response.data.results[0].address[0].id)

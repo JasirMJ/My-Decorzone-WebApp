@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useContext , useEffect } from 'react'
 import SideCard from './components/SideCard'
 
 import Header from '../../components/Header'
@@ -22,9 +22,13 @@ import PurchasePopup from '../../components/PurchasePopup';
 import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
+import {baseurl , protocol , AppContext} from '../../common/Constants'
 
 const MyAccount = () => {
   const [open, setopen] = useState(false)
+
+  const { userToken , userDetails } = useContext(AppContext)
+
   return (
     <div>
       <div>
@@ -43,7 +47,9 @@ const MyAccount = () => {
             <div className="row">
               {/* Sidebar Area Start */}
               <SideCard />
-              <div className="ec-shop-rightside col-lg-9 col-md-12">
+              {
+                userDetails &&
+                <div className="ec-shop-rightside col-lg-9 col-md-12">
                 <div className="ec-vendor-dashboard-card ec-vendor-setting-card">
                   <div className="ec-vendor-card-body">
                     <div className="row">
@@ -55,7 +61,7 @@ const MyAccount = () => {
                             </div>
                             <div className="ec-vendor-block-detail">
                               <img className="v-img" src="assets/images/user/1.jpg" alt="vendor image" />
-                              <h5 className="name">Mariana Johns</h5>
+                              <h5 className="name">{userDetails.first_name}</h5>
                               <p>( Business Man )</p>
                             </div>
                             <p>Hello <span>Mariana Johns!</span></p>
@@ -106,6 +112,7 @@ const MyAccount = () => {
                   </div>
                 </div>
               </div>
+              }
 
             </div>
           </div>
