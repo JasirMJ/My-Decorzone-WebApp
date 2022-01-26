@@ -162,7 +162,7 @@ const GridProduct = ({ Data }) => {
                                 Data.is_out_of_stock == false &&
                                 (cartCount ?
                                     (cartData.count >= 1 ?
-                                        <div className="qty-plus-minus d-flex justify-content-center">
+                                        <div className="qty-plus-minus d-flex justify-content-evenly" style={{ border: '1px solid #eeeeee', width: '7rem' }}>
                                             <button style={{ height: '2rem' }} onClick={() => setcartData({ ...cartData, count: cartData.count - 1 })} disabled={!cartData.count}><i class="fas fa-minus"></i></button>
                                             <input className="qty-input" type="text" name="ec_qtybtn" value={cartData.count}
                                                 style={{

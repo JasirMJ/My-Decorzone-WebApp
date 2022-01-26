@@ -22,7 +22,7 @@ import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { AppContext, baseurl } from '../../common/Constants';
 
 
@@ -33,10 +33,12 @@ const OrderDetails = () => {
   const [open, setopen] = useState(false)
   const [data, setdata] = useState({});
   const { userToken } = useContext(AppContext);
+  const [deliveryStatusCode, setdeliveryStatusCode] = useState(0);
+
 
   useEffect(() => {
     Getdata()
-  }, [id]);
+  }, []);
 
 
   const Getdata = () => {
@@ -67,6 +69,24 @@ const OrderDetails = () => {
 
   }
 
+  useEffect(() => {
+    if (data.status == "DELIVERED") {
+      setdeliveryStatusCode(4)
+    }
+    else if (data.status == "OUT_FOR_DELIVERY") {
+      setdeliveryStatusCode(3)
+    }
+    else if (data.status == "SHIPPED") {
+      setdeliveryStatusCode(2)
+    }
+    else if (data.status == "PLACED") {
+      setdeliveryStatusCode(1)
+    }
+  }, []);
+
+
+
+  console.log({ data });
   return (
     <div>
       <div>
@@ -84,33 +104,33 @@ const OrderDetails = () => {
                 <div className="ec-trackorder-top">
                   <h2 className="ec-order-id">order #{data.id}</h2>
                   <div className="ec-order-detail">
-                    <div>Expected arrival 14-02-2021-2022</div>
-                    <div>Grasshoppers <span>v534hb</span></div>
+                    {/* <div>Expected arrival 14-02-2021-2022</div>
+                    <div>Grasshoppers <span>v534hb</span></div> */}
                   </div>
                 </div>
                 <div className="ec-trackorder-bottom">
                   <div className="ec-progress-track">
                     <ul id="ec-progressbar">
-                      <li className={`step0 ${data.status == 'placed' && 'active'}`}><span className="ec-track-icon">
+                      <li className={`step0 ${deliveryStatusCode >= 1 && 'active'}`}><span className="ec-track-icon">
                         {/* <img src="assets/images/icons/track_1.png" alt="track_order" /> */}
                       </span><span className="ec-progressbar-track" /><span className="ec-track-title">order
-                          <br />processed</span></li>
-                      <li className={`step0 ${data.status == 'shipped' && 'active'}`}><span className="ec-track-icon">
-                        {/* <img src="assets/images/icons/track_2.png" alt="track_order" /> */}
+                          <br />Placed</span></li>
+                      {/* <li className={`step0 ${data.status == 'shipped' && 'active'}`}><span className="ec-track-icon">
+                        <img src="assets/images/icons/track_2.png" alt="track_order" />
                       </span><span className="ec-progressbar-track" /><span className="ec-track-title">order
-                          <br />designing</span></li>
-                      <li className={`step0 ${data.status == 'out_for_delivery' && 'active'}`}><span className="ec-track-icon">
+                          <br />designing</span></li> */}
+                      <li className={`step0 ${deliveryStatusCode >= 2 && 'active'}`}><span className="ec-track-icon">
                         {/* <img src="assets/images/icons/track_3.png" alt="track_order" /> */}
                       </span><span className="ec-progressbar-track" /><span className="ec-track-title">order
-                          <br />shipped</span></li>
-                      <li className={`step0 ${data.status == '"DELIVERED"' ? 'active' : ''}`}><span className="ec-track-icon">
+                          <br />Shipped</span></li>
+                      <li className={`step0 ${deliveryStatusCode >= 3 && 'active'}`}><span className="ec-track-icon">
                         {/* <img src="assets/images/icons/track_4.png" alt="track_order" /> */}
                       </span><span className="ec-progressbar-track" />
-                        <span className="ec-track-title">order <br />enroute</span></li>
-                      <li className={`step0 ${data.status == 'declined' && 'active'}`}><span className="ec-track-icon">
+                        <span className="ec-track-title">order <br />Out for delivery</span></li>
+                      <li className={`step0 ${deliveryStatusCode >= 4 && 'active'}`}><span className="ec-track-icon">
                         {/* <img src="assets/images/icons/track_5.png" alt="track_order" /> */}
                       </span><span className="ec-progressbar-track" /><span className="ec-track-title">order
-                          <br />arrived</span></li>
+                          <br />Delivered</span></li>
                     </ul>
                   </div>
                 </div>
@@ -141,15 +161,17 @@ const OrderDetails = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              {
-                                [{}, {}, {}, {}, {}, {}].map(item => {
-                                  return <tr>
-                                    <td data-label="Product" className="ec-cart-pro-name"><a href="product-left-sidebar.html"><img className="ec-cart-pro-img mr-4" src="assets/images/product-image/4.jpg" alt />Wool Hat For Men</a></td>
-                                    <td data-label="Price" className="ec-cart-pro-price"><span className="amount">$95.00</span></td>
-                                    <td data-label="Quantity" className="ec-cart-pro-qty"><span className="amount">1</span></td>
-                                    <td data-label="Total" className="ec-cart-pro-subtotal">$95.00</td>
-                                  </tr>
-                                })
+                              {data.issued_items?.map(item => (<tr>
+                                <td data-label="Product" className="ec-cart-pro-name">
+                                  <Link to={`/product/${item.id}`}>
+                                    {/* <img className="ec-cart-pro-img mr-4" src="assets/images/product-image/4.jpg" alt /> */}
+                                    {item.item.name}</Link>
+                                </td>
+                                <td data-label="Price" className="ec-cart-pro-price"><span className="amount">{item.rate}</span></td>
+                                <td data-label="Quantity" className="ec-cart-pro-qty"><span className="amount">{item.qty}</span></td>
+                                <td data-label="Total" className="ec-cart-pro-subtotal">{item.total}</td>
+                              </tr>
+                              ))
                               }
                             </tbody>
                           </table>
@@ -173,8 +195,9 @@ const OrderDetails = () => {
                       <div className="ec-cart-form">
 
                         <ul className="align-items-center">
-                          <li className="ec-contact-item"><i className="ecicon eci-map-marker" aria-hidden="true" /><span>Address :</span>71 Pilgrim Avenue Chevy Chase, east california. east california. MD
-                            20815, USA</li>
+                          <li className="ec-contact-item"><i className="ecicon eci-map-marker" aria-hidden="true" /><span>Address :</span>
+                            {data.user.address[0].address?.address1 + ' ' + data.user.address[0]?.address?.address2 + ' ' + data.user.address[0]?.address?.city + ' ' + data.user.address[0]?.address?.state + ' ' + data.user.address[0]?.address?.pin}
+                          </li>
                         </ul>
 
                       </div>
@@ -184,22 +207,26 @@ const OrderDetails = () => {
                         <div className="ec-cart-summary">
                           <div>
                             <span className="text-left">Sub-Total</span>
-                            <span className="text-right">$80.00</span>
+                            <span className="text-right">{data.amount}</span>
                           </div>
                           <div>
                             <span className="text-left">Delivery Charges</span>
-                            <span className="text-right">$80.00</span>
+                            <span className="text-right">{data.delivery_charge}</span>
+                          </div>
+                          <div>
+                            <span className="text-left">Discount</span>
+                            <span className="text-right">{data.item_discount}</span>
                           </div>
 
-                          <div className="ec-cart-coupan-content">
+                          {/* <div className="ec-cart-coupan-content">
                             <form className="ec-cart-coupan-form" name="ec-cart-coupan-form" method="post" action="#">
                               <input className="ec-coupan" type="text" required placeholder="Enter Your Coupan Code" name="ec-coupan" defaultValue />
                               <button className="ec-coupan-btn button btn-primary" type="submit" name="subscribe" value>Apply</button>
                             </form>
-                          </div>
+                          </div> */}
                           <div className="ec-cart-summary-total">
                             <span className="text-left">Total Amount</span>
-                            <span className="text-right">$80.00</span>
+                            <span className="text-right">{data.net_amount}</span>
                           </div>
                         </div>
                       </div>
