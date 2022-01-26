@@ -45,7 +45,7 @@ export default function CartProduct({ Data }) {
       method: 'post',
       url: baseurl + '/cart/',
       headers: {
-        'Authorization': 'token ' + userToken,
+        'Authorization': userToken,
       },
       data: fdata
     };

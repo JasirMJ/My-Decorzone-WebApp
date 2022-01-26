@@ -37,10 +37,11 @@ function Context() {
 
 
    const calculateCartAmount = () => {
+     console.log("CALCULATE CART AMOUNT" );
     var carttotal = 0
     var totalsellingprice = 0
       cartObjs.map(item=>{
-         carttotal = carttotal + ( item.varient.mrp  *item.quantity )
+         carttotal = carttotal + ( item.varient.rate  *item.quantity )
          totalsellingprice = totalsellingprice +( item.varient.final_rate * item.quantity )
       })
       setcartTotalAmount(carttotal)
