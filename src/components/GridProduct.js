@@ -9,6 +9,9 @@ const GridProduct = ({ Data }) => {
     const [quantity, setquantity] = useState()
     const [updateCart, setupdateCart] = useState(false)
     const [singleItem, setsingleItem] = useState(false)
+    const [cartCount, setcartCount] = useState(false);
+    const [cartData, setcartData] = useState({ count: 0, varient: '' });
+
 
     useEffect(() => {
         if (userToken) {
@@ -77,12 +80,12 @@ const GridProduct = ({ Data }) => {
         axios(config)
             .then(function (response) {
                 setupdateCart(false)
-                console.log({response});
+                console.log({ response });
                 if (response.data.Error) {
                     console.log("Sorry , product is unavialable right now", response.data);
                     // getCart()
                 } else {
-                    
+
                     setCartObjs(response.data.basket)
                 }
             })
@@ -154,12 +157,44 @@ const GridProduct = ({ Data }) => {
                         <li><a href="#" className="ec-opt-sz" data-old="$35.00" data-new="$30.00" data-tooltip="Extra Large">XL</a></li>
                     </ul> */}
                         </div>
-                        {
-                            Data.is_out_of_stock == false &&
-                            <div className="ec-single-cart ">
-                                <button className="btn btn-primary">Add To Cart</button>
-                            </div>
-                        }
+                        <div className="ec-single-qty">
+                            {
+                                Data.is_out_of_stock == false &&
+                                (cartCount ?
+                                    (cartData.count >= 1 ?
+                                        <div className="qty-plus-minus d-flex justify-content-center">
+                                            <button style={{ height: '2rem' }} onClick={() => setcartData({ ...cartData, count: cartData.count - 1 })} disabled={!cartData.count}><i class="fas fa-minus"></i></button>
+                                            <input className="qty-input" type="text" name="ec_qtybtn" value={cartData.count}
+                                                style={{
+                                                    background: 'transparent none repeat scroll 0 0',
+                                                    border: 'medium none',
+                                                    color: '#444444',
+                                                    // float: 'right',
+                                                    fontSize: '15px',
+                                                    height: '2rem',
+                                                    margin: 0,
+                                                    padding: 0,
+                                                    textAlign: 'center',
+                                                    width: '40px',
+                                                    outline: 'none',
+                                                    fontWeight: 700,
+                                                }}
+                                            />
+                                            <button style={{ height: '2rem' }} onClick={() => setcartData({ ...cartData, count: cartData.count + 1, varient: Data.variants[0] })} > <i class="fas fa-plus"></i></button>
+                                        </div>
+                                        :
+                                        <div className="ec-single-cart ">
+                                            <button className="btn btn-primary" onClick={() => { setcartCount(true); setcartData({ ...cartData, count: 1 }) }}>Add To Cart</button>
+                                        </div>
+                                    )
+                                    :
+
+                                    <div className="ec-single-cart ">
+                                        <button className="btn btn-primary" onClick={() => { setcartCount(true); setcartData({ ...cartData, count: 1 }) }}>Add To Cart</button>
+                                    </div>
+                                )
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

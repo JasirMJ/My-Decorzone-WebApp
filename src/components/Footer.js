@@ -1,4 +1,5 @@
 import React from 'react'
+import Logo from '../assets/images/logo.png'
 
 function Footer() {
     return (
@@ -17,7 +18,7 @@ function Footer() {
               <div className="row">
                 <div className="col-sm-12 col-lg-3 ec-footer-contact">
                   <div className="ec-footer-widget">
-                    <div className="ec-footer-logo"><a href="#"><img src="assets/images/logo/footer-logo.png" alt /><img className="dark-footer-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style={{ display: 'none' }} /></a></div>
+                    <div className="ec-footer-logo"><a href="#"><img src={Logo} alt /><img className="dark-footer-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style={{ display: 'none' }} /></a></div>
                     <h4 className="ec-footer-heading">Contact us</h4>
                     <div className="ec-footer-links">
                       <ul className="align-items-center">

@@ -24,6 +24,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AppContext, baseurl } from '../../common/Constants';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { ImageSlider } from './ImageSlider';
 
 
 const ProductDetails = () => {
@@ -92,7 +93,7 @@ const ProductDetails = () => {
 
     }
 
-    console.log({data});
+    console.log({ data });
     return (
         <div>
             <div>
@@ -101,7 +102,7 @@ const ProductDetails = () => {
 
                 {/* ekka Cart Start */}
                 <div className="ec-side-cart-overlay" />
-                {/* <div id="ec-side-cart" className="ec-side-cart">
+                <div id="ec-side-cart" className="ec-side-cart">
                     <div className="ec-cart-inner">
                         <div className="ec-cart-top">
                             <div className="ec-cart-title">
@@ -169,7 +170,7 @@ const ProductDetails = () => {
                             </div>
                         </div>
                     </div>
-                </div> */}
+                </div>
                 {/* ekka Cart End */}
                 {/* Ec breadcrumb start */}
 
@@ -188,6 +189,7 @@ const ProductDetails = () => {
                                                     <div className="single-product-cover">
                                                         <div className="single-slide zoom-image-hover">
                                                             {/* <img className="img-responsive" src={data.images[0].image} alt /> */}
+                                                            <ImageSlider images={data.images} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -227,72 +229,72 @@ const ProductDetails = () => {
                                                             <button onClick={() => setcount({ ...count, count: count.count - 1 })} disabled={!count.count}><i class="fas fa-minus"></i></button>
                                                             <input className="qty-input" type="text" name="ec_qtybtn" value={count.count} />
                                                             <button onClick={() => setcount({ ...count, count: count.count + 1 })} > <i class="fas fa-plus"></i></button>
-                                                    </div>
-                                                    <div className="ec-single-cart ">
-                                                        <button className="btn btn-primary">Add To Cart</button>
+                                                        </div>
+                                                        <div className="ec-single-cart ">
+                                                            <button className="btn btn-primary">Add To Cart</button>
+                                                        </div>
+
                                                     </div>
 
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            {/*Single product content End */}
-                            {/* Single product tab start */}
-                            <div className="ec-single-pro-tab">
-                                <div className="ec-single-pro-tab-wrapper">
-                                    <div className="ec-single-pro-tab-nav">
-                                        <ul className="nav nav-tabs">
-                                            <li className="nav-item">
-                                                <a className="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-details" role="tablist">Detail</a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-info" role="tablist">More Information</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="tab-content  ec-single-pro-tab-content">
-                                        <div id="ec-spt-nav-details" className="tab-pane fade show active">
-                                            <div className="ec-single-pro-tab-desc">
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                    Lorem Ipsum has been the industry's standard dummy text ever since the
-                                                    1500s, when an unknown printer took a galley of type and scrambled it to
-                                                    make a type specimen book. It has survived not only five centuries, but also
-                                                    the leap into electronic typesetting, remaining essentially unchanged.
-                                                </p>
-                                                <ul>
-                                                    <li>Any Product types that You want - Simple, Configurable</li>
-                                                    <li>Downloadable/Digital Products, Virtual Products</li>
-                                                    <li>Inventory Management with Backordered items</li>
-                                                    <li>Flatlock seams throughout.</li>
-                                                </ul>
-                                            </div>
+                                {/*Single product content End */}
+                                {/* Single product tab start */}
+                                <div className="ec-single-pro-tab">
+                                    <div className="ec-single-pro-tab-wrapper">
+                                        <div className="ec-single-pro-tab-nav">
+                                            <ul className="nav nav-tabs">
+                                                <li className="nav-item">
+                                                    <a className="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-details" role="tablist">Detail</a>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-info" role="tablist">More Information</a>
+                                                </li>
+                                            </ul>
                                         </div>
-                                        <div id="ec-spt-nav-info" className="tab-pane fade">
-                                            <div className="ec-single-pro-tab-moreinfo">
-                                                <ul>
-                                                    <li><span>Weight</span> 1000 g</li>
-                                                    <li><span>Dimensions</span> 35 × 30 × 7 cm</li>
-                                                    <li><span>Color</span> Black, Pink, Red, White</li>
-                                                </ul>
+                                        <div className="tab-content  ec-single-pro-tab-content">
+                                            <div id="ec-spt-nav-details" className="tab-pane fade show active">
+                                                <div className="ec-single-pro-tab-desc">
+                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                                        Lorem Ipsum has been the industry's standard dummy text ever since the
+                                                        1500s, when an unknown printer took a galley of type and scrambled it to
+                                                        make a type specimen book. It has survived not only five centuries, but also
+                                                        the leap into electronic typesetting, remaining essentially unchanged.
+                                                    </p>
+                                                    <ul>
+                                                        <li>Any Product types that You want - Simple, Configurable</li>
+                                                        <li>Downloadable/Digital Products, Virtual Products</li>
+                                                        <li>Inventory Management with Backordered items</li>
+                                                        <li>Flatlock seams throughout.</li>
+                                                    </ul>
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div id="ec-spt-nav-info" className="tab-pane fade">
+                                                <div className="ec-single-pro-tab-moreinfo">
+                                                    <ul>
+                                                        <li><span>Weight</span> 1000 g</li>
+                                                        <li><span>Dimensions</span> 35 × 30 × 7 cm</li>
+                                                        <li><span>Color</span> Black, Pink, Red, White</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
 
+                                        </div>
                                     </div>
                                 </div>
+                                {/* product details description area end */}
                             </div>
-                            {/* product details description area end */}
+                            {/* Sidebar Area Start */}
+
+                            {/* Sidebar Area Start */}
                         </div>
-                        {/* Sidebar Area Start */}
-
-                        {/* Sidebar Area Start */}
                     </div>
-            </div>
-        </section>
-                {/* End Single product */ }
-    {/* Related Product Start */ }
+                </section>
+                {/* End Single product */}
+                {/* Related Product Start */}
                 <section className="section ec-releted-product section-space-p">
                     <div className="container">
                         <div className="row">
@@ -314,10 +316,10 @@ const ProductDetails = () => {
                 </section>
 
                 <Footer />
-    {/* Footer navigation panel for responsive display */ }
-    <FooterNav setopen={() => setopen(!open)} />
+                {/* Footer navigation panel for responsive display */}
+                <FooterNav setopen={() => setopen(!open)} />
 
-    {/* Footer navigation panel for responsive display end */ }
+                {/* Footer navigation panel for responsive display end */}
             </div >
         </div >
     )

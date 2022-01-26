@@ -51,7 +51,7 @@ const Products = () => {
     axios(config)
     .then(function (response) {
       setloading(false)
-      console.log(JSON.stringify(response.data));
+      console.log(response.data);
       setprodcuts(response.data.results)
       setNext(response.data.next);
       setPrev(response.data.previous);
