@@ -131,15 +131,15 @@ function Home() {
       {/* ec Product tab Area End */}
 
       {/* ec Banner Section Start */}
-      <BannerSection />
+      {/* <BannerSection /> */}
       {/* ec Banner Section End */}
 
       {/*  Category Section Start */}
-      <CategorySection />
+      {/* <CategorySection /> */}
       {/* Category Section End */}
 
       {/*  Feature & Special Section Start */}
-      <FeatureSection />
+      {/* <FeatureSection /> */}
       {/* Feature & Special Section End */}
 
       {/*  services Section Start */}
@@ -147,7 +147,7 @@ function Home() {
       {/*services Section End */}
 
       {/*  offer Section Start */}
-      <OfferSection />
+      {/* <OfferSection /> */}
       {/* offer Section End */}
       {/* New Product Start */}
       {/* <NewProduct
@@ -163,7 +163,7 @@ function Home() {
       {/* <BrandSection /> */}
       {/* Ec Brand Section End */}
       {/* Ec Instagram Start */}
-      <InstagramSection />
+      {/* <InstagramSection /> */}
       {/* Ec Instagram End */}
       {/* Footer Start */}
       <Footer />

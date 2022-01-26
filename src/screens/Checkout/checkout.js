@@ -4,9 +4,12 @@ import { AppContext, baseurl } from '../../common/Constants';
 import Header from '../../components/Header';
 
 const Checkout = () => {
+
+  const { userToken, setCartObjs, cartObjs, totalPayAmount, cartDiscountTotalAmount, cartTotalAmount, extraCharges, deliveryCharge, userAddressId } = useContext(AppContext)
+
+
     const [AddNewAddress, setAddNewAddress] = useState(false);
     const [Edit, setEdit] = useState();
-    const { userToken } = useContext(AppContext)
     const [data, setdata] = useState([]);
     const [addressData, setaddressData] = useState({
         address1: '',
@@ -18,6 +21,8 @@ const Checkout = () => {
         pin: '',
         state: '',
     });
+
+    const [selectedAddressid, setselectedAddressid] = useState("");
 
     useEffect(() => {
         GetData()
@@ -42,7 +47,7 @@ const Checkout = () => {
             method: 'post',
             url: baseurl + '/users/address/',
             headers: {
-                'Authorization': 'token ' + userToken,
+                'Authorization': userToken,
             },
             data: data
         };
@@ -66,7 +71,7 @@ const Checkout = () => {
             method: 'get',
             url: baseurl + '/users/address/',
             headers: {
-                'Authorization': 'token ' + userToken,
+                'Authorization':  userToken,
             },
             data: data
         };
@@ -87,13 +92,11 @@ const Checkout = () => {
 
     const handleDelete = (id) => {
 
-
-
         var config = {
             method: 'delete',
             url: baseurl + '/users/address/' + id,
             headers: {
-                'Authorization': 'Token ' + userToken,
+                'Authorization':  userToken,
             },
         };
 
@@ -107,6 +110,66 @@ const Checkout = () => {
 
     }
 
+    const placeOrder = () => {
+        if(selectedAddressid == "") {
+            alert("select address");
+            return 0
+        }
+        var axios = require('axios');
+        var FormData = require('form-data');
+        var data = new FormData();
+        data.append('order_type', 'COD');
+        data.append('address', selectedAddressid);
+        data.append('promocode', '');
+        
+        var config = {
+          method: 'post',
+          url:  baseurl + '/order/',
+          headers: { 
+            'Authorization': userToken, 
+          },
+          data : data
+        };
+        
+        axios(config)
+        .then(function (response) {
+            if(response.status == 200) {
+                window.location.replace('/myorders')
+            } else {
+                alert("cart is empty")
+            }
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("cart is empty")
+        });
+    }
+
+    const selectedAddress = (id) => {
+        var axios = require('axios');
+        var FormData = require('form-data');
+        var data = new FormData();
+        data.append('address_id', id);
+        
+        var config = {
+          method: 'post',
+          url: baseurl + '/users/default/',
+          headers: { 
+            'Authorization': userToken, 
+          },
+          data : data
+        };
+        
+        axios(config)
+        .then(function (response) {
+            setselectedAddressid(id)
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+ 
     return <div>
         <Header />
         <section className="ec-page-content section-space-p">
@@ -213,7 +276,9 @@ const Checkout = () => {
                                                                 <ul>
                                                                     <li><strong>Home : </strong>{item.address1} {item.address2} {item.land_mark} {item.city} {item.pin} {item.state}</li>
                                                                 </ul>
-                                                                <button className='btn btn-danger w-100 mt-3'>Choose address</button>
+                                                                <button onClick={()=>{selectedAddress(item.id)}} className='btn btn-danger w-100 mt-3'>
+                                                                    {selectedAddressid === item.id ? 'Selected' : 'Choose address'}
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -255,8 +320,8 @@ const Checkout = () => {
                                         <form action="#">
                                             <span className="ec-pay-option">
                                                 <span className='d-flex '>
-                                                    <input type="radio" style={{ height: '15px' }} id="pay1" name="radio-group" />
-                                                    <label htmlFor="pay1">Cash On Delivery</label>
+                                                    <input value={true} type="radio" style={{ height: '15px' }} id="pay1" name="radio-group" />
+                                                    <label  htmlFor="pay1">Cash On Delivery</label>
                                                 </span>
                                             </span>
                                             {/* <span className="ec-pay-commemt">
@@ -272,6 +337,8 @@ const Checkout = () => {
                             {/* Sidebar Payment Block */}
                         </div>
                         <div className="ec-sidebar-wrap">
+
+                  
                             {/* Sidebar Summary Block */}
                             <div className="ec-sidebar-block">
                                 <div className="ec-sb-title">
@@ -279,18 +346,31 @@ const Checkout = () => {
                                 </div>
                                 <div className="ec-sb-block-content ec-sidebar-dropdown">
                                     <div className="ec-checkout-summary">
-                                        <div>
-                                            <span className="text-left">Sub-Total</span>
-                                            <span className="text-right">$80.00</span>
-                                        </div>
-                                        <div>
-                                            <span className="text-left">Delivery Charges</span>
-                                            <span className="text-right">$80.00</span>
-                                        </div>
-                                        <div>
-                                            <span className="text-left">Coupan Discount</span>
-                                            <span className="text-right"><a className="ec-checkout-coupan">Apply Coupan</a></span>
-                                        </div>
+                                    <div>
+                            <span className="text-left">Item Total</span>
+                            <span className="text-right">₹ {cartTotalAmount}</span>
+                          </div>
+
+                          <div>
+                            <span className="text-left">Discount</span>
+                            <span className="text-right">-₹{cartDiscountTotalAmount}</span>
+                          </div>
+
+
+                          <div>
+                            <span className="text-left">Delivery Charges</span>
+                            <span className="text-right">₹{deliveryCharge}</span>
+                          </div>
+
+                          <div>
+                            <span className="text-left">Extra Charges</span>
+                            <span className="text-right">₹{extraCharges}</span>
+                          </div>
+
+                          <div className="ec-cart-summary-total">
+                            <span className="text-left">Total Amount</span>
+                            <span className="text-right">₹{totalPayAmount}</span>
+                          </div>
                                         <div className="ec-checkout-coupan-content">
                                             <form className="ec-checkout-coupan-form" name="ec-checkout-coupan-form" method="post" action="#">
                                                 <input className="ec-coupan" type="text" required placeholder="Enter Your Coupan Code" name="ec-coupan" defaultValue />
@@ -299,13 +379,13 @@ const Checkout = () => {
                                         </div>
                                         <div className="ec-checkout-summary-total">
                                             <span className="text-left">Total Amount</span>
-                                            <span className="text-right">$80.00</span>
+                                            <span className="text-right">₹{totalPayAmount}</span>
                                         </div>
 
                                     </div>
                                 </div>
                                 <span className="ec-check-order-btn">
-                                    <a className="btn w-100 btn-primary" href="#">Place Order</a>
+                                    <a onClick={()=>{placeOrder()}} className="btn w-100 btn-primary" href="#">Place Order</a>
                                 </span>
                             </div>
                             {/* Sidebar Summary Block */}

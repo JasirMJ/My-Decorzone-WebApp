@@ -72,12 +72,12 @@ const Contactus = () => {
                             </div>
                         </div> */}
                         <div className="ec-contact-rightside">
-                            <div className="ec_contact_map">
+                            {/* <div className="ec_contact_map">
                             <div className="ec_map_canvas">
                                 <iframe id="ec_map_canvas" src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d71263.65594328841!2d144.93151478652146!3d-37.8734290780509!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1615963387757!5m2!1sen!2sus" />
                                 <a href="https://sites.google.com/view/maps-api-v2/mapv2" />
                             </div>
-                            </div>
+                            </div> */}
                             <div className="ec_contact_info">
                             <h1 className="ec_contact_info_head">Contact us</h1>
                             <ul className="align-items-center">

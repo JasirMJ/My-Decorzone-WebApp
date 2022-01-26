@@ -6,7 +6,7 @@ import {baseurl , protocol , AppContext} from '../common/Constants'
 
 function Context() {
 
-  const localStorageName = "onlinecart_token"
+  const localStorageName = "onlinecartsite_token"
   
   // user Details
   const [userToken, setUserToken] = useState(Cookies.getJSON(localStorageName) ? Cookies.getJSON(localStorageName).token : "");
@@ -37,10 +37,11 @@ function Context() {
 
 
    const calculateCartAmount = () => {
+     console.log("CALCULATE CART AMOUNT" );
     var carttotal = 0
     var totalsellingprice = 0
       cartObjs.map(item=>{
-         carttotal = carttotal + ( item.varient.mrp  *item.quantity )
+         carttotal = carttotal + ( item.varient.rate  *item.quantity )
          totalsellingprice = totalsellingprice +( item.varient.final_rate * item.quantity )
       })
       setcartTotalAmount(carttotal)
@@ -135,7 +136,7 @@ const getUserDetails = (token) => {
     }
   })
   .catch(function (error) {
-    console.log(error);
+    console.log("USER DETAILS ERR",error);
   });
   
 }

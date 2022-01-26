@@ -37,16 +37,16 @@ const Login = () => {
     // alert("ok")
     var axios = require('axios');
     var FormData = require('form-data');
-    var data = new FormData();
-    data.append('username', data.username);
-    data.append('password', data.password);
+    var fdata = new FormData();
+    fdata.append('username', data.username);
+    fdata.append('password', data.password);
 
     var config = {
       method: 'post',
       url: baseurl + '/users/login/',
       headers: { 
       },
-      data : data
+      data : fdata
     };
 
     axios(config)
