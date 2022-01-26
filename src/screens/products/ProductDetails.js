@@ -154,41 +154,47 @@ const ProductDetails = () => {
 
     const cartUpdate = (count) => {
 
-        var item = [{
-            "varient": selectVarientId,
-            "quantity": count
-        }]
+        if(isLogined) {
+            var item = [{
+                "varient": selectVarientId,
+                "quantity": count
+            }]
+    
+            var axios = require('axios');
+            var FormData = require('form-data');
+            var fdata = new FormData();
+            fdata.append('varient_lst', JSON.stringify(item));
+            fdata.append('keyword', 'add');
+    
+            var config = {
+                method: 'post',
+                url: baseurl + '/cart/',
+                headers: {
+                    'Authorization': userToken,
+                },
+                data: fdata
+            };
+    
+            axios(config)
+                .then(function (response) {
+                    setupdateCart(false)
+                    console.log({ response });
+                    if (response.data.Error) {
+                        console.log("Sorry , product is unavialable right now", response.data);
+                        // getCart()
+                    } else {
+                        setCartObjs(response.data.basket)
+                    }
+                })
+                .catch(function (error) {
+                    // console.log(error);
+                    console.log(error.response.data.Error);
+                });
+        } else {
+            window.location.replace('/login') 
+        }
 
-        var axios = require('axios');
-        var FormData = require('form-data');
-        var fdata = new FormData();
-        fdata.append('varient_lst', JSON.stringify(item));
-        fdata.append('keyword', 'add');
-
-        var config = {
-            method: 'post',
-            url: baseurl + '/cart/',
-            headers: {
-                'Authorization': userToken,
-            },
-            data: fdata
-        };
-
-        axios(config)
-            .then(function (response) {
-                setupdateCart(false)
-                console.log({ response });
-                if (response.data.Error) {
-                    console.log("Sorry , product is unavialable right now", response.data);
-                    // getCart()
-                } else {
-                    setCartObjs(response.data.basket)
-                }
-            })
-            .catch(function (error) {
-                // console.log(error);
-                console.log(error.response.data.Error);
-            });
+   
     }
 
     const selectVarient = (item) => {

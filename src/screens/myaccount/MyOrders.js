@@ -45,7 +45,7 @@ const MyOrders = () => {
 
     var config = {
       method: 'get',
-      url: baseurl + '/order/',
+      url: baseurl + '/order/?ordering=-id',
       headers: {
         'Authorization': userToken,
       },
