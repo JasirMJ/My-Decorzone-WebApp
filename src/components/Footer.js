@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from '../assets/images/logo.png'
-
+import { version } from '../common/Constants'
 function Footer() {
     return (
         <>
@@ -90,7 +90,7 @@ function Footer() {
                 {/* Footer Copyright Start */}
                 <div className="col text-center footer-copy">
                   <div className="footer-bottom-copy ">
-                    <div className="ec-copy">Copyright © 2022 My Decorzone. All Rights Reserved</div>
+                    <div className="ec-copy">Copyright © 2022 My Decorzone. All Rights Reserved . Version {version}</div>
                   </div>
                 </div>
                 {/* Footer Copyright End */}
