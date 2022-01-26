@@ -169,6 +169,7 @@ const Checkout = () => {
         axios(config)
         .then(function (response) {
             if(response.status == 200) {
+                setCartObjs([])
                 window.location.replace('/myorders')
             } else {
                 alert("cart is empty")
