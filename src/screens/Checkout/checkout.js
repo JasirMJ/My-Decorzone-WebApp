@@ -54,7 +54,11 @@ const Checkout = () => {
 
         axios(config)
             .then(function (response) {
-                console.log(JSON.stringify(response.data));
+                console.log(response.data)
+                if (response.data) {
+                    setAddNewAddress(false)
+                    GetData()
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -103,6 +107,9 @@ const Checkout = () => {
         axios(config)
             .then(function (response) {
                 console.log(response.data);
+                if (response.data) {
+                    GetData()
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -257,7 +264,7 @@ const Checkout = () => {
                                                 <div className="row">
                                                     {data.map(item => (
 
-                                                        <div className="col-md-6 col-sm-12">
+                                                        <div className="col-md-6 col-sm-12 mt-2">
                                                             <div className="ec-vendor-detail-block ec-vendor-block-address mar-b-30">
                                                                 <div className='d-flex justify-content-between p-2' style={{ backgroundColor: '#f7f7f7' }}>Address
                                                                     <div>
@@ -283,7 +290,7 @@ const Checkout = () => {
                                                         </div>
                                                     ))}
 
-                                                    <div className='col-md-6 col-sm-12 align-items-center d-flex justify-content-center'>
+                                                    <div className='col-md-6 col-sm-12 align-items-center d-flex justify-content-center' style={{minHeight:'6rem'}}>
                                                         <div className="ec-vendor-detail-block ec-vendor-block-address mar-b-30">
                                                             <div className="d-flex flex-column justify-content-center align-items-center">
                                                                 <button className='btn' onClick={() => setAddNewAddress(true)}>

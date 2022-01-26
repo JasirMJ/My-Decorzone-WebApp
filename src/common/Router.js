@@ -28,7 +28,7 @@ function RouterSet() {
             <Route exact path={`/myaccount`}><MyAccount /></Route>
             <Route exact path={`/myorders`}><MyOrders /></Route>
             <Route exact path={`/checkout`}><Checkout /></Route>
-            <Route exact path={`/orderdetails`}><OrderDetails /></Route>
+            <Route exact path={`/orderdetails/:id`}><OrderDetails /></Route>
             <Route exact path={`/product/:id`}><ProductDetails /></Route>
             <Route exact path={`/cart`}><Cart /></Route>
             <Route exact path={`/products`}><Products /></Route>

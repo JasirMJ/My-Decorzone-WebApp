@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import React from 'react'
 import SideCard from './components/SideCard'
@@ -24,131 +24,119 @@ import PurchasePopup from '../../components/PurchasePopup';
 import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
+import { AppContext, baseurl } from '../../common/Constants';
+import { Link } from 'react-router-dom';
 
 const MyOrders = () => {
 
   const [open, setopen] = useState(false)
+  const [data, setdata] = useState([]);
+  const { userToken } = useContext(AppContext);
+
+  useEffect(() => {
+    Getdata()
+  }, []);
 
 
-    return (
-        <div>
-          <div>
-            <div id="ec-overlay"><span className="loader_img" /></div>
-            <Header />
-            {/* ekka Cart Start */}
-            <div className="ec-side-cart-overlay" />
-      
-            <section className="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
-              <div className="container">
-                <div className="row">
-                  {/* Sidebar Area Start */}
-             <SideCard/>
-             <div className="ec-shop-rightside col-lg-9 col-md-12">
+  const Getdata = () => {
+    var axios = require('axios');
+    var FormData = require('form-data');
+    var data = new FormData();
+
+    var config = {
+      method: 'get',
+      url: baseurl + '/order/',
+      headers: {
+        'Authorization': userToken,
+      },
+      data: data
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response.data);
+
+        if (response.data.results) {
+          setdata(response.data.results)
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
+  console.log({ data });
+
+  return (
+    <div>
+      <div>
+        <div id="ec-overlay"><span className="loader_img" /></div>
+        <Header />
+        {/* ekka Cart Start */}
+        <div className="ec-side-cart-overlay" />
+
+        <section className="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
+          <div className="container">
+            <div className="row">
+              {/* Sidebar Area Start */}
+              <SideCard />
+              <div className="ec-shop-rightside col-lg-9 col-md-12">
                 <div className="ec-vendor-dashboard-card">
-                    <div className="ec-vendor-card-header">
+                  <div className="ec-vendor-card-header">
                     <h5>My Orders</h5>
                     {/* <div className="ec-header-btn">
                         <a className="btn btn-lg btn-primary" href="#">Shop Now</a>
                     </div> */}
-                    </div>
-                    <div className="ec-vendor-card-body">
+                  </div>
+                  <div className="ec-vendor-card-body">
                     <div className="ec-vendor-card-table">
-                        <table className="table ec-table">
+                      <table className="table ec-table">
                         <thead>
-                            <tr>
+                          <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Name</th>
+                            {/* <th scope="col">Image</th> */}
+                            {/* <th scope="col">Name</th> */}
                             <th scope="col">Date</th>
                             <th scope="col">Price</th>
                             <th scope="col">Status</th>
                             <th scope="col">Actions</th>
-                            </tr>
+                          </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                            <th scope="row"><span>225</span></th>
-                            <td><img className="prod-img" src="assets/images/product-image/1.jpg" alt="product image" /></td>
-                            <td><span>Stylish baby shoes</span></td>
-                            <td><span>16 Jul 2021-2022</span></td>
-                            <td><span>$65</span></td>
-                            <td><span>Active</span></td>
-                            <td><span className="tbl-btn"><a className="btn btn-lg btn-primary" href="/orderdetails">View</a></span></td>
-                            </tr>
-                            <tr>
-                            <th scope="row"><span>548</span></th>
-                            <td><img className="prod-img" src="assets/images/product-image/2.jpg" alt="product image" /></td>
-                            <td><span>Sweat Pullover Hoodie</span></td>
-                            <td><span>13 Aug 2016</span></td>
-                            <td><span>$68</span></td>
-                            <td><span>On Hold</span></td>
-                            <td><span className="tbl-btn"><a className="btn btn-lg btn-primary" href="/orderdetails">View</a></span></td>
-                            </tr>
-                            <tr>
-                            <th scope="row"><span>684</span></th>
-                            <td><img className="prod-img" src="assets/images/product-image/3.jpg" alt="product image" /></td>
-                            <td><span>T-shirt for girl</span></td>
-                            <td><span>20 Jul 2015</span></td>
-                            <td><span>$360</span></td>
-                            <td><span>On Hold</span></td>
-                            <td><span className="tbl-btn"><a className="btn btn-lg btn-primary" href="/orderdetails">View</a></span></td>
-                            </tr>
-                            <tr>
-                            <th scope="row"><span>987</span></th>
-                            <td><img className="prod-img" src="assets/images/product-image/4.jpg" alt="product image" /></td>
-                            <td><span>Wool hat for men</span></td>
-                            <td><span>05 Feb 2014</span></td>
-                            <td><span>$584</span></td>
-                            <td><span>On Hold</span></td>
-                            <td><span className="tbl-btn"><a className="btn btn-lg btn-primary" href="/orderdetails">View</a></span></td>
-                            </tr>
-                            <tr>
-                            <th scope="row"><span>225</span></th>
-                            <td><img className="prod-img" src="assets/images/product-image/5.jpg" alt="product image" /></td>
-                            <td><span>Women leather purse</span></td>
-                            <td><span>23 Jul 2013</span></td>
-                            <td><span>$65</span></td>
-                            <td><span>On Hold</span></td>
-                            <td><span className="tbl-btn"><a className="btn btn-lg btn-primary" href="#">View</a></span></td>
-                            </tr>
-                            <tr>
-                            <th scope="row"><span>548</span></th>
-                            <td><img className="prod-img" src="assets/images/product-image/6.jpg" alt="product image" /></td>
-                            <td><span>Doctor kit toy</span></td>
-                            <td><span>28 Mar 2011</span></td>
-                            <td><span>$68</span></td>
-                            <td><span>Disabled</span></td>
-                            <td><span className="tbl-btn"><a className="btn btn-lg btn-primary" href="#">View</a></span></td>
-                            </tr>
-                            <tr>
-                            <th scope="row"><span>684</span></th>
-                            <td><img className="prod-img" src="assets/images/product-image/7.jpg" alt="product image" /></td>
-                            <td><span>Teddy bear for baby</span></td>
-                            <td><span>16 Apr 2010</span></td>
-                            <td><span>$360</span></td>
-                            <td><span>On Hold</span></td>
-                            <td><span className="tbl-btn"><a className="btn btn-lg btn-primary" href="#">View</a></span></td>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </div>
-                    </div>
-                </div>
-                </div>
+                          {data.map(item => (
 
+                            <tr>
+                              <th scope="row"><span>{item.id}</span></th>
+                              {/* <td><img className="prod-img" src="assets/images/product-image/1.jpg" alt="product image" /></td> */}
+                              {/* <td><span>Stylish baby shoes</span></td> */}
+                              <td><span>{item.date.slice(0, 10)}</span></td>
+                              <td><span>{item.net_amount}</span></td>
+                              <td><span>{item.status.replaceAll('_',' ')}</span></td>
+                              <td><span className="tbl-btn"><Link className="btn btn-lg btn-primary" to={`/orderdetails/${item.id}`}>View</Link></span></td>
+                            </tr>
+                          ))}
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </section>
+
+            </div>
+          </div>
+        </section>
         <Footer />
 
-      <FooterNav setopen={() => setopen(!open)} />
+        <FooterNav setopen={() => setopen(!open)} />
 
 
-            {/* End User history section */}
-          </div>
+        {/* End User history section */}
+      </div>
 
-        </div>
-    )
+    </div>
+  )
 }
 
 export default MyOrders
