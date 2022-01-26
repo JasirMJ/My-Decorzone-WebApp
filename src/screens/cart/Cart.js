@@ -125,7 +125,9 @@ const Cart = () => {
                 {/*cart content End */}
               </div>
               {/* Sidebar Area Start */}
-              <div className="ec-cart-rightside col-lg-4 col-md-12">
+              {
+                cartObjs.length != 0 &&
+                <div className="ec-cart-rightside col-lg-4 col-md-12">
                 <div className="ec-sidebar-wrap">
                   {/* Sidebar Summary Block */}
                   <div className="ec-sidebar-block">
@@ -167,12 +169,16 @@ const Cart = () => {
                       </div>
                     </div>
                     <div className="ec-single-cart " style={{ marginTop: 10 }}>
-                      <a href="/checkout" className="btn btn-primary w-100">Checkout</a>
+                      <a  onClick={()=>{
+                        cartObjs.length != 0 ?   window.location.replace('/checkout') : alert("Please add items to cart")
+                      }} className="btn btn-primary w-100">Checkout</a>
                     </div>
                   </div>
                   {/* Sidebar Summary Block */}
                 </div>
               </div>
+              }
+       
             </div>
           </div>
         </section>
