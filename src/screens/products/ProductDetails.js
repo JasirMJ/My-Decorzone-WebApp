@@ -290,7 +290,6 @@ const ProductDetails = () => {
                                                             <div className="ec-pro-variation-content">
                                                                 <ul>
                                                                     {
-
                                                                         Data.variants?.map((item, index) => 
                                                                              <li className={selectVarientId == item.id && "active"} onClick={()=>{ selectVarient(item) }}><span>{item.name}</span></li>
                                                                         )
