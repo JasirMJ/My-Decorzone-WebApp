@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { getOffer, addDomainInImage } from '../common/Functions'
 import { baseurl, protocol, AppContext } from '../common/Constants'
+import { Link } from 'react-router-dom'
 
 const GridProduct = ({ Data }) => {
 
@@ -111,40 +112,42 @@ const GridProduct = ({ Data }) => {
         <div className="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
             <div className="ec-product-inner">
                 <div className="ec-pro-image-outer">
-                    <div className="ec-pro-image">
-                        <a href={`/product/${Data.id}`} className="image">
-                            <img className="main-image" src={addDomainInImage(Data.images?.length != 0 ? Data.images[0]?.image : "")} alt="Product" />
-                            <img className="hover-image" src={addDomainInImage(Data.images?.length != 0 ? Data.images[0]?.image : "")} alt="Product" />
+                    <a href={`/product/${Data.id}`}>
+                        <div className="ec-pro-image">
+                            <a href={`/product/${Data.id}`} className="image">
+                                <img className="main-image" src={addDomainInImage(Data.images?.length != 0 ? Data.images[0]?.image : "")} alt="Product" />
+                                <img className="hover-image" src={addDomainInImage(Data.images?.length != 0 ? Data.images[0]?.image : "")} alt="Product" />
 
-                        </a>
+                            </a>
 
-                        {
-                            getOffer(Data.variants) &&
-                            <span className="percentage">{getOffer(Data.variants)}%</span>
+                            {
+                                getOffer(Data.variants) &&
+                                <span className="percentage">{getOffer(Data.variants)}%</span>
 
-                        }
-                        {/* <span className="percentage">20%</span> */}
-                        {
-                            Data.is_popular == true &&
-                            <span class="flags" style={{ bottom: '22' }}><span class="new">Popular</span></span>
-                        }
+                            }
+                            {/* <span className="percentage">20%</span> */}
+                            {
+                                Data.is_popular == true &&
+                                <span class="flags" style={{ bottom: '22' }}><span class="new">Popular</span></span>
+                            }
 
-                        {
-                            Data.is_recommended == true &&
-                            <span class="flags" style={{ bottom: '0' }} ><span class="new">Recommended</span></span>
-                        }
+                            {
+                                Data.is_recommended == true &&
+                                <span class="flags" style={{ bottom: '0' }} ><span class="new">Recommended</span></span>
+                            }
 
-                        {
-                            Data.is_new == true &&
-                            <span class="flags" style={{ bottom: '44' }}><span class="new">New</span></span>
-                        }
+                            {
+                                Data.is_new == true &&
+                                <span class="flags" style={{ bottom: '44' }}><span class="new">New</span></span>
+                            }
 
-                        {
-                            Data.is_out_of_stock == true &&
-                            <span class="flags" style={{ bottom: '66' }} ><span class="new">Out Of Stock</span></span>
-                        }
+                            {
+                                Data.is_out_of_stock == true &&
+                                <span class="flags" style={{ bottom: '66' }} ><span class="new">Out Of Stock</span></span>
+                            }
 
-                    </div>
+                        </div>
+                    </a>
                 </div>
                 <div className="ec-pro-content">
                     <h5 className="ec-pro-title"><a href={`/product/${Data.id}`}>{Data.name}</a></h5>
@@ -157,69 +160,69 @@ const GridProduct = ({ Data }) => {
                             <>
                                 <div className='d-flex'>
                                     <span className="new-price" style={{ fontWeight: '500' }} >₹{Data.variants[0]?.offer_rate}</span>
-                                <del className="old-price ml-2" style={{ marginRight: '5px' }}>₹{Data.variants[0]?.rate}</del>
-                            </div>
+                                    <del className="old-price ml-2" style={{ marginRight: '5px' }}>₹{Data.variants[0]?.rate}</del>
+                                </div>
                             </>
-                :
-                <span className="old-price">₹{Data.variants[0]?.rate}</span>
+                            :
+                            <span className="old-price">₹{Data.variants[0]?.rate}</span>
                     }
-                <div className="ec-pro-option">
-                    <div className="ec-pro-size">
-                        <span className="ec-pro-opt-label">Size</span>
-                        {/* <ul className="ec-opt-size">
+                    <div className="ec-pro-option">
+                        <div className="ec-pro-size">
+                            <span className="ec-pro-opt-label">Size</span>
+                            {/* <ul className="ec-opt-size">
                         <li className="active"><a href="#" className="ec-opt-sz" data-old="$25.00" data-new="$20.00" data-tooltip="Small">S</a></li>
                         <li><a href="#" className="ec-opt-sz" data-old="$27.00" data-new="$22.00" data-tooltip="Medium">M</a></li>
                         <li><a href="#" className="ec-opt-sz" data-old="$35.00" data-new="$30.00" data-tooltip="Extra Large">XL</a></li>
                     </ul> */}
-                    </div>
-                    <div className="ec-single-qty d-flex justify-content-between w-100 align-items-center">
-                        {
-                            (Data.is_out_of_stock == false) &&
-                            Data.variants.length != 0 &&
-                            <>
-                                <div className="qty-plus-minus d-flex justify-content-center" style={{ border: '1px solid #eeeeee' }}>
-                                    <button style={{ height: '2rem' }}
-                                        // onClick={() => setcartData({ ...cartData, count: cartData.count - 1 })}
-                                        onClick={() => {
-                                            setquantity((r) => {
-                                                if (r > 0) {
-                                                    return r - 1;
-                                                }
-                                                return r;
-                                            });
-                                        }}
-                                    ><i class="fas fa-minus"></i></button>
-                                    <input className="qty-input" type="text" name="ec_qtybtn" value={quantity}
-                                        style={{
-                                            background: 'transparent none repeat scroll 0 0',
-                                            border: 'medium none',
-                                            color: '#444444',
-                                            // float: 'right',
-                                            fontSize: '15px',
-                                            height: '2rem',
-                                            margin: 0,
-                                            padding: 0,
-                                            textAlign: 'center',
-                                            width: '40px',
-                                            outline: 'none',
-                                            fontWeight: 700,
-                                        }}
-                                    />
-                                    <button style={{ height: '2rem' }}
+                        </div>
+                        <div className="ec-single-qty d-flex justify-content-between w-100 align-items-center">
+                            {
+                                (Data.is_out_of_stock == false) &&
+                                Data.variants.length != 0 &&
+                                <>
+                                    <div className="qty-plus-minus d-flex justify-content-center" style={{ border: '1px solid #eeeeee' }}>
+                                        <button style={{ height: '2rem' }}
+                                            // onClick={() => setcartData({ ...cartData, count: cartData.count - 1 })}
+                                            onClick={() => {
+                                                setquantity((r) => {
+                                                    if (r > 0) {
+                                                        return r - 1;
+                                                    }
+                                                    return r;
+                                                });
+                                            }}
+                                        ><i class="fas fa-minus"></i></button>
+                                        <input className="qty-input" type="text" name="ec_qtybtn" value={quantity}
+                                            style={{
+                                                background: 'transparent none repeat scroll 0 0',
+                                                border: 'medium none',
+                                                color: '#444444',
+                                                // float: 'right',
+                                                fontSize: '15px',
+                                                height: '2rem',
+                                                margin: 0,
+                                                padding: 0,
+                                                textAlign: 'center',
+                                                width: '40px',
+                                                outline: 'none',
+                                                fontWeight: 700,
+                                            }}
+                                        />
+                                        <button style={{ height: '2rem' }}
 
-                                        onClick={() =>
-                                            setquantity(pre => pre + 1)} > <i class="fas fa-plus"></i></button>
-                                </div>
-                                <div className="ec-single-cart ">
-                                    <button className="btn btn-primary"
-                                        onClick={() => { cartUpdate(quantity) }}>Add To Cart</button>
-                                </div>
-                            </>
-                        }
+                                            onClick={() =>
+                                                setquantity(pre => pre + 1)} > <i class="fas fa-plus"></i></button>
+                                    </div>
+                                    <div className="ec-single-cart ">
+                                        <button className="btn btn-primary"
+                                            onClick={() => { cartUpdate(quantity) }}>Add To Cart</button>
+                                    </div>
+                                </>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div >
     )
 }

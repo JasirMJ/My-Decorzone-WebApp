@@ -44,6 +44,7 @@ const ProductDetails = () => {
 
     const [products, setproducts] = useState([]);
 
+    const [ButtonLoading, setButtonLoading] = useState(false);
 
     const [selectVarientId, setselectVarientId] = useState("")
 
@@ -66,10 +67,10 @@ const ProductDetails = () => {
 
         axios(config)
             .then(function (response) {
-                console.log("PRODUCT DETAILS",response.data);
+                console.log("PRODUCT DETAILS", response.data);
                 if (response.data) {
                     setData(response.data)
-                    if(response.data.variants.length > 0){
+                    if (response.data.variants.length > 0) {
                         setselectVarientId(response.data.variants[0].id)
                         setprice(response.data.variants[0].rate)
                         setofferprice(response.data.variants[0].offer_rate)
@@ -83,7 +84,7 @@ const ProductDetails = () => {
 
     }
 
-    const getProducts= () => {
+    const getProducts = () => {
         var FormData = require('form-data');
         var fdata = new FormData();
 
@@ -97,7 +98,7 @@ const ProductDetails = () => {
 
         axios(config)
             .then(function (response) {
-                console.log("PRODUCTS",response.data.results);
+                console.log("PRODUCTS", response.data.results);
                 setproducts(response.data.results)
             })
             .catch(function (error) {
@@ -124,8 +125,8 @@ const ProductDetails = () => {
 
     const checkingItemInCart = (varientid) => {
         if (isLogined) {
-            if(Data.length!=0) {
-                if(Data.variants.length !=0) {
+            if (Data.length != 0) {
+                if (Data.variants.length != 0) {
                     var itemAvailableInCart = cartObjs.find(data => data.varient.id == varientid)
                     if (itemAvailableInCart) {
                         console.warn("ITEM AVAILABLE IN CART", itemAvailableInCart);
@@ -136,9 +137,9 @@ const ProductDetails = () => {
                         setsingleItem(false)
                         setquantity(1)
                     }
-                   }
                 }
             }
+        }
     }
 
     const checkingVarientSingleOrMultiple = () => {
@@ -154,18 +155,18 @@ const ProductDetails = () => {
 
     const cartUpdate = (count) => {
 
-        if(isLogined) {
+        if (isLogined) {
             var item = [{
                 "varient": selectVarientId,
                 "quantity": count
             }]
-    
+
             var axios = require('axios');
             var FormData = require('form-data');
             var fdata = new FormData();
             fdata.append('varient_lst', JSON.stringify(item));
             fdata.append('keyword', 'add');
-    
+
             var config = {
                 method: 'post',
                 url: baseurl + '/cart/',
@@ -174,27 +175,30 @@ const ProductDetails = () => {
                 },
                 data: fdata
             };
-    
+
             axios(config)
                 .then(function (response) {
                     setupdateCart(false)
                     console.log({ response });
                     if (response.data.Error) {
                         console.log("Sorry , product is unavialable right now", response.data);
+                        setButtonLoading(false)
                         // getCart()
                     } else {
                         setCartObjs(response.data.basket)
+                        setButtonLoading(false)
                     }
                 })
                 .catch(function (error) {
                     // console.log(error);
+                    setButtonLoading(false)
                     console.log(error.response.data.Error);
                 });
         } else {
-            window.location.replace('/login') 
+            window.location.replace('/login')
         }
 
-   
+
     }
 
     const selectVarient = (item) => {
@@ -212,7 +216,7 @@ const ProductDetails = () => {
 
                 {/* ekka Cart Start */}
                 <div className="ec-side-cart-overlay" />
-            
+
                 {/* ekka Cart End */}
                 {/* Ec breadcrumb start */}
 
@@ -238,14 +242,39 @@ const ProductDetails = () => {
                                             </div>
                                             <div className="single-pro-desc">
                                                 <div className="single-pro-content">
-                                                    <h5 className="ec-single-title">{Data.name}</h5>
+                                                    <h5 className="ec-single-title mb-0">{Data.name}</h5>
+                                                    <div className="ec-single-stoke d-flex justify-content-between align-items-center  mb-4">
+                                                        <div className=''>
+
+                                                            {
+                                                                Data.is_popular == true &&
+                                                                <b className="ec-single-ps-title " style={{ fontSize: 'x-small' }}>POPULAR <span className='mx-1'>|</span></b>
+                                                            }
+
+                                                            {
+                                                                Data.is_recommended == true &&
+                                                                <b className="ec-single-ps-title " style={{ fontSize: 'x-small' }}>RECOMMEDED <span className='mx-1'>|</span></b>
+
+                                                            }
+
+                                                            {
+                                                                Data.is_new == true &&
+                                                                <b className="ec-single-ps-title " style={{ fontSize: 'x-small' }}>NEW <span className='mx-1'></span></b>
+                                                            }
+
+                                                        </div>
+
+                                                        <span class="flags " style={{ fontSize: 'smaller' }}><span class="new" style={Data.is_out_of_stock == true ? { color: 'red', fontWeight: '500' } : { color: 'green', fontWeight: '500' }}>{Data.is_out_of_stock == true ? 'OUT OF STOCK' : 'IN STOCK'}</span></span>
+
+
+                                                    </div>
 
                                                     <div className="ec-single-desc">{Data.description}</div>
 
                                                     <div className="ec-single-price-stoke">
                                                         <div className="ec-single-price">
                                                             <span className="ec-single-ps-title">Price</span>
-                                                          
+
                                                             {
                                                                 Data.variants?.length > 0 &&
                                                                 <span className="ec-price">
@@ -253,80 +282,67 @@ const ProductDetails = () => {
                                                                     }
                                                                     {
                                                                         offer_enabled == true ?
-                                                                        <>
-                                                                        <del>
-                                                                        <span className="old-price" style={{marginRight:'5px'}}>₹{price}</span>
-                                                                        </del>
-                                                                        <span className="new-price">₹{offerprice}</span>
-                                                                        </>
-                                                                       :
-                                                                       <span className="old-price">₹{price}</span>
+                                                                            <>
+                                                                                <span className="new-price mr-2">₹{offerprice}</span>
+                                                                                <del>
+                                                                                    <span className="old-price" style={{ marginRight: '5px' }}>₹{price}</span>
+                                                                                </del>
+                                                                            </>
+                                                                            :
+                                                                            <span className=" new-price">₹{price}</span>
                                                                     }
                                                                 </span>
                                                             }
                                                         </div>
 
-                                                        
-                                                        <div className="ec-single-stoke">
-                                                        {
-                                                            Data.is_popular == true &&
-                                                            <span className="ec-single-ps-title">POPULAR</span>
-                                                        }
 
-                                                        {
-                                                            Data.is_recommended == true &&
-                                                            <span className="ec-single-ps-title">RECOMMEDED</span>
 
-                                                        }
-
-                                                        {
-                                                            Data.is_new == true &&
-                                                            <span className="ec-single-ps-title">NEW</span>
-                                                        }
-
-                                                  
-                                                        <span class="flags"><span class="new">{Data.is_out_of_stock == true ? 'OUT OF STOCK' : 'IN STOCK'}</span></span>
-
-                                                           
-                                                        </div>
                                                     </div>
+
+
                                                     <div className="ec-pro-variation">
                                                         <div className="ec-pro-variation-inner ec-pro-variation-size">
                                                             <span>Select Variant</span>
                                                             <div className="ec-pro-variation-content">
                                                                 <ul>
                                                                     {
-                                                                        Data.variants?.map((item, index) => 
-                                                                             <li className={selectVarientId == item.id && "active"} onClick={()=>{ selectVarient(item) }}><span>{item.name}</span></li>
+                                                                        Data.variants?.map((item, index) =>
+                                                                            <li className={selectVarientId == item.id && "active"} onClick={() => { selectVarient(item) }}><span>{item.name}</span></li>
                                                                         )
                                                                     }
                                                                 </ul>
                                                             </div>
-                                                               
-                                                            
+
+
                                                         </div>
 
                                                     </div>
                                                     <div className="ec-single-qty">
                                                         <div className="qty-plus-minus">
-                                                            <button 
-                                                              onClick={()=>{
-                                                                setquantity((r) => {
-                                                                    if (r > 0) {
-                                                                        return r - 1;
-                                                                    }
+                                                            <button
+                                                                onClick={() => {
+                                                                    setquantity((r) => {
+                                                                        if (r > 0) {
+                                                                            return r - 1;
+                                                                        }
                                                                         return r;
-                                                                });
-                                                            }}
+                                                                    });
+                                                                }}
                                                             ><i class="fas fa-minus"></i></button>
                                                             <input className="qty-input" type="text" name="ec_qtybtn" value={quantity} />
-                                                            <button 
-                                                                onClick={() => 
-                                                                setquantity(pre=>pre+1) } 
+                                                            <button
+                                                                onClick={() =>
+                                                                    setquantity(pre => pre + 1)}
                                                             > <i class="fas fa-plus"></i></button>
                                                         </div>
                                                         <div className="ec-single-cart ">
-                                                            <button  onClick={() => { cartUpdate(quantity) }} className="btn btn-primary">Add To Cart</button>
+                                                            <button onClick={() => { { cartUpdate(quantity); setButtonLoading(true) } }} className="btn btn-primary">
+
+                                                                {ButtonLoading &&
+                                                                    <div class="spinner-border spinner-border-sm text-light mr-1" role="status">
+                                                                        <span class="sr-only">Loading...</span>
+                                                                    </div>}
+                                                                Add To Cart</button>
                                                         </div>
 
                                                     </div>
@@ -402,17 +418,17 @@ const ProductDetails = () => {
                             </div>
                         </div>
                         <div className="row margin-minus-b-30">
-                       {
-                        products.length >0 &&
-                        <div className="row">
-                        {
-                            products.map((item, index) => {
-                            return <GridProduct key={index} Data={item} />
-                        })
-                        }
+                            {
+                                products.length > 0 &&
+                                <div className="row">
+                                    {
+                                        products.map((item, index) => {
+                                            return <GridProduct key={index} Data={item} />
+                                        })
+                                    }
+                                </div>
+                            }
                         </div>
-                       }
-                    </div>
                     </div>
                 </section>
 
