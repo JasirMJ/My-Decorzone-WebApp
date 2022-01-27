@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from "react-slick";
 
 export const ImageSlider = ({ images }) => {
-
+console.log({images});
     const settings = {
         customPaging: function (i) {
             return (

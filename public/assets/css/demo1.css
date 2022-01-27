@@ -19825,7 +19825,7 @@ button.btn-close.qty_close {
   left: 0;
   opacity: 0;
 }
-.ec-product-inner .ec-pro-image .flags {
+/* .ec-product-inner .ec-pro-image .flags {
   position: absolute;
   z-index: 8;
   top: 24px;
@@ -19841,7 +19841,7 @@ button.btn-close.qty_close {
   -webkit-transform: rotate(-90deg);
   transform: rotate(-90deg);
   background-color: #555;
-}
+} */
 .ec-product-inner .ec-pro-image .flags .sale {
   padding: 0 5px;
   background-color: #81dca8;
@@ -19869,9 +19869,9 @@ button.btn-close.qty_close {
   color: #ffffff;
   letter-spacing: 1px;
 }
-.ec-product-inner .ec-pro-image .flags + .flags {
+/* .ec-product-inner .ec-pro-image .flags + .flags {
   right: 20px;
-}
+} */
 .ec-product-inner .ec-pro-image .percentage {
   position: absolute;
   z-index: 8;
