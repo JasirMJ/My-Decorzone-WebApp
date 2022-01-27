@@ -69,7 +69,6 @@ export default function SimpleSlider() {
       method: 'get',
       url: baseurl + '/landing/banners/',
       headers: {
-        'Authorization': 'Token f789f7bfba757d318cc1040a9d3abffa74daf3ea',
       },
       data: data
     };
