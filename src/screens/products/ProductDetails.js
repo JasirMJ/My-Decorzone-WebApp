@@ -155,6 +155,8 @@ const ProductDetails = () => {
 
     const cartUpdate = (count) => {
 
+        setButtonLoading(true) 
+
         if (isLogined) {
             var item = [{
                 "varient": selectVarientId,
@@ -179,10 +181,11 @@ const ProductDetails = () => {
             axios(config)
                 .then(function (response) {
                     setupdateCart(false)
+                    setButtonLoading(false)
                     console.log({ response });
                     if (response.data.Error) {
                         console.log("Sorry , product is unavialable right now", response.data);
-                        setButtonLoading(false)
+                   
                         // getCart()
                     } else {
                         setCartObjs(response.data.basket)
@@ -336,7 +339,7 @@ const ProductDetails = () => {
                                                             > <i class="fas fa-plus"></i></button>
                                                         </div>
                                                         <div className="ec-single-cart ">
-                                                            <button onClick={() => { { cartUpdate(quantity); setButtonLoading(true) } }} className="btn btn-primary">
+                                                            <button onClick={() => { { cartUpdate(quantity)} }} className="btn btn-primary">
 
                                                                 {ButtonLoading &&
                                                                     <div class="spinner-border spinner-border-sm text-light mr-1" role="status">

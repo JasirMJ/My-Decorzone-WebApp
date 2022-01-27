@@ -12,20 +12,21 @@ const GridProduct = ({ Data }) => {
     const [singleItem, setsingleItem] = useState(false)
     const [cartCount, setcartCount] = useState(false);
     const [cartData, setcartData] = useState({ count: 0, varient: '' });
+    const [ButtonLoading, setButtonLoading] = useState(false);
 
 
-    useEffect(() => {
-        if (userToken) {
-            if (updateCart) {
-                const delayDebounceFn = setTimeout(() => {
-                    //   console.log(searchKey)
-                    // Send Axios request here
-                    cartUpdate(quantity)
-                }, 1000)
-                return () => clearTimeout(delayDebounceFn)
-            }
-        }
-    }, [quantity])
+    // useEffect(() => {
+    //     if (userToken) {
+    //         if (updateCart) {
+    //             const delayDebounceFn = setTimeout(() => {
+    //                 //   console.log(searchKey)
+    //                 // Send Axios request here
+    //                 cartUpdate(quantity)
+    //             }, 1000)
+    //             return () => clearTimeout(delayDebounceFn)
+    //         }
+    //     }
+    // }, [quantity])
 
     useEffect(() => {
         checkingItemInCart()
@@ -59,6 +60,7 @@ const GridProduct = ({ Data }) => {
     }
 
     const cartUpdate = (count) => {
+        setButtonLoading(true) 
         if (isLogined) {
             var item = [{
                 "varient": Data.variants[0].id,
@@ -84,6 +86,7 @@ const GridProduct = ({ Data }) => {
                 .then(function (response) {
                     setupdateCart(false)
                     console.log({ response });
+                    setButtonLoading(false)
                     if (response.data.Error) {
                         console.log("Sorry , product is unavialable right now", response.data);
                         // getCart()
@@ -94,6 +97,7 @@ const GridProduct = ({ Data }) => {
                 })
                 .catch(function (error) {
                     // console.log(error);
+                    setButtonLoading(false)
                     console.log(error.response.data.Error);
                 });
         } else {
@@ -215,7 +219,12 @@ const GridProduct = ({ Data }) => {
                                     </div>
                                     <div className="ec-single-cart ">
                                         <button className="btn btn-primary"
-                                            onClick={() => { cartUpdate(quantity) }}>Add To Cart</button>
+                                            onClick={() => { cartUpdate(quantity) }}>
+                                              {ButtonLoading &&
+                                            <div class="spinner-border spinner-border-sm text-light mr-1" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>}
+                                            Add To Cart</button>
                                     </div>
                                 </>
                             }
