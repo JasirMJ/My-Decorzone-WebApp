@@ -19514,19 +19514,24 @@ button.btn-close.qty_close {
 .ec-product-inner .ec-pro-image .flags {
   position: absolute;
   z-index: 8;
-  top: 24px;
+  /* top: 24px; */
   left: auto;
-  right: 4px;
+  right: 0;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-transform: rotate(-90deg);
-  transform: rotate(-90deg);
+  /* display: flex; */
+  /* -webkit-box-orient: vertical; */
+  /* -webkit-box-direction: normal; */
+  -ms-flex-direction: column;
+  /* flex-direction: column; */
+  /* -webkit-transform: rotate(
+-90deg
+); */
+  /* transform: rotate(
+-90deg
+); */
   background-color: #555;
+  bottom: 0;
 }
 .ec-product-inner .ec-pro-image .flags .sale {
   padding: 0 5px;
@@ -19537,7 +19542,7 @@ button.btn-close.qty_close {
   background-color: #8196dc;
 }
 .ec-product-inner .ec-pro-image .flags span {
-  font-size: 11px;
+  font-size: 7px;
   font-weight: 600;
   line-height: 20px;
   padding: 0;
@@ -19555,9 +19560,9 @@ button.btn-close.qty_close {
   color: #ffffff;
   letter-spacing: 1px;
 }
-.ec-product-inner .ec-pro-image .flags + .flags {
+/* .ec-product-inner .ec-pro-image .flags + .flags {
   right: 20px;
-}
+} */
 .ec-product-inner .ec-pro-image .percentage {
   position: absolute;
   z-index: 8;
@@ -19826,7 +19831,7 @@ button.btn-close.qty_close {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: left;
+-webkit-box-pack: left;
       -ms-flex-pack: left;
           justify-content: left;
   color: #777777;

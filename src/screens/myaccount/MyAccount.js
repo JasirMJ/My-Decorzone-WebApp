@@ -23,11 +23,15 @@ import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
 import {baseurl , protocol , AppContext} from '../../common/Constants'
+import user from '../../assets/images/user.png'
+
 
 const MyAccount = () => {
   const [open, setopen] = useState(false)
 
   const { userToken , userDetails } = useContext(AppContext)
+
+  console.log({userDetails});
 
   return (
     <div>
@@ -60,11 +64,11 @@ const MyAccount = () => {
                               <a href="#" className="btn btn-lg btn-primary" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal">Edit Detail</a>
                             </div>
                             <div className="ec-vendor-block-detail">
-                              <img className="v-img" src="assets/images/user/1.jpg" alt="vendor image" />
+                              <img className="v-img" src={user} alt="vendor image" />
                               <h5 className="name">{userDetails.first_name}</h5>
-                              <p>( Business Man )</p>
+                              {/* <p>( Business Man )</p> */}
                             </div>
-                            <p>Hello <span>Mariana Johns!</span></p>
+                            <p>Hello <span>{userDetails.first_name}</span></p>
                             <p>From your account you can easily view and track orders. You can manage and change your account information like address, contact information and history of orders.</p>
                           </div>
                           <h5>Account Information</h5>
@@ -73,8 +77,8 @@ const MyAccount = () => {
                               <div className="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
                                 <h6>E-mail address <a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" className="svg_img pro_svg" alt="edit" /></a></h6>
                                 <ul>
-                                  <li><strong>Email 1 : </strong><a href="https://loopinfosol.in/cdn-cgi/l/email-protection" className="__cf_email__" data-cfemail="1a696f6a6a75686e2b5a7f627b6a77767f34797577">[email&nbsp;protected]</a></li>
-                                  <li><strong>Email 2 : </strong><a href="https://loopinfosol.in/cdn-cgi/l/email-protection" className="__cf_email__" data-cfemail="b5c6c0c5c5dac7c187f5d0cdd4c5d8d9d09bd6dad8">[email&nbsp;protected]</a></li>
+                                  <li><strong>Email 1 : </strong><a  className="__cf_email__" data-cfemail="1a696f6a6a75686e2b5a7f627b6a77767f34797577">{userDetails.email}</a></li>
+                                  {/* <li><strong>Email 2 : </strong><a href="https://loopinfosol.in/cdn-cgi/l/email-protection" className="__cf_email__" data-cfemail="b5c6c0c5c5dac7c187f5d0cdd4c5d8d9d09bd6dad8">[email&nbsp;protected]</a></li> */}
                                 </ul>
                               </div>
                             </div>
@@ -82,8 +86,8 @@ const MyAccount = () => {
                               <div className="ec-vendor-detail-block ec-vendor-block-contact space-bottom-30">
                                 <h6>Contact nubmer<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" className="svg_img pro_svg" alt="edit" /></a></h6>
                                 <ul>
-                                  <li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890</li>
-                                  <li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890</li>
+                                  <li><strong>Phone Nubmer 1 : </strong>{userDetails.mobile}</li>
+                                  {/* <li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890</li> */}
                                 </ul>
                               </div>
                             </div>
