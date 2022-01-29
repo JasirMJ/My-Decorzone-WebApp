@@ -89,7 +89,7 @@ const OrderDetails = () => {
     if (data.status?.includes("PLACED")) {
       setdeliveryStatusCode(1)
     }
-  }, []);
+  }, [data]);
 
   // useEffect(() => {
   // alert(deliveryStatusCode)
@@ -149,6 +149,8 @@ const OrderDetails = () => {
                         <span className="ec-progressbar-track" />
                         <span className="ec-track-title">order<br />Delivered</span>
                       </li>
+
+                      
 
 
 
