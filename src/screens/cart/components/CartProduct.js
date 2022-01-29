@@ -72,7 +72,7 @@ export default function CartProduct({ Data }) {
   }
 
   return (
-    <tr>
+    <tr style={{display:'grid', }}>
       <td data-label="Product" className="ec-cart-pro-name"><a href="product-left-sidebar.html">
         <img className="ec-cart-pro-img mr-4" src={addDomainInImage(Data.varient.item_status.images.length != 0 ? Data.varient.item_status.images[0].image : "")} alt />
         {Data.varient.item_status.name + "-" + Data.varient.name}</a></td>

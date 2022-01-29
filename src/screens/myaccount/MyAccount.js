@@ -112,7 +112,7 @@ const MyAccount = () => {
                             <div className="row">
                               <div className="col-md-6 col-sm-12">
                                 <div className="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
-                                  <h6>E-mail address <a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" className="svg_img pro_svg" alt="edit" /></a></h6>
+                                  <h6>E-mail address <a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"></a></h6>
                                   <ul>
                                     <li><strong>Email 1 : </strong><a className="__cf_email__" data-cfemail="1a696f6a6a75686e2b5a7f627b6a77767f34797577">{userDetails.email}</a></li>
                                     {/* <li><strong>Email 2 : </strong><a href="https://loopinfosol.in/cdn-cgi/l/email-protection" className="__cf_email__" data-cfemail="b5c6c0c5c5dac7c187f5d0cdd4c5d8d9d09bd6dad8">[email&nbsp;protected]</a></li> */}
@@ -121,7 +121,7 @@ const MyAccount = () => {
                               </div>
                               <div className="col-md-6 col-sm-12">
                                 <div className="ec-vendor-detail-block ec-vendor-block-contact space-bottom-30">
-                                  <h6>Contact nubmer<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" className="svg_img pro_svg" alt="edit" /></a></h6>
+                                  <h6>Contact nubmer<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"></a></h6>
                                   <ul>
                                     <li><strong>Phone Nubmer 1 : </strong>{userDetails.mobile}</li>
                                     {/* <li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890</li> */}

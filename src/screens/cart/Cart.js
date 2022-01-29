@@ -96,7 +96,7 @@ const Cart = () => {
                             <div className="table-content cart-table-content">
                               <table>
                                 <thead>
-                                  <tr>
+                                  <tr >
                                     <th>Product</th>
                                     <th>Price</th>
                                     <th style={{ textAlign: 'center' }}>Quantity</th>

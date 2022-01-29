@@ -24,6 +24,7 @@ import FeatureTools from '../../components/FeatureTools';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AppContext, baseurl } from '../../common/Constants';
+import moment from 'moment';
 
 
 const OrderDetails = () => {
@@ -77,7 +78,6 @@ const OrderDetails = () => {
       setdeliveryStatusCode(5)
     }
     if (data.status?.includes("OUT_FOR_DELIVERY")) {
-      //  alert('outof delivery')
       setdeliveryStatusCode(4)
     }
     if (data.status?.includes("SHIPPED")) {
@@ -95,7 +95,7 @@ const OrderDetails = () => {
   // alert(deliveryStatusCode)
   // }, [deliveryStatusCode]);
 
-
+  let todate = moment(data.date).add(14, 'days').format('DD-MMM-YYYY');
 
   console.log({ data });
   return (
@@ -122,35 +122,42 @@ const OrderDetails = () => {
                 <div className="ec-trackorder-bottom">
                   <div className="ec-progress-track">
                     <ul id="ec-progressbar">
-                      <li className={`step0 ${(deliveryStatusCode >= 1 && deliveryStatusCode <= 5) && 'active'}`}><span className="ec-track-icon">                      </span>
+                      <li className={`step0 ${(deliveryStatusCode >= 1) && 'active'}`}><span className="ec-track-icon">                      </span>
                         <span className="ec-progressbar-track" />
+
                         <span className="ec-track-title">order
                           <br />Placed</span>
                       </li>
-                      
-                      <li className={`step0 ${(deliveryStatusCode >= 2 && deliveryStatusCode <= 5) && 'active'}`}>
+
+                      <li className={`step0 ${(deliveryStatusCode >= 2) && 'active'}`}>
                         <span className="ec-track-icon"></span>
                         <span className="ec-progressbar-track" />
-                        <span className="ec-track-title">order<br />Approved</span>
+                        {deliveryStatusCode <= 5 &&
+                          <span className="ec-track-title">order<br />Approved</span>
+                        }
                       </li>
-                      <li className={`step0 ${(deliveryStatusCode >= 3 && deliveryStatusCode <= 5) && 'active'}`}><span className="ec-track-icon"> </span>
+                      <li className={`step0 ${(deliveryStatusCode >= 3) && 'active'}`}><span className="ec-track-icon"> </span>
                         <span className="ec-progressbar-track" />
-                        <span className="ec-track-title">order
-                          <br />Shipped</span>
+                        {deliveryStatusCode <= 5 &&
+                          <span className="ec-track-title">order
+                            <br />Shipped</span>
+                        }
                       </li>
 
-                      <li className={`step0 ${(deliveryStatusCode >= 4 && deliveryStatusCode <= 5) && 'active'}`}>
-                        <span className="ec-track-icon">                        </span>
-                        <span className="ec-progressbar-track" />
-                        <span className="ec-track-title">order <br />Out for delivery</span>
-                      </li>
-                      <li className={`step0 ${deliveryStatusCode == 5 && 'active'}`}>
+                      <li className={`step0 ${(deliveryStatusCode >= 4) && 'active'}`}>
                         <span className="ec-track-icon"></span>
                         <span className="ec-progressbar-track" />
-                        <span className="ec-track-title">order<br />Delivered</span>
+                        {deliveryStatusCode <= 5 &&
+                          <span className="ec-track-title">order <br />Out for delivery</span>
+                        }
+                      </li>
+                      <li className={`step0 ${deliveryStatusCode >= 5 && 'active'}`}>
+                        <span className="ec-track-icon"></span>
+                        <span className="ec-progressbar-track" />
+                        <span className="ec-track-title">order<br />{deliveryStatusCode == 6 ? 'Cancelled' : 'Delivered'}</span>
                       </li>
 
-                      
+
 
 
 
@@ -221,7 +228,7 @@ const OrderDetails = () => {
 
                         <ul className="align-items-center">
                           {/* {data.user?.delivery_date && */}
-                          <li className="ec-contact-item"><i class="fas fa-truck"></i><span>Expected delivery date : </span>
+                          <li className="ec-contact-item"><i class="fas fa-truck"></i><span>Expected delivery date : {data.delivery_date ? data.delivery_date : todate}</span>
                             {data.user?.delivery_date}
                           </li>
                           {/* } */}
@@ -229,6 +236,11 @@ const OrderDetails = () => {
                             data.user?.address.length > 0 &&
                             <li className="ec-contact-item"><i className="ecicon eci-map-marker" aria-hidden="true" /><span>Address :</span>
                               {data.user.address[0].address?.address1 + ' ' + data.user.address[0]?.address?.address2 + ' ' + data.user.address[0]?.address?.city + ' ' + data.user.address[0]?.address?.state + ' ' + data.user.address[0]?.address?.pin}
+                            </li>
+                          }
+                          {data.other_charges &&
+                            <li className="ec-contact-item"><i className="ecicon eci-map-marker" aria-hidden="true" /><span>Extra charge :</span>
+                              {data.other_charges}
                             </li>
                           }
                         </ul>

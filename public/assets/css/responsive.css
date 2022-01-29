@@ -721,7 +721,7 @@
     font-size: 12px;
     background-color: #ff6767;
   }
-  
+
   .section-space-p {
     padding: 30px 0;
   }
@@ -2050,7 +2050,7 @@
   }
   .ec-cart-content .table-content table tbody > tr {
     border: 1px solid #ebebeb;
-    display: block;
+    display: grid;
     margin-bottom: 15px;
   }
   .ec-cart-content .table-content table tbody > tr td.ec-cart-pro-name {
