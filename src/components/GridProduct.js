@@ -4,7 +4,7 @@ import { baseurl, protocol, AppContext } from '../common/Constants'
 import { Link } from 'react-router-dom'
 
 const GridProduct = ({ Data }) => {
-
+console.log({Data});
     const { userToken, setCartObjs, cartObjs, isLogined, totalPayAmount, cartDiscountTotalAmount, cartTotalAmount, extraCharges, deliveryCharge, userAddressId } = useContext(AppContext)
 
     const [quantity, setquantity] = useState(1)
@@ -101,11 +101,11 @@ const GridProduct = ({ Data }) => {
         }
     }
 
-    let newtag = {}
-    newtag.is_recommended = Data.is_recommended
-    newtag.is_new = Data.is_new
-    newtag.is_popular = Data.is_popular
-    newtag.is_out_of_stock = Data.is_out_of_stock
+    // let newtag = {}
+    // newtag.is_recommended = Data.is_recommended
+    // newtag.is_new = Data.is_new
+    // newtag.is_popular = Data.is_popular
+    // newtag.is_out_of_stock = Data.is_out_of_stock
 
     // console.log({ newtag });
     return (

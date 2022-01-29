@@ -307,7 +307,7 @@ const ProductDetails = () => {
                                                                 <ul>
                                                                     {
                                                                         Data.variants?.map((item, index) =>
-                                                                            <li className={selectVarientId == item.id && "active"} onClick={() => { selectVarient(item) }}><span>{item.name}</span></li>
+                                                                            <li className={selectVarientId == item.id && "active"} onClick={() => { selectVarient(item) }} style={{ padding: '2px 8px' }}><span>{item.name}</span></li>
                                                                         )
                                                                     }
                                                                 </ul>
@@ -354,7 +354,7 @@ const ProductDetails = () => {
                                 </div>
                                 {/*Single product content End */}
                                 {/* Single product tab start */}
-                                {/* <div className="ec-single-pro-tab">
+                                <div className="ec-single-pro-tab">
                                     <div className="ec-single-pro-tab-wrapper">
                                         <div className="ec-single-pro-tab-nav">
                                             <ul className="nav nav-tabs">
@@ -363,6 +363,9 @@ const ProductDetails = () => {
                                                 </li>
                                                 <li className="nav-item">
                                                     <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-info" role="tablist">More Information</a>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-rtrn" role="tablist">{'Return & Exchange Policy'}</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -383,19 +386,20 @@ const ProductDetails = () => {
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div id="ec-spt-nav-info" className="tab-pane fade">
-                                                <div className="ec-single-pro-tab-moreinfo">
-                                                    <ul>
-                                                        <li><span>Weight</span> 1000 g</li>
-                                                        <li><span>Dimensions</span> 35 × 30 × 7 cm</li>
-                                                        <li><span>Color</span> Black, Pink, Red, White</li>
-                                                    </ul>
+                                            <div id="#ec-spt-nav-rtrn" className="tab-pane fade">
+                                                <div className="ec-single-pro-tab-desc">
+                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                                        Lorem Ipsum has been the industry's standard dummy text ever since the
+                                                        1500s, when an unknown printer took a galley of type and scrambled it to
+                                                        make a type specimen book. It has survived not only five centuries, but also
+                                                        the leap into electronic typesetting, remaining essentially unchanged.
+                                                    </p>
                                                 </div>
                                             </div>
 
                                         </div>
                                     </div>
-                                </div> */}
+                                </div>
                                 {/* product details description area end */}
                             </div>
                             {/* Sidebar Area Start */}

@@ -22802,8 +22802,8 @@ h4.ec-faq-title::after, .ec-faq-title.h4::after {
 .single-pro-content .ec-pro-variation .ec-pro-variation-inner .ec-pro-variation-content li {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  width: 30px;
-  height: 30px;
+  /* width: 30px;
+  height: 30px; */
   cursor: pointer;
   background-color: #f5f5f5;
   color: #777777;

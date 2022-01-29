@@ -5,7 +5,7 @@ import Header from '../../components/Header';
 
 const Checkout = () => {
 
-  const { userToken, setCartObjs, cartObjs, totalPayAmount, cartDiscountTotalAmount, cartTotalAmount, extraCharges, deliveryCharge, userAddressId } = useContext(AppContext)
+    const { userToken, setCartObjs, cartObjs, totalPayAmount, cartDiscountTotalAmount, cartTotalAmount, extraCharges, deliveryCharge, userAddressId } = useContext(AppContext)
 
 
     const [AddNewAddress, setAddNewAddress] = useState(false);
@@ -43,15 +43,26 @@ const Checkout = () => {
         data.append('pin', addressData.pin);
         data.append('state', addressData.state);
 
+        if (addressData.id) {
+            var config = {
+                method: 'put',
+                url: baseurl + '/users/address/' + addressData.id,
+                headers: {
+                    'Authorization': userToken,
+                },
+                data: data
+            };
+        } else {
+            var config = {
+                method: 'post',
+                url: baseurl + '/users/address/',
+                headers: {
+                    'Authorization': userToken,
+                },
+                data: data
+            };
+        }
 
-        var config = {
-            method: 'post',
-            url: baseurl + '/users/address/',
-            headers: {
-                'Authorization': userToken,
-            },
-            data: data
-        };
 
         axios(config)
             .then(function (response) {
@@ -59,6 +70,16 @@ const Checkout = () => {
                 if (response.data) {
                     setAddNewAddress(false)
                     GetData()
+                    setaddressData({
+                        address1: '',
+                        address2: '',
+                        land_mark: '',
+                        latitude: '',
+                        longtitude: '',
+                        city: '',
+                        pin: '',
+                        state: '',
+                    })
                 }
             })
             .catch(function (error) {
@@ -76,7 +97,7 @@ const Checkout = () => {
             method: 'get',
             url: baseurl + '/users/address/',
             headers: {
-                'Authorization':  userToken,
+                'Authorization': userToken,
             },
             data: data
         };
@@ -101,7 +122,7 @@ const Checkout = () => {
             method: 'delete',
             url: baseurl + '/users/address/' + id,
             headers: {
-                'Authorization':  userToken,
+                'Authorization': userToken,
             },
         };
 
@@ -124,29 +145,29 @@ const Checkout = () => {
         var data = new FormData();
 
         var config = {
-        method: 'get',
-        url: baseurl + '/users/default/',
-        headers: { 
-            'Authorization': userToken, 
-        },
-        data : data
+            method: 'get',
+            url: baseurl + '/users/default/',
+            headers: {
+                'Authorization': userToken,
+            },
+            data: data
         };
 
         axios(config)
-        .then(function (response) {
-            console.log(JSON.stringify(response.data));
-            if(response.data.length != 0) {
-                setselectedAddressid(response.data[0].address.id)
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                if (response.data.length != 0) {
+                    setselectedAddressid(response.data[0].address.id)
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
 
     }
 
     const placeOrder = () => {
-        if(selectedAddressid == "") {
+        if (selectedAddressid == "") {
             alert("select address");
             return 0
         }
@@ -156,29 +177,29 @@ const Checkout = () => {
         data.append('order_type', 'COD');
         data.append('address', selectedAddressid);
         data.append('promocode', '');
-        
+
         var config = {
-          method: 'post',
-          url:  baseurl + '/order/',
-          headers: { 
-            'Authorization': userToken, 
-          },
-          data : data
+            method: 'post',
+            url: baseurl + '/order/',
+            headers: {
+                'Authorization': userToken,
+            },
+            data: data
         };
-        
+
         axios(config)
-        .then(function (response) {
-            if(response.status == 200) {
-                setCartObjs([])
-                window.location.replace('/myorders')
-            } else {
+            .then(function (response) {
+                if (response.status == 200) {
+                    setCartObjs([])
+                    window.location.replace('/myorders')
+                } else {
+                    alert("cart is empty")
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
                 alert("cart is empty")
-            }
-        })
-        .catch(function (error) {
-          console.log(error);
-          alert("cart is empty")
-        });
+            });
     }
 
     const selectedAddress = (id) => {
@@ -186,26 +207,26 @@ const Checkout = () => {
         var FormData = require('form-data');
         var data = new FormData();
         data.append('address_id', id);
-        
+
         var config = {
-          method: 'post',
-          url: baseurl + '/users/default/',
-          headers: { 
-            'Authorization': userToken, 
-          },
-          data : data
+            method: 'post',
+            url: baseurl + '/users/default/',
+            headers: {
+                'Authorization': userToken,
+            },
+            data: data
         };
-        
+
         axios(config)
-        .then(function (response) {
-            setselectedAddressid(id)
-          console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+            .then(function (response) {
+                setselectedAddressid(id)
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
- 
+
     return <div>
         <Header />
         <section className="ec-page-content section-space-p">
@@ -312,14 +333,14 @@ const Checkout = () => {
                                                                 <ul>
                                                                     <li><strong>Home : </strong>{item.address1} {item.address2} {item.land_mark} {item.city} {item.pin} {item.state}</li>
                                                                 </ul>
-                                                                <button onClick={()=>{selectedAddress(item.id)}} className='btn btn-danger w-100 mt-3'>
+                                                                <button onClick={() => { selectedAddress(item.id) }} className='btn btn-danger w-100 mt-3'>
                                                                     {selectedAddressid === item.id ? 'Selected' : 'Choose address'}
                                                                 </button>
                                                             </div>
                                                         </div>
                                                     ))}
 
-                                                    <div className='col-md-6 col-sm-12 align-items-center d-flex justify-content-center' style={{minHeight:'6rem'}}>
+                                                    <div className='col-md-6 col-sm-12 align-items-center d-flex justify-content-center' style={{ minHeight: '6rem' }}>
                                                         <div className="ec-vendor-detail-block ec-vendor-block-address mar-b-30">
                                                             <div className="d-flex flex-column justify-content-center align-items-center">
                                                                 <button className='btn' onClick={() => setAddNewAddress(true)}>
@@ -357,7 +378,7 @@ const Checkout = () => {
                                             <span className="ec-pay-option">
                                                 <span className='d-flex '>
                                                     <input checked type="radio" style={{ height: '15px' }} id="pay1" name="radio-group" />
-                                                    <label  htmlFor="pay1">Cash On Delivery</label>
+                                                    <label htmlFor="pay1">Cash On Delivery</label>
                                                 </span>
                                             </span>
                                             {/* <span className="ec-pay-commemt">
@@ -374,7 +395,7 @@ const Checkout = () => {
                         </div>
                         <div className="ec-sidebar-wrap">
 
-                  
+
                             {/* Sidebar Summary Block */}
                             <div className="ec-sidebar-block">
                                 <div className="ec-sb-title">
@@ -382,28 +403,28 @@ const Checkout = () => {
                                 </div>
                                 <div className="ec-sb-block-content ec-sidebar-dropdown">
                                     <div className="ec-checkout-summary">
-                                    <div>
-                            <span className="text-left">Item Total</span>
-                            <span className="text-right">₹ {cartTotalAmount}</span>
-                          </div>
+                                        <div>
+                                            <span className="text-left">Item Total</span>
+                                            <span className="text-right">₹ {cartTotalAmount}</span>
+                                        </div>
 
-                          <div>
-                            <span className="text-left">Discount</span>
-                            <span className="text-right">-₹{cartDiscountTotalAmount}</span>
-                          </div>
+                                        <div>
+                                            <span className="text-left">Discount</span>
+                                            <span className="text-right">-₹{cartDiscountTotalAmount}</span>
+                                        </div>
 
 
-                          <div>
-                            <span className="text-left">Delivery Charges</span>
-                            <span className="text-right">₹{deliveryCharge}</span>
-                          </div>
+                                        <div>
+                                            <span className="text-left">Delivery Charges</span>
+                                            <span className="text-right">₹{deliveryCharge}</span>
+                                        </div>
 
-                          <div>
-                            <span className="text-left">Extra Charges</span>
-                            <span className="text-right">₹{extraCharges}</span>
-                          </div>
+                                        <div>
+                                            <span className="text-left">Extra Charges</span>
+                                            <span className="text-right">₹{extraCharges}</span>
+                                        </div>
 
-                        
+
                                         <div className="ec-checkout-coupan-content">
                                             <form className="ec-checkout-coupan-form" name="ec-checkout-coupan-form" method="post" action="#">
                                                 <input className="ec-coupan" type="text" required placeholder="Enter Your Coupan Code" name="ec-coupan" defaultValue />
@@ -418,7 +439,7 @@ const Checkout = () => {
                                     </div>
                                 </div>
                                 <span className="ec-check-order-btn">
-                                    <a onClick={()=>{placeOrder()}} className="btn w-100 btn-primary" href="#">Place Order</a>
+                                    <a onClick={() => { placeOrder() }} className="btn w-100 btn-primary" href="#">Place Order</a>
                                 </span>
                             </div>
                             {/* Sidebar Summary Block */}

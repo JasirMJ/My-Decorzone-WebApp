@@ -10,8 +10,8 @@ function FooterNav(data) {
     return (
         <>
           <div className="ec-nav-toolbar">
-        <div className="container">
-          <div className="ec-nav-panel">
+        <div className="container m-auto">
+          <div className="ec-nav-panel d-flex justify-content-between ">
             <div className="ec-nav-panel-icons">
               <button  
               onClick={()=>data.setopen()} 

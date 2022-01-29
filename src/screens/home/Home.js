@@ -1,5 +1,5 @@
 // import './App.css';
-import React, { useState , useContext , useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
 import MainSlider from '../../components/MainSlider';
@@ -17,7 +17,7 @@ import Footer from '../../components/Footer';
 import TemplateModal from '../../components/TemplateModal';
 import Newsletter from '../../components/Newsletter';
 import FooterNav from '../../components/FooterNav';
-import {baseurl , protocol , AppContext} from '../../common/Constants'
+import { baseurl, protocol, AppContext } from '../../common/Constants'
 
 function Home() {
   const [open, setopen] = useState(false)
@@ -25,12 +25,13 @@ function Home() {
   const [popular, setpopular] = useState([])
   const [is_new, setis_new] = useState([])
   const [is_recommended, setis_recommended] = useState([])
-
+  const [Brands, setBrands] = useState([]);
 
   useEffect(() => {
     getPopularProducts()
     getNewProducts()
     getRecommenderProducts()
+    GetBrandsLogos()
   }, [])
 
   const getPopularProducts = () => {
@@ -38,17 +39,17 @@ function Home() {
     var config = {
       method: 'get',
       url: baseurl + '/items/items/?ordering=?&pagination=false&is_popular=true',
-      headers: { }
+      headers: {}
     };
 
     axios(config)
-    .then(function (response) {
-      setpopular(response.data)
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then(function (response) {
+        setpopular(response.data)
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   const getNewProducts = () => {
@@ -56,17 +57,17 @@ function Home() {
     var config = {
       method: 'get',
       url: baseurl + '/items/items/?ordering=?&pagination=false&is_new=true',
-      headers: { }
+      headers: {}
     };
 
     axios(config)
-    .then(function (response) {
-      setis_new(response.data)
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then(function (response) {
+        setis_new(response.data)
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   const getRecommenderProducts = () => {
@@ -74,17 +75,44 @@ function Home() {
     var config = {
       method: 'get',
       url: baseurl + '/items/items/?ordering=?&pagination=false&is_recommended=true',
-      headers: { }
+      headers: {}
     };
 
     axios(config)
-    .then(function (response) {
-      setis_recommended(response.data)
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then(function (response) {
+        setis_recommended(response.data)
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const GetBrandsLogos = () => {
+    var axios = require('axios');
+    // var FormData = require('form-data');
+    // var data = new FormData();
+    // data.append('name', 'test');
+
+    var config = {
+      method: 'get',
+      url: baseurl + '/items/brand/',
+      // headers: {
+
+      // },
+      // data: data
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response.data);
+        setBrands(response.data.results)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+
   }
 
   return (
@@ -135,7 +163,7 @@ function Home() {
       {/* ec Banner Section End */}
 
       {/*  Category Section Start */}
-      {/* <CategorySection /> */}
+      <CategorySection />
       {/* Category Section End */}
 
       {/*  Feature & Special Section Start */}
@@ -143,7 +171,7 @@ function Home() {
       {/* Feature & Special Section End */}
 
       {/*  services Section Start */}
-      <ServiceSection />
+      {/* <ServiceSection /> */}
       {/*services Section End */}
 
       {/*  offer Section Start */}
@@ -163,7 +191,7 @@ function Home() {
       {/* <BrandSection /> */}
       {/* Ec Brand Section End */}
       {/* Ec Instagram Start */}
-      {/* <InstagramSection /> */}
+      <InstagramSection brands={Brands} />
       {/* Ec Instagram End */}
       {/* Footer Start */}
       <Footer />

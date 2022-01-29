@@ -1,16 +1,16 @@
 import React from 'react'
 
-function InstagramSection() {
-    return (
-        <>
-         <section className="section ec-instagram-section module section-space-p">
+function InstagramSection({ brands }) {
+  return (
+    <>
+      <section className="section ec-instagram-section module section-space-p">
         <div className="container">
           <div className="row">
             <div className="col-md-12 text-center">
               <div className="section-title">
-                <h2 className="ec-bg-title">Instagram Feed</h2>
-                <h2 className="ec-title">Instagram Feed</h2>
-                <p className="sub-title">Share your store with us</p>
+                {/* <h2 className="ec-bg-title"> </h2> */}
+                <h2 className="ec-title">Brands</h2>
+                {/* <p className="sub-title">Share your store with us</p> */}
               </div>
             </div>
           </div>
@@ -20,58 +20,54 @@ function InstagramSection() {
             <div className="container" data-animation="fadeIn">
               <div className="insta-auto">
                 {/* instagram item */}
-                <div className="ec-insta-item">
+                {brands.map(item => (
+
+                  <div className="ec-insta-item">
+                    <div className="d-flex justify-content-center  ec-insta-inner" style={{ background: '#0072e17d', padding: '1rem', borderRadius: '5px' }}>
+                      <h4>{item.name}</h4>
+                      {/* <a href="#" target="_blank"><img src="assets/images/brand-image/10.jpg" alt="insta" /></a> */}
+                    </div>
+                  </div>
+                ))}
+
+                {/* instagram item */}
+                {/* <div className="ec-insta-item">
                   <div className="ec-insta-inner">
-                    <a href="#" target="_blank"><img src="assets/images/instragram-image/1.jpg" alt="insta" /></a>
+                    <a href="#" target="_blank"><img src="assets/images/brand-image/12.jpg" alt="insta" /></a>
                   </div>
                 </div>
-                {/* instagram item */}
                 <div className="ec-insta-item">
                   <div className="ec-insta-inner">
-                    <a href="#" target="_blank"><img src="assets/images/instragram-image/2.jpg" alt="insta" /></a>
+                    <a href="#" target="_blank"><img src="assets/images/brand-image/13.jpg" alt="insta" /></a>
                   </div>
                 </div>
-                {/* instagram item */}
                 <div className="ec-insta-item">
                   <div className="ec-insta-inner">
-                    <a href="#" target="_blank"><img src="assets/images/instragram-image/3.jpg" alt="insta" /></a>
+                    <a href="#" target="_blank"><img src="assets/images/brand-image/14.jpg" alt="insta" /></a>
                   </div>
                 </div>
-                {/* instagram item */}
                 <div className="ec-insta-item">
                   <div className="ec-insta-inner">
-                    <a href="#" target="_blank"><img src="assets/images/instragram-image/4.jpg" alt="insta" /></a>
+                    <a href="#" target="_blank"><img src="assets/images/brand-image/15.jpg" alt="insta" /></a>
                   </div>
                 </div>
-                {/* instagram item */}
-                {/* instagram item */}
                 <div className="ec-insta-item">
                   <div className="ec-insta-inner">
-                    <a href="#" target="_blank"><img src="assets/images/instragram-image/5.jpg" alt="insta" /></a>
+                    <a href="#" target="_blank"><img src="assets/images/brand-image/16.jpg" alt="insta" /></a>
                   </div>
                 </div>
-                {/* instagram item */}
-                {/* instagram item */}
                 <div className="ec-insta-item">
                   <div className="ec-insta-inner">
-                    <a href="#" target="_blank"><img src="assets/images/instragram-image/6.jpg" alt="insta" /></a>
+                    <a href="#" target="_blank"><img src="assets/images/brand-image/17.jpg" alt="insta" /></a>
                   </div>
-                </div>
-                {/* instagram item */}
-                {/* instagram item */}
-                <div className="ec-insta-item">
-                  <div className="ec-insta-inner">
-                    <a href="#" target="_blank"><img src="assets/images/instragram-image/7.jpg" alt="insta" /></a>
-                  </div>
-                </div>
-                {/* instagram item */}
+                </div> */}
               </div>
             </div>
           </div>
         </div>
-      </section>   
-        </>
-    )
+      </section>
+    </>
+  )
 }
 
 export default InstagramSection

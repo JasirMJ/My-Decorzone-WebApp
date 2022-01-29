@@ -22,6 +22,7 @@ import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
 import { baseurl, protocol, AppContext } from '../../common/Constants'
 import CartProduct from './components/CartProduct';
+import NoData from '../NoData/noData';
 
 const Cart = () => {
   const [open, setopen] = useState(false)
@@ -30,7 +31,7 @@ const Cart = () => {
   const { userToken, setCartObjs, cartObjs, totalPayAmount, cartDiscountTotalAmount, cartTotalAmount, extraCharges, deliveryCharge, userAddressId } = useContext(AppContext)
 
   useEffect(() => {
-    console.log("userToken CART" ,userToken);
+    console.log("userToken CART", userToken);
     getData()
   }, [])
 
@@ -41,7 +42,7 @@ const Cart = () => {
       method: 'get',
       url: baseurl + '/cart/',
       headers: {
-        'Authorization':  userToken,
+        'Authorization': userToken,
       },
     };
 
@@ -54,7 +55,7 @@ const Cart = () => {
         }
       })
       .catch(function (error) {
-        console.log("CART LIST",error);
+        console.log("CART LIST", error);
       });
   }
 
@@ -87,7 +88,7 @@ const Cart = () => {
               <div className="ec-cart-leftside col-lg-8 col-md-12 ">
                 {/* cart content Start */}
                 {
-                  cartObjs.length != 0 ?
+                  cartObjs.length != 0 &&
                     <div className="ec-cart-content">
                       <div className="ec-cart-inner">
                         <div className="row">
@@ -119,66 +120,70 @@ const Cart = () => {
                         </div>
                       </div>
                     </div>
-                    :
-                    <span>NO Cart Item</span>
+                    
+                    // <span>NO Cart Item</span>
                 }
                 {/*cart content End */}
               </div>
               {/* Sidebar Area Start */}
               {
-                cartObjs.length != 0 &&
-                <div className="ec-cart-rightside col-lg-4 col-md-12">
-                <div className="ec-sidebar-wrap">
-                  {/* Sidebar Summary Block */}
-                  <div className="ec-sidebar-block">
-                    <div className="ec-sb-title">
-                      <h3 className="ec-sidebar-title">Summary</h3>
-                    </div>
+                cartObjs.length != 0 ?
+                  <div className="ec-cart-rightside col-lg-4 col-md-12">
+                    <div className="ec-sidebar-wrap">
+                      {/* Sidebar Summary Block */}
+                      <div className="ec-sidebar-block">
+                        <div className="ec-sb-title">
+                          <h3 className="ec-sidebar-title">Summary</h3>
+                        </div>
 
-                    <div className="ec-sb-block-content">
-                      <div className="ec-cart-summary-bottom">
-                        <div className="ec-cart-summary">
+                        <div className="ec-sb-block-content">
+                          <div className="ec-cart-summary-bottom">
+                            <div className="ec-cart-summary">
 
-                          <div>
-                            <span className="text-left">Item Total</span>
-                            <span className="text-right">₹ {cartTotalAmount}</span>
+                              <div>
+                                <span className="text-left">Item Total</span>
+                                <span className="text-right">₹ {cartTotalAmount}</span>
+                              </div>
+
+                              <div>
+                                <span className="text-left">Discount</span>
+                                <span className="text-right">-₹{cartDiscountTotalAmount}</span>
+                              </div>
+
+
+                              <div>
+                                <span className="text-left">Delivery Charges</span>
+                                <span className="text-right">₹{deliveryCharge}</span>
+                              </div>
+
+                              <div>
+                                <span className="text-left">Extra Charges</span>
+                                <span className="text-right">₹{extraCharges}</span>
+                              </div>
+
+                              <div className="ec-cart-summary-total">
+                                <span className="text-left">Total Amount</span>
+                                <span className="text-right">₹{totalPayAmount}</span>
+                              </div>
+
+                            </div>
                           </div>
-
-                          <div>
-                            <span className="text-left">Discount</span>
-                            <span className="text-right">-₹{cartDiscountTotalAmount}</span>
-                          </div>
-
-
-                          <div>
-                            <span className="text-left">Delivery Charges</span>
-                            <span className="text-right">₹{deliveryCharge}</span>
-                          </div>
-
-                          <div>
-                            <span className="text-left">Extra Charges</span>
-                            <span className="text-right">₹{extraCharges}</span>
-                          </div>
-
-                          <div className="ec-cart-summary-total">
-                            <span className="text-left">Total Amount</span>
-                            <span className="text-right">₹{totalPayAmount}</span>
-                          </div>
-
+                        </div>
+                        <div className="ec-single-cart " style={{ marginTop: 10 }}>
+                          <a onClick={() => {
+                            cartObjs.length != 0 ? window.location.replace('/checkout') : alert("Please add items to cart")
+                          }} className="btn btn-primary w-100">Checkout</a>
                         </div>
                       </div>
-                    </div>
-                    <div className="ec-single-cart " style={{ marginTop: 10 }}>
-                      <a  onClick={()=>{
-                        cartObjs.length != 0 ?   window.location.replace('/checkout') : alert("Please add items to cart")
-                      }} className="btn btn-primary w-100">Checkout</a>
+                      {/* Sidebar Summary Block */}
                     </div>
                   </div>
-                  {/* Sidebar Summary Block */}
-                </div>
-              </div>
+                  :
+                  <div className='d-flex justify-content-center'>
+                    <NoData />
+                  </div>
               }
-       
+
             </div>
           </div>
         </section>

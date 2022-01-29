@@ -41,7 +41,7 @@ function Header({ open, setopen }) {
                   <div className="ec-header-bottons">
                     {/* Header User Start */}
                     <div className="ec-header-user dropdown">
-                      <button className="dropdown-toggle" data-bs-toggle="dropdown"><img src="assets/images/icons/user.svg" className="svg_img header_svg" alt /></button>
+                      <button className="dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-user svg_img header_svg" style={{fontSize:'x-large'}}></i></button>
                       <ul className="dropdown-menu dropdown-menu-right">
                         {
                           userToken == "" &&
@@ -68,7 +68,7 @@ function Header({ open, setopen }) {
                     {/* Header wishlist End */}
                     {/* Header Cart Start */}
                     <a href="/cart" className="ec-header-btn ec-side-toggle">
-                      <div className="header-icon"><img src="assets/images/icons/cart.svg" className="svg_img header_svg" alt /></div>
+                      <div className="header-icon"><i class="fas fa-shopping-cart svg_img header_svg" style={{fontSize:'x-large'}}></i></div>
                       <span className="ec-header-count cart-count-lable">{cartObjs.length}</span>
                     </a>
                     {/* Header Cart End */}
@@ -86,7 +86,7 @@ function Header({ open, setopen }) {
               {/* Ec Header Logo Start */}
               <div className="col">
                 <div className="header-logo">
-                  <a href="/"><img src="assets/images/logo/logo.png" alt="Site Logo" /><img className="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style={{ display: 'none' }} /></a>
+                  <a href="/"><img src={Logo} alt="Site Logo" /><img className="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style={{ display: 'none' }} /></a>
                 </div>
               </div>
               {/* Ec Header Logo End */}
