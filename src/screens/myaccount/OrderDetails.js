@@ -70,19 +70,30 @@ const OrderDetails = () => {
   }
 
   useEffect(() => {
-    if (data.status == "DELIVERED") {
+    if (data.status?.includes("CANCELLED")) {
+      setdeliveryStatusCode(6)
+    }
+    if (data.status?.includes("DELIVERED")) {
+      setdeliveryStatusCode(5)
+    }
+    if (data.status?.includes("OUT_FOR_DELIVERY")) {
+      //  alert('outof delivery')
       setdeliveryStatusCode(4)
     }
-    else if (data.status == "OUT_FOR_DELIVERY") {
+    if (data.status?.includes("SHIPPED")) {
       setdeliveryStatusCode(3)
     }
-    else if (data.status == "SHIPPED") {
+    if (data.status?.includes("APPROVED")) {
       setdeliveryStatusCode(2)
     }
-    else if (data.status == "PLACED") {
+    if (data.status?.includes("PLACED")) {
       setdeliveryStatusCode(1)
     }
   }, []);
+
+  // useEffect(() => {
+  // alert(deliveryStatusCode)
+  // }, [deliveryStatusCode]);
 
 
 
@@ -122,18 +133,6 @@ const OrderDetails = () => {
                         <img src="assets/images/icons/track_2.png" alt="track_order" />
                       </span><span className="ec-progressbar-track" /><span className="ec-track-title">order
                           <br />designing</span></li> */}
-                      <li className={`step0 ${deliveryStatusCode >= 2 && 'active'}`}><span className="ec-track-icon">
-                        {/* <img src="assets/images/icons/track_3.png" alt="track_order" /> */}
-                      </span><span className="ec-progressbar-track" /><span className="ec-track-title">order
-                          <br />Shipped</span></li>
-                      <li className={`step0 ${deliveryStatusCode >= 3 && 'active'}`}><span className="ec-track-icon">
-                        {/* <img src="assets/images/icons/track_4.png" alt="track_order" /> */}
-                      </span><span className="ec-progressbar-track" />
-                        <span className="ec-track-title">order <br />Out for delivery</span></li>
-                      <li className={`step0 ${deliveryStatusCode >= 4 && 'active'}`}><span className="ec-track-icon">
-                        {/* <img src="assets/images/icons/track_5.png" alt="track_order" /> */}
-                      </span><span className="ec-progressbar-track" /><span className="ec-track-title">order
-                          <br />Delivered</span></li>
                     </ul>
                   </div>
                 </div>
@@ -198,12 +197,17 @@ const OrderDetails = () => {
                       <div className="ec-cart-form">
 
                         <ul className="align-items-center">
-                        {
-                          data.user?.address.length >0 &&
-                            <li className="ec-contact-item"><i className="ecicon eci-map-marker" aria-hidden="true" /><span>Address :</span>
-                            {data.user.address[0].address?.address1 + ' ' + data.user.address[0]?.address?.address2 + ' ' + data.user.address[0]?.address?.city + ' ' + data.user.address[0]?.address?.state + ' ' + data.user.address[0]?.address?.pin}
+                          {/* {data.user?.delivery_date && */}
+                          <li className="ec-contact-item"><i class="fas fa-truck"></i><span>Expected delivery date : </span>
+                            {data.user?.delivery_date}
                           </li>
-                        }
+                          {/* } */}
+                          {
+                            data.user?.address.length > 0 &&
+                            <li className="ec-contact-item"><i className="ecicon eci-map-marker" aria-hidden="true" /><span>Address :</span>
+                              {data.user.address[0].address?.address1 + ' ' + data.user.address[0]?.address?.address2 + ' ' + data.user.address[0]?.address?.city + ' ' + data.user.address[0]?.address?.state + ' ' + data.user.address[0]?.address?.pin}
+                            </li>
+                          }
                         </ul>
 
                       </div>

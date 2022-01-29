@@ -84,8 +84,8 @@ function Header({ open, setopen }) {
           <div className="container position-relative">
             <div className="row ">
               {/* Ec Header Logo Start */}
-              <div className="col">
-                <div className="header-logo">
+              <div className="lg-col">
+                <div className="header-logo d-flex justify-content-center">
                   <a href="/"><img src={Logo} alt="Site Logo" /><img className="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style={{ display: 'none' }} /></a>
                 </div>
               </div>

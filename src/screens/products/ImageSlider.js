@@ -1,40 +1,30 @@
-import { CarouselProvider, ImageWithZoom, Slide } from 'pure-react-carousel';
+// import { CarouselProvider, ImageWithZoom, Slide } from 'pure-react-carousel';
 import React from 'react';
 import Slider from "react-slick";
+import SimpleImageSlider from "react-simple-image-slider";
 
 export const ImageSlider = ({ images }) => {
     console.log({ images });
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    };
     return (
-        <CarouselProvider
-            visibleSlides={3}
-            totalSlides={6}
-            step={3}
-            naturalSlideWidth={400}
-            naturalSlideHeight={500}
-            hasMasterSpinner={true}
-            className='h-64'
-        >
-            {/* <h2 className={'headline'}>Carousel (With Master Loading Spinner)</h2>
-            <p>
-                This spinner will go away after all the images have loaded. You might want to use
-                Chrome dev tools to throttle the network connection so you can see the spinner.
-            </p> */}
-            <Slider className={'slider'}>
+        <div>
+            <Slider {...settings}>
 
-                {images?.map((item, idx) =>
+                {images?.map(item => (
+                    <div >
+                        <img style={{ height: '22rem', objectFit: 'cover', width: '100%', objectPosition: 'center' }} src={item.image} alt="" srcset="" />
+                    </div>
+                ))}
 
-                    <Slide index={idx}>
-                        <ImageWithZoom src={item.image} />
-                    </Slide>
 
-                )}
 
             </Slider>
-            {/* <ButtonFirst>First</ButtonFirst>
-        <ButtonBack>Back</ButtonBack>
-        <ButtonNext>Next</ButtonNext>
-        <ButtonLast>Last</ButtonLast> */}
-            {/* <DotGroup /> */}
-        </CarouselProvider>
+        </div>
     )
 }
