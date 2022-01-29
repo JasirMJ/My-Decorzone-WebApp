@@ -763,7 +763,7 @@
   }
 
   .ec-slide-1, .ec-slide-2, .ec-slide-3 {
-    background-position: right;
+    background-position: center;
   }
 
   .width-50 {
@@ -803,7 +803,7 @@
   }
 
   .ec-header-bottom {
-    padding: 20px 0;
+    padding: 2px 0;
   }
 
   .ec-header-bottons .ec-header-btn {
@@ -2417,7 +2417,7 @@
   }
 
   .ec-header-bottom {
-    padding: 20px 0;
+    padding: 2px 0;
   }
   .ec-header-bottom .col {
     -webkit-box-flex: 1;

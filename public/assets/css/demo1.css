@@ -19331,13 +19331,13 @@ body.ec-open:before {
     width: 100%;
     /* background-image: url("../images/main-slider-banner/1.jpg"); */
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     overflow-y: hidden;
   }
   
 }
-.ec-slide-2 {
+/* .ec-slide-2 {
   background-image: url("../images/main-slider-banner/2.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -19349,7 +19349,7 @@ body.ec-open:before {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-}
+} */
 
 /*----  Main Slider Style  ----*/
 .ec-main-slider .container {
@@ -21266,8 +21266,8 @@ section.ec-instagram-section {
   transition: all 0.3s ease 0s;
 }
 .ec-insta-inner a:before {
-  font-family: "EcIcons";
-  content: "";
+  /* font-family: "EcIcons";
+  content: ""; */
   font-size: 45px;
   top: 52%;
   left: 50%;

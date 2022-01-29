@@ -47,6 +47,9 @@ const ProductDetails = () => {
     const [ButtonLoading, setButtonLoading] = useState(false);
 
     const [selectVarientId, setselectVarientId] = useState("")
+    const [varientDesc, setvarientDesc] = useState("");
+
+
 
     useEffect(() => {
         GetData()
@@ -75,6 +78,7 @@ const ProductDetails = () => {
                         setprice(response.data.variants[0].rate)
                         setofferprice(response.data.variants[0].offer_rate)
                         setoffer_enabled(response.data.variants[0].offer_enabled)
+                        setvarientDesc(response.data.variants[0].description)
                     }
                 }
             })
@@ -155,7 +159,7 @@ const ProductDetails = () => {
 
     const cartUpdate = (count) => {
 
-        setButtonLoading(true) 
+        setButtonLoading(true)
 
         if (isLogined) {
             var item = [{
@@ -185,7 +189,7 @@ const ProductDetails = () => {
                     console.log({ response });
                     if (response.data.Error) {
                         console.log("Sorry , product is unavialable right now", response.data);
-                   
+
                         // getCart()
                     } else {
                         setCartObjs(response.data.basket)
@@ -310,8 +314,12 @@ const ProductDetails = () => {
                                                                 <ul>
                                                                     {
                                                                         Data.variants?.map((item, index) =>
-                                                                            <li className={selectVarientId == item.id && "active"} onClick={() => { selectVarient(item) }} style={{ padding: '2px 8px' }}><span>{item.name}</span></li>
+                                                                            <li className={selectVarientId == item.id && "active"} onClick={() => { selectVarient(item) ; setvarientDesc(item.description) }} style={{ padding: '2px 8px' }}><span>{item.name}</span></li>
                                                                         )
+                                                                    }
+
+                                                                    {varientDesc &&
+                                                                        <li className='p-1 mt-1'>{varientDesc}</li>
                                                                     }
                                                                 </ul>
                                                             </div>
@@ -339,7 +347,7 @@ const ProductDetails = () => {
                                                             > <i class="fas fa-plus"></i></button>
                                                         </div>
                                                         <div className="ec-single-cart ">
-                                                            <button onClick={() => { { cartUpdate(quantity)} }} className="btn btn-primary">
+                                                            <button onClick={() => { { cartUpdate(quantity) } }} className="btn btn-primary">
 
                                                                 {ButtonLoading &&
                                                                     <div class="spinner-border spinner-border-sm text-light mr-1" role="status">

@@ -23,9 +23,9 @@ function InstagramSection({ brands }) {
                 {brands.map(item => (
 
                   <div className="ec-insta-item">
-                    <div className="d-flex justify-content-center  ec-insta-inner" style={{ background: '#0072e17d', padding: '1rem', borderRadius: '5px' }}>
-                      <h4>{item.name}</h4>
-                      {/* <a href="#" target="_blank"><img src="assets/images/brand-image/10.jpg" alt="insta" /></a> */}
+                    <div className="d-flex justify-content-center  ec-insta-inner" >
+                      {/* <h4>{item.name}</h4> */}
+                      <a href="#" ><img src={item.image} alt="insta" /></a>
                     </div>
                   </div>
                 ))}

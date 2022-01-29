@@ -18322,7 +18322,7 @@ h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 
 .ec-header-bottom {
   background-color: transparent;
-  padding: 25px 0;
+  padding: 7px 0;
   border-bottom: 1px solid #eeeeee;
 }
 
@@ -20335,8 +20335,8 @@ section.ec-instagram-section {
   transition: all 0.3s ease 0s;
 }
 .ec-insta-inner a:before {
-  font-family: "EcIcons";
-  content: "";
+  /* font-family: "EcIcons";
+  content: ""; */
   font-size: 45px;
   top: 52%;
   left: 50%;
