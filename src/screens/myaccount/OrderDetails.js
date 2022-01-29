@@ -238,6 +238,11 @@ const OrderDetails = () => {
                               {data.user.address[0].address?.address1 + ' ' + data.user.address[0]?.address?.address2 + ' ' + data.user.address[0]?.address?.city + ' ' + data.user.address[0]?.address?.state + ' ' + data.user.address[0]?.address?.pin}
                             </li>
                           }
+                          {data.other_charges &&
+                            <li className="ec-contact-item"><i className="ecicon eci-map-marker" aria-hidden="true" /><span>Extra charge :</span>
+                              {data.other_charges}
+                            </li>
+                          }
                         </ul>
 
                       </div>

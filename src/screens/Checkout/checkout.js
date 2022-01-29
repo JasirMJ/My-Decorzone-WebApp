@@ -347,9 +347,9 @@ const Checkout = () => {
                                                     ))}
 
                                                     <div className='col-md-6 col-sm-12 align-items-center d-flex justify-content-center' style={{ minHeight: '6rem' }}>
-                                                        <div className="ec-vendor-detail-block ec-vendor-block-address mar-b-30">
-                                                            <div className="d-flex flex-column justify-content-center align-items-center">
-                                                                <button className='btn' onClick={() => setAddNewAddress(true)}>
+                                                        <div className="ec-vendor-detail-block ec-vendor-block-address ">
+                                                            <div className="d-flex flex-column justify-content-center align-items-center"  >
+                                                                <button className='btn' onClick={() => setAddNewAddress(true)} style={{height:'fit-content'}}>
                                                                     <i class="far fa-plus-square " style={{ fontSize: '3rem' }}></i>
                                                                     <p>Add New Address</p>
                                                                 </button>
