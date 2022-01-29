@@ -111,6 +111,9 @@ const OrderDetails = () => {
                 <div className="ec-trackorder-bottom">
                   <div className="ec-progress-track">
                     <ul id="ec-progressbar">
+                    {/* {
+                        data.issued_items?.map(item => (
+                    } */}
                       <li className={`step0 ${deliveryStatusCode >= 1 && 'active'}`}><span className="ec-track-icon">
                         {/* <img src="assets/images/icons/track_1.png" alt="track_order" /> */}
                       </span><span className="ec-progressbar-track" /><span className="ec-track-title">order
