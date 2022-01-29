@@ -30,7 +30,7 @@ function Footer() {
                     </div>
                   </div>
                 </div>
-                {/* <div className="col-sm-12 col-lg-2 ec-footer-info">
+                <div className="col-sm-12 col-lg-2 ec-footer-info">
                   <div className="ec-footer-widget">
                     <h4 className="ec-footer-heading">Information</h4>
                     <div className="ec-footer-links">
@@ -42,8 +42,8 @@ function Footer() {
                       </ul>
                     </div>
                   </div>
-                </div> */}
-                {/* <div className="col-sm-12 col-lg-2 ec-footer-account">
+                </div>
+                <div className="col-sm-12 col-lg-2 ec-footer-account">
                   <div className="ec-footer-widget">
                     <h4 className="ec-footer-heading">Account</h4>
                     <div className="ec-footer-links">
@@ -55,8 +55,8 @@ function Footer() {
                       </ul>
                     </div>
                   </div>
-                </div> */}
-                {/* <div className="col-sm-12 col-lg-2 ec-footer-service">
+                </div>
+                <div className="col-sm-12 col-lg-2 ec-footer-service">
                   <div className="ec-footer-widget">
                     <h4 className="ec-footer-heading">Services</h4>
                     <div className="ec-footer-links">
@@ -69,7 +69,7 @@ function Footer() {
                       </ul>
                     </div>
                   </div>
-                </div> */}
+                </div>
                 <div className="col-sm-12 col-lg-3 ec-footer-news">
                   <div className="ec-footer-widget">
                     <div className="ec-footer-links">
