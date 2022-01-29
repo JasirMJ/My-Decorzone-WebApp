@@ -89,7 +89,7 @@ const OrderDetails = () => {
     if (data.status?.includes("PLACED")) {
       setdeliveryStatusCode(1)
     }
-  }, []);
+  }, [data]);
 
   // useEffect(() => {
   // alert(deliveryStatusCode)
@@ -122,16 +122,39 @@ const OrderDetails = () => {
                 <div className="ec-trackorder-bottom">
                   <div className="ec-progress-track">
                     <ul id="ec-progressbar">
-                    {/* {
-                        data.issued_items?.map(item => (
-                    } */}
-                      <li className={`step0 ${deliveryStatusCode >= 1 && 'active'}`}><span className="ec-track-icon">
-                        {/* <img src="assets/images/icons/track_1.png" alt="track_order" /> */}
-                      </span><span className="ec-progressbar-track" /><span className="ec-track-title">order
-                          <br />Placed</span></li>
-                      {/* <li className={`step0 ${data.status == 'shipped' && 'active'}`}><span className="ec-track-icon">
-                        <img src="assets/images/icons/track_2.png" alt="track_order" />
-                      </span><span className="ec-progressbar-track" /><span className="ec-track-title">order
+                      <li className={`step0 ${(deliveryStatusCode >= 1 && deliveryStatusCode <= 5) && 'active'}`}><span className="ec-track-icon">                      </span>
+                        <span className="ec-progressbar-track" />
+                        <span className="ec-track-title">order
+                          <br />Placed</span>
+                      </li>
+                      
+                      <li className={`step0 ${(deliveryStatusCode >= 2 && deliveryStatusCode <= 5) && 'active'}`}>
+                        <span className="ec-track-icon"></span>
+                        <span className="ec-progressbar-track" />
+                        <span className="ec-track-title">order<br />Approved</span>
+                      </li>
+                      <li className={`step0 ${(deliveryStatusCode >= 3 && deliveryStatusCode <= 5) && 'active'}`}><span className="ec-track-icon"> </span>
+                        <span className="ec-progressbar-track" />
+                        <span className="ec-track-title">order
+                          <br />Shipped</span>
+                      </li>
+
+                      <li className={`step0 ${(deliveryStatusCode >= 4 && deliveryStatusCode <= 5) && 'active'}`}>
+                        <span className="ec-track-icon">                        </span>
+                        <span className="ec-progressbar-track" />
+                        <span className="ec-track-title">order <br />Out for delivery</span>
+                      </li>
+                      <li className={`step0 ${deliveryStatusCode == 5 && 'active'}`}>
+                        <span className="ec-track-icon"></span>
+                        <span className="ec-progressbar-track" />
+                        <span className="ec-track-title">order<br />Delivered</span>
+                      </li>
+
+                      
+
+
+
+                      {/* </span><span className="ec-progressbar-track" /><span className="ec-track-title">order
                           <br />designing</span></li> */}
                     </ul>
                   </div>
