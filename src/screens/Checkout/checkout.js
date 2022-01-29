@@ -24,6 +24,8 @@ const Checkout = () => {
 
     const [selectedAddressid, setselectedAddressid] = useState("");
 
+    const [placeOrderLoading, setplaceOrderLoading] = useState(false);
+
     useEffect(() => {
         GetData()
         getDefaultAddress()
@@ -167,10 +169,12 @@ const Checkout = () => {
     }
 
     const placeOrder = () => {
-        if (selectedAddressid == "") {
+        
+        if(selectedAddressid == "") {
             alert("select address");
             return 0
         }
+        setplaceOrderLoading(true)
         var axios = require('axios');
         var FormData = require('form-data');
         var data = new FormData();
@@ -188,18 +192,20 @@ const Checkout = () => {
         };
 
         axios(config)
-            .then(function (response) {
-                if (response.status == 200) {
-                    setCartObjs([])
-                    window.location.replace('/myorders')
-                } else {
-                    alert("cart is empty")
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
+        .then(function (response) {
+            setplaceOrderLoading(false)
+            if(response.status == 200) {
+                setCartObjs([])
+                window.location.replace('/myorders')
+            } else {
                 alert("cart is empty")
-            });
+            }
+        })
+        .catch(function (error) {
+          console.log(error);
+          setplaceOrderLoading(false)
+          alert("cart is empty")
+        });
     }
 
     const selectedAddress = (id) => {
@@ -439,7 +445,12 @@ const Checkout = () => {
                                     </div>
                                 </div>
                                 <span className="ec-check-order-btn">
-                                    <a onClick={() => { placeOrder() }} className="btn w-100 btn-primary" href="#">Place Order</a>
+                                    <a onClick={()=>{placeOrder()}} className="btn w-100 btn-primary" href="#">
+                                    {placeOrderLoading &&
+                                    <div class="spinner-border spinner-border-sm text-light mr-1" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>}
+                                    Place Order</a>
                                 </span>
                             </div>
                             {/* Sidebar Summary Block */}
