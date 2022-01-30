@@ -1,7 +1,6 @@
 import React, { useState , useContext , useEffect } from 'react'
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
-import MainSlider from '../../components/MainSlider';
 import ProductTabArea from '../../components/ProductTabArea';
 import BannerSection from '../../components/BannerSection';
 import CategorySection from '../../components/CategorySection';
@@ -57,9 +56,9 @@ const Register = () => {
       axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-          setUserToken(response.data.token)
-          setDataOnCookie(localStorageName, response.data);
-          window.location.replace('/')
+          // setUserToken(response.data.token)
+          // setDataOnCookie(localStorageName, response.data);
+          window.location.replace('/login')
       })
       .catch(function (error) {
         console.log(error);

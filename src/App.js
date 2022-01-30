@@ -2,7 +2,6 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
 import CartComponent from './components/CartComponent';
-import MainSlider from './components/MainSlider';
 import ProductTabArea from './components/ProductTabArea';
 import BannerSection from './components/BannerSection';
 import CategorySection from './components/CategorySection';
@@ -42,7 +41,6 @@ function App() {
       {/* ekka Cart End */}
 
       {/* Main Slider Start */}
-      <MainSlider/>
       {/* Main Slider End */}
 
       {/* Product tab Area Start */}

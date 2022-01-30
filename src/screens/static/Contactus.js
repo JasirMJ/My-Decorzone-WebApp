@@ -1,6 +1,5 @@
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
-import MainSlider from '../../components/MainSlider';
 import ProductTabArea from '../../components/ProductTabArea';
 import BannerSection from '../../components/BannerSection';
 import CategorySection from '../../components/CategorySection';
@@ -85,7 +84,7 @@ const Contactus = () => {
                                 20815, USA</li>
                                 <li className="ec-contact-item align-items-center"><i className="ecicon eci-phone" aria-hidden="true" /><span>Call Us :</span><a href="tel:+440123456789">+44 0123
                                     456 789</a></li>
-                                <li className="ec-contact-item align-items-center"><i className="ecicon eci-envelope" aria-hidden="true" /><span>Email :</span><a href="https://loopinfosol.in/cdn-cgi/l/email-protection#6e0b160f031e020b2e0b0d430b030f0702400d0103"><span className="__cf_email__" data-cfemail="3a5f425b574a565f7a5f59175f575b535614595557">[email&nbsp;protected]</span></a></li>
+                                <li className="ec-contact-item align-items-center"><i className="ecicon eci-envelope" aria-hidden="true" /><span>Email :</span><a ><span className="__cf_email__" >mydecorzone@gmail.com</span></a></li>
                             </ul>
                             </div>
                         </div>

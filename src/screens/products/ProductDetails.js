@@ -1,6 +1,5 @@
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
-import MainSlider from '../../components/MainSlider';
 import ProductTabArea from '../../components/ProductTabArea';
 import BannerSection from '../../components/BannerSection';
 import CategorySection from '../../components/CategorySection';
@@ -213,6 +212,7 @@ const ProductDetails = () => {
         setprice(item.rate)
         setofferprice(item.offer_rate)
         setoffer_enabled(item.offer_enabled)
+        setvarientDesc(item.description)
     }
 
     return (
@@ -314,13 +314,11 @@ const ProductDetails = () => {
                                                                 <ul>
                                                                     {
                                                                         Data.variants?.map((item, index) =>
-                                                                            <li className={selectVarientId == item.id && "active"} onClick={() => { selectVarient(item) ; setvarientDesc(item.description) }} style={{ padding: '2px 8px' }}><span>{item.name}</span></li>
+                                                                            <li className={selectVarientId == item.id && "active"} onClick={() => { selectVarient(item)  }} style={{ padding: '2px 8px' }}><span>{item.name}</span></li>
                                                                         )
                                                                     }
 
-                                                                    {varientDesc &&
-                                                                        <li className='p-1 mt-1'>{varientDesc}</li>
-                                                                    }
+                                                                
                                                                 </ul>
                                                             </div>
 
@@ -383,20 +381,21 @@ const ProductDetails = () => {
                                         <div className="tab-content  ec-single-pro-tab-content">
                                             <div id="ec-spt-nav-details" className="tab-pane fade show active">
                                                 <div className="ec-single-pro-tab-desc">
+                                                    <p>{Data.description}</p>
+                                                    <p>{varientDesc} </p>
+                                                </div>
+                                            </div>
+                                            <div id="#ec-spt-nav-info" className="tab-pane fade">
+                                                <div className="ec-single-pro-tab-desc">
                                                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                                         Lorem Ipsum has been the industry's standard dummy text ever since the
                                                         1500s, when an unknown printer took a galley of type and scrambled it to
                                                         make a type specimen book. It has survived not only five centuries, but also
                                                         the leap into electronic typesetting, remaining essentially unchanged.
                                                     </p>
-                                                    <ul>
-                                                        <li>Any Product types that You want - Simple, Configurable</li>
-                                                        <li>Downloadable/Digital Products, Virtual Products</li>
-                                                        <li>Inventory Management with Backordered items</li>
-                                                        <li>Flatlock seams throughout.</li>
-                                                    </ul>
                                                 </div>
                                             </div>
+
                                             <div id="#ec-spt-nav-rtrn" className="tab-pane fade">
                                                 <div className="ec-single-pro-tab-desc">
                                                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.

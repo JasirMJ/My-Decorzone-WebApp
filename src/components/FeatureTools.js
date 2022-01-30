@@ -8,9 +8,9 @@ function FeatureTools() {
         <div className="tool-title">
           <h3>Features</h3>
         </div>
-        <a href="#" className="ec-tools-sidebar-toggle in-out">
+        {/* <a href="#" className="ec-tools-sidebar-toggle in-out">
           <img alt="icon" src="assets/images/common/settings.png" />
-        </a>
+        </a> */}
         <div className="ec-tools-detail">
           <div className="ec-tools-sidebar-content ec-change-color ec-color-desc">
             <h3>Color Scheme</h3>

@@ -759,7 +759,7 @@
   }
 
   .ec-slide-item {
-    height: 50vh;
+    height: 75vh;
   }
 
   .ec-slide-1, .ec-slide-2, .ec-slide-3 {
@@ -1385,7 +1385,7 @@
   }
 
   .ec-footer-logo a img {
-    width: 130px;
+    width: 100px;
   }
 
   .sec-1 h2, .sec-2 h2, .sec-3 h2, .sec-4 h2, .sec-5 h2, .sec-6 h2, .sec-7 h2, .sec-8 h2, .sec-9 h2, .sec-10 h2, .sec-11 h2, .sec-12 h2 {
@@ -1544,7 +1544,7 @@
   }
 
   .ec-slide-item {
-    height: 40vh;
+    height: 60vh;
   }
 
   .section-title .ec-title {
@@ -2347,7 +2347,7 @@
 }
 @media only screen and (max-width: 575px) {
   .ec-slide-item {
-    height: 30vh;
+    height: 45vh;
   }
 
   .list-view .ec-product-inner .ec-pro-image-outer {

@@ -35,10 +35,10 @@ function Footer() {
                     <h4 className="ec-footer-heading">Information</h4>
                     <div className="ec-footer-links">
                       <ul className="align-items-center">
-                        <li className="ec-footer-link"><a href="about-us.html">About us</a></li>
+                        <li className="ec-footer-link"><a href="/about">About us</a></li>
                         <li className="ec-footer-link"><a href="faq.html">FAQ</a></li>
                         <li className="ec-footer-link"><a href="track-order.html">Delivery Information</a></li>
-                        <li className="ec-footer-link"><a href="contact-us.html">Contact us</a></li>
+                        <li className="ec-footer-link"><a href="/contactus">Contact us</a></li>
                       </ul>
                     </div>
                   </div>
@@ -48,10 +48,10 @@ function Footer() {
                     <h4 className="ec-footer-heading">Account</h4>
                     <div className="ec-footer-links">
                       <ul className="align-items-center">
-                        <li className="ec-footer-link"><a href="user-profile.html">My Account</a></li>
-                        <li className="ec-footer-link"><a href="track-order.html">Order History</a></li>
-                        <li className="ec-footer-link"><a href="wishlist.html">Wish List</a></li>
-                        <li className="ec-footer-link"><a href="offer.html">Specials</a></li>
+                        <li className="ec-footer-link"><a href="/myaccount">My Account</a></li>
+                        <li className="ec-footer-link"><a href="/myorders">Order History</a></li>
+                        <li className="ec-footer-link"><a href="/cart">Cart</a></li>
+                        <li className="ec-footer-link"><a href="/offers">Specials</a></li>
                       </ul>
                     </div>
                   </div>

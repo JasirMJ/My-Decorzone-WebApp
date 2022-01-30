@@ -2,10 +2,9 @@ import { useContext, useEffect, useState } from 'react';
 
 import React from 'react'
 import SideCard from './components/SideCard'
-
+import Preloader from '../../components/Preloader';
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
-import MainSlider from '../../components/MainSlider';
 import ProductTabArea from '../../components/ProductTabArea';
 import BannerSection from '../../components/BannerSection';
 import CategorySection from '../../components/CategorySection';
@@ -26,12 +25,14 @@ import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
 import { AppContext, baseurl } from '../../common/Constants';
 import { Link } from 'react-router-dom';
+import NoData from '../NoData/noData';
 
 const MyOrders = () => {
 
   const [open, setopen] = useState(false)
   const [data, setdata] = useState([]);
   const { userToken } = useContext(AppContext);
+  const [loading, setloading] = useState(true)
 
   useEffect(() => {
     Getdata()
@@ -55,6 +56,8 @@ const MyOrders = () => {
     axios(config)
       .then(function (response) {
         console.log(response.data);
+        setloading(false)
+
 
         if (response.data.results) {
           setdata(response.data.results)
@@ -62,6 +65,8 @@ const MyOrders = () => {
       })
       .catch(function (error) {
         console.log(error);
+        setloading(false)
+
       });
 
   }
@@ -71,7 +76,7 @@ const MyOrders = () => {
   return (
     <div>
       <div>
-        <div id="ec-overlay"><span className="loader_img" /></div>
+        {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
         <Header />
         {/* ekka Cart Start */}
         <div className="ec-side-cart-overlay" />
@@ -89,6 +94,15 @@ const MyOrders = () => {
                         <a className="btn btn-lg btn-primary" href="#">Shop Now</a>
                     </div> */}
                   </div>
+                  {
+                      loading ?
+                      <Preloader/>
+                      :
+                      data.length == 0 ?
+                   <div className='d-flex justify-content-center'>
+                    <NoData />
+                  </div>
+                  :
                   <div className="ec-vendor-card-body">
                     <div className="ec-vendor-card-table">
                       <table className="table ec-table">
@@ -121,6 +135,7 @@ const MyOrders = () => {
                       </table>
                     </div>
                   </div>
+                  }
                 </div>
               </div>
 

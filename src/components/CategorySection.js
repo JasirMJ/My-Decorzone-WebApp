@@ -18,7 +18,7 @@ function CategorySection() {
 
     var config = {
       method: 'get',
-      url: baseurl + '/items/category/',
+      url: baseurl + '/items/category/?ordering=?',
       headers: {
         'Authorization': userToken,
 
@@ -64,11 +64,7 @@ function CategorySection() {
                 </div>
               </div>
             ))}
-            <a href="/categories" style={{ textAlign: 'center' }}>
-              <button className='btn-danger p-1' style={{borderRadius:'.125rem'}}>
-                view all categories
-              </button>
-            </a>
+          
           </div>
           {/* <div className="ec-pro-pagination"><span /><ul className="ec-pro-pagination-inner" /></div> */}
         </div>

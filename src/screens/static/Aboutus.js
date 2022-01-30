@@ -1,6 +1,5 @@
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
-import MainSlider from '../../components/MainSlider';
 import ProductTabArea from '../../components/ProductTabArea';
 import BannerSection from '../../components/BannerSection';
 import CategorySection from '../../components/CategorySection';
@@ -39,14 +38,14 @@ function Aboutus() {
         </div>
         <div className="ec-common-wrapper">
           <div className="row">
-            <div className="col-md-6 ec-cms-block ec-abcms-block text-center">
+            {/* <div className="col-md-6 ec-cms-block ec-abcms-block text-center">
               <div className="ec-cms-block-inner">
                 <img className="a-img" src="assets/images/offer-image/1.jpg" alt="about" />
               </div>
-            </div>
-            <div className="col-md-6 ec-cms-block ec-abcms-block text-center">
+            </div> */}
+            <div className="col-md-12 ec-cms-block ec-abcms-block text-center">
               <div className="ec-cms-block-inner">
-                <h3 className="ec-cms-block-title">What is the ekka?</h3>
+                <h3 className="ec-cms-block-title">What is the My Decorzone?</h3>
                 <p>Electronic typesetting text of the printing and typesetting industry. when an unknown printer took a galley of type
                   and scrambled it to make a type specimen book. Lorem Ipsum is
                   simply dutmmy text ever since the 1500s, It has survived not only,

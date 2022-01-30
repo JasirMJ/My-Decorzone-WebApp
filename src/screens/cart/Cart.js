@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
-import MainSlider from '../../components/MainSlider';
 import ProductTabArea from '../../components/ProductTabArea';
 import BannerSection from '../../components/BannerSection';
 import CategorySection from '../../components/CategorySection';
@@ -23,12 +22,14 @@ import FeatureTools from '../../components/FeatureTools';
 import { baseurl, protocol, AppContext } from '../../common/Constants'
 import CartProduct from './components/CartProduct';
 import NoData from '../NoData/noData';
+import Preloader from '../../components/Preloader';
 
 const Cart = () => {
   const [open, setopen] = useState(false)
   // const [cartTotal, setcartTotal] = useState('');
 
   const { userToken, setCartObjs, cartObjs, totalPayAmount, cartDiscountTotalAmount, cartTotalAmount, extraCharges, deliveryCharge, userAddressId } = useContext(AppContext)
+  const [loading, setloading] = useState(true)
 
   useEffect(() => {
     console.log("userToken CART", userToken);
@@ -49,12 +50,14 @@ const Cart = () => {
     axios(config)
       .then(function (response) {
         console.log("CART", response.data);
+        setloading(false)
         if (response.data.results.length != 0) {
           console.log("CART DATA", response.data.results[0].basket);
           setCartObjs(response.data.results[0].basket)
         }
       })
       .catch(function (error) {
+        setloading(false)
         console.log("CART LIST", error);
       });
   }
@@ -84,11 +87,20 @@ const Cart = () => {
         {/* Ec cart page */}
         <section className="ec-page-content section-space-p">
           <div className="container">
+          {
+                  loading ?
+                      <Preloader/>
+                      :
+                   
+                   cartObjs.length == 0 ?
+                   <div className='d-flex justify-content-center'>
+                    <NoData />
+                  </div>
+                  :
             <div className="row">
               <div className="ec-cart-leftside col-lg-8 col-md-12 ">
                 {/* cart content Start */}
-                {
-                  cartObjs.length != 0 &&
+             
                     <div className="ec-cart-content">
                       <div className="ec-cart-inner">
                         <div className="row">
@@ -121,13 +133,11 @@ const Cart = () => {
                       </div>
                     </div>
                     
-                    // <span>NO Cart Item</span>
-                }
+             
                 {/*cart content End */}
               </div>
               {/* Sidebar Area Start */}
-              {
-                cartObjs.length != 0 ?
+          
                   <div className="ec-cart-rightside col-lg-4 col-md-12">
                     <div className="ec-sidebar-wrap">
                       {/* Sidebar Summary Block */}
@@ -178,13 +188,12 @@ const Cart = () => {
                       {/* Sidebar Summary Block */}
                     </div>
                   </div>
-                  :
-                  <div className='d-flex justify-content-center'>
-                    <NoData />
-                  </div>
-              }
+                
+               
+         
 
             </div>
+          }
           </div>
         </section>
         <Footer />

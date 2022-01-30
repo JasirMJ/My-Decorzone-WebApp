@@ -1,6 +1,5 @@
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
-import MainSlider from '../../components/MainSlider';
 import ProductTabArea from '../../components/ProductTabArea';
 import BannerSection from '../../components/BannerSection';
 import CategorySection from '../../components/CategorySection';
@@ -20,10 +19,11 @@ import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
 import GridProduct from '../../components/GridProduct'
-import { useContext, useEffect, useState  } from 'react';
-import {baseurl , protocol , AppContext} from '../../common/Constants'
+import { useContext, useEffect, useState } from 'react';
+import { baseurl, protocol, AppContext } from '../../common/Constants'
 import Preloader from '../../components/Preloader';
 import { useParams } from 'react-router-dom';
+import NoData from '../NoData/noData';
 
 const CategoryProducts = () => {
   const [open, setopen] = useState(false)
@@ -36,34 +36,44 @@ const CategoryProducts = () => {
   const { id } = useParams()
   const [Data, setData] = useState([]);
 
+  const [nodata, setnodata] = useState(false);
+
   useEffect(() => {
     getCategoryProducts()
   }, [])
 
-  const getCategoryProducts =  () => {
+  const getCategoryProducts = () => {
     var axios = require('axios');
     var FormData = require('form-data');
     var data = new FormData();
-    
+
     var config = {
       method: 'get',
       url: baseurl + '/items/items/?category=' + id,
-      headers: { 
+      headers: {
       },
-      data : data
+      data: data
     };
-    
+
     axios(config)
-    .then(function (response) {
-      setloading(false)
-      setData(response.data.results)
-      setNext(response.data.next);
-      setPrev(response.data.previous);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    
+      .then(function (response) {
+        console.log(response);
+        setloading(false)
+        if (response.data.results.length) {
+          setData(response.data.results)
+          setNext(response.data.next);
+          setPrev(response.data.previous);
+          setnodata(false)
+        } else {
+          // alert('no data')
+          setnodata(true)
+        }
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
   }
 
 
@@ -71,104 +81,110 @@ const CategoryProducts = () => {
     // alert("prev");
     var axios = require('axios');
     var config = {
-        method: "get",
-        url: prev.replace("http:", protocol.replace('//', "")),
-        // url: prev + "/?" + params,
+      method: "get",
+      url: prev.replace("http:", protocol.replace('//', "")),
+      // url: prev + "/?" + params,
 
-        headers: {
-        },
+      headers: {
+      },
     };
     // console.log("Caed previousssssssssssssssss ", prev);
     axios(config)
-        .then(function (response) {
-            // console.log(JSON.stringify(response.data.results));
-            setData(response.data.results);
-            setNext(response.data.next);
-            setPrev(response.data.previous);
-        })
-        .catch(function (error) {
-            // console.log(error);
-        });
-};
+      .then(function (response) {
+        // console.log(JSON.stringify(response.data.results));
+        setData(response.data.results);
+        setNext(response.data.next);
+        setPrev(response.data.previous);
+      })
+      .catch(function (error) {
+        // console.log(error);
+      });
+  };
 
-const handleNext = () => {
-  var axios = require('axios');
+  const handleNext = () => {
+    var axios = require('axios');
     // alert("next")
     var config = {
-        method: "get",
-        url: next.replace("http:", protocol.replace('//', "")),
-        // url: next + "/?" + params,
+      method: "get",
+      url: next.replace("http:", protocol.replace('//', "")),
+      // url: next + "/?" + params,
 
-        headers: {
-        },
+      headers: {
+      },
     };
     // console.log(config.url)
     axios(config)
-        .then(function (response) {
-            // console.log((response));
-            setData(response.data.results);
-            setNext(response.data.next);
-            setPrev(response.data.previous);
-        })
-        .catch(function (error) {
-            // console.log(error);
-        });
-};
+      .then(function (response) {
+        // console.log((response));
+        setData(response.data.results);
+        setNext(response.data.next);
+        setPrev(response.data.previous);
+      })
+      .catch(function (error) {
+        // console.log(error);
+      });
+  };
 
   return (
     <div>
       <div>
-        <div id="ec-overlay"><span className="loader_img" /></div>
+        {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
         {/* ekka Cart Start */}
         <Header open={open} setopen={() => setopen(!open)} />
 
         <div className="ec-side-cart-overlay" />
 
         {/* Ec Shop page */}
-        <section className="ec-page-content section-space-p">
-          <div className="container">
-            <div className="row">
-              <div className="ec-shop-rightside col-lg-12 col-md-12">
+        {!nodata ?
+          <section className="ec-page-content section-space-p">
+            <div className="container">
+              <div className="row">
+                <div className="ec-shop-rightside col-lg-12 col-md-12">
 
-                {/* Shop content Start */}
-                <div className="shop-pro-content">
-                  <div className="shop-pro-inner">
-                    {
-                      loading ?
-                      <Preloader/>
-                      :
-                     Data.length !=0 &&
-                     <div className="row">
+                  {/* Shop content Start */}
+                  <div className="shop-pro-content">
+                    <div className="shop-pro-inner">
                       {
-                        Data.map((item, index) => {
-                          return <GridProduct key={index} Data={item} />
-                      })
+                        loading ?
+                          <Preloader />
+                          :
+                          Data.length != 0 &&
+                          <div className="row">
+                            {
+                              Data.map((item, index) => {
+                                return <GridProduct key={index} Data={item} />
+                              })
+                            }
+                          </div>
                       }
                     </div>
-                    }
-                  </div>
-                  {/* Ec Pagination Start */}
-                  <div className="ec-pro-pagination">
-                    <span></span>
-                    <ul className="ec-pro-pagination-inner">
-                    {
-                      prev != null &&
-                      <li><a className="next" href="#" onClick={()=>{handlePrev()}}><i className="ecicon eci-angle-left" /> Previous</a></li>
-                    }
+                    {/* Ec Pagination Start */}
+                    <div className="ec-pro-pagination">
+                      <span></span>
+                      <ul className="ec-pro-pagination-inner">
+                        {
+                          prev != null &&
+                          <li><a className="next" href="#" onClick={() => { handlePrev() }}><i className="ecicon eci-angle-left" /> Previous</a></li>
+                        }
 
-                    {
-                      next != null &&
-                      <li><a className="next" href="#"  onClick={()=>{handleNext()}}>Next <i className="ecicon eci-angle-right" /></a></li>
-                    }
-                    </ul>
+                        {
+                          next != null &&
+                          <li><a className="next" href="#" onClick={() => { handleNext() }}>Next <i className="ecicon eci-angle-right" /></a></li>
+                        }
+                      </ul>
+                    </div>
+                    {/* Ec Pagination End */}
                   </div>
-                  {/* Ec Pagination End */}
                 </div>
-              </div>
 
+              </div>
             </div>
+          </section>
+          :
+          <div className='d-flex justify-content-center'>
+            <NoData />
           </div>
-        </section>
+        }
       </div>
       <Footer />
       {/* Footer navigation panel for responsive display */}

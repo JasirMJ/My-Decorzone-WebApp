@@ -1,7 +1,6 @@
 import React, { useState , useContext , useEffect } from 'react'
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
-import MainSlider from '../../components/MainSlider';
 import ProductTabArea from '../../components/ProductTabArea';
 import BannerSection from '../../components/BannerSection';
 import CategorySection from '../../components/CategorySection';
@@ -218,7 +217,7 @@ const Categories = () => {
                                 <div className="cat-card">
                                     <img className="cat-icon"src={addDomainInImage(item.image)} alt="cat-icon" />
                                     <div className="cat-detail">
-                                        <h4 style={{color:"#fff"}}>{item.name}</h4><br/>
+                                        <h4 style={{color:"#fff", textShadow:'0 0 5px #999999'}}>{item.name}</h4><br/>
                                         <a className="btn-primary"  href={`/category/${item.id}`} >Shop now</a>
                                     </div>
                                 </div>
