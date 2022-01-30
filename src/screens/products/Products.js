@@ -1,4 +1,4 @@
-import React, { useState , useContext , useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
 import ProductTabArea from '../../components/ProductTabArea';
@@ -20,8 +20,9 @@ import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
 import GridProduct from '../../components/GridProduct'
-import {baseurl , protocol , AppContext} from '../../common/Constants'
+import { baseurl, protocol, AppContext } from '../../common/Constants'
 import Preloader from '../../components/Preloader';
+import NoData from '../NoData/noData';
 
 
 
@@ -33,81 +34,84 @@ const Products = () => {
 
   const [next, setNext] = useState(null);
   const [prev, setPrev] = useState(null);
+  const { userToken, serachText } = useContext(AppContext)
 
   useEffect(() => {
     getproduct()
-  }, [])
+  }, [serachText])
+
+  let param = serachText
 
   const getproduct = () => {
     var axios = require('axios');
 
     var config = {
       method: 'get',
-      url: baseurl + '/items/items/?ordering=?',
-      headers: { }
+      url: baseurl + '/items/items/?ordering=?&' + `search=${param}`,
+      headers: {}
     };
-    
+
     axios(config)
-    .then(function (response) {
-      setloading(false)
-      console.log(response.data);
-      setprodcuts(response.data.results)
-      setNext(response.data.next);
-      setPrev(response.data.previous);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    
+      .then(function (response) {
+        setloading(false)
+        console.log('prdts', response);
+        setprodcuts(response.data.results)
+        setNext(response.data.next);
+        setPrev(response.data.previous);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
   }
 
   const handlePrev = () => {
     // alert("prev");
     var axios = require('axios');
     var config = {
-        method: "get",
-        url: prev.replace("http:", protocol.replace('//', "")),
-        // url: prev + "/?" + params,
+      method: "get",
+      url: prev.replace("http:", protocol.replace('//', "")) + `&search=${param}`,
+      // url: prev + "/?" + params,
 
-        headers: {
-        },
+      headers: {
+      },
     };
     // console.log("Caed previousssssssssssssssss ", prev);
     axios(config)
-        .then(function (response) {
-            // console.log(JSON.stringify(response.data.results));
-            setprodcuts(response.data.results);
-            setNext(response.data.next);
-            setPrev(response.data.previous);
-        })
-        .catch(function (error) {
-            // console.log(error);
-        });
-};
+      .then(function (response) {
+        // console.log(JSON.stringify(response.data.results));
+        setprodcuts(response.data.results);
+        setNext(response.data.next);
+        setPrev(response.data.previous);
+      })
+      .catch(function (error) {
+        // console.log(error);
+      });
+  };
 
-const handleNext = () => {
-  var axios = require('axios');
+  const handleNext = () => {
+    var axios = require('axios');
     // alert("next")
     var config = {
-        method: "get",
-        url: next.replace("http:", protocol.replace('//', "")),
-        // url: next + "/?" + params,
+      method: "get",
+      url: next.replace("http:", protocol.replace('//', "")) + `&search=${param}`,
+      // url: next + "/?" + params,
 
-        headers: {
-        },
+      headers: {
+      },
     };
     // console.log(config.url)
     axios(config)
-        .then(function (response) {
-            // console.log((response));
-            setprodcuts(response.data.results);
-            setNext(response.data.next);
-            setPrev(response.data.previous);
-        })
-        .catch(function (error) {
-            // console.log(error);
-        });
-};
+      .then(function (response) {
+        // console.log((response));
+        setprodcuts(response.data.results);
+        setNext(response.data.next);
+        setPrev(response.data.previous);
+      })
+      .catch(function (error) {
+        // console.log(error);
+      });
+  };
 
   return (
     <div>
@@ -129,31 +133,38 @@ const handleNext = () => {
                   <div className="shop-pro-inner">
                     {
                       loading ?
-                      <Preloader/>
-                      :
-                     prodcuts.length !=0 &&
-                     <div className="row">
-                      {
-                        prodcuts.map((item, index) => {
-                          return <GridProduct key={index} Data={item} />
-                      })
-                      }
-                    </div>
+                        <Preloader />
+                        :
+                        prodcuts.length != 0 ?
+                          <>
+
+                            <div className="row">
+                              {
+                                prodcuts.map((item, index) => {
+                                  return <GridProduct key={index} Data={item} />
+                                })
+                              }
+                            </div>
+                          </>
+                          :
+                          <div className='d-flex justify-content-center'>
+                            <NoData text={'No data found'} url={'/'} buttonName={'Return to Home '} />
+                          </div>
                     }
                   </div>
                   {/* Ec Pagination Start */}
                   <div className="ec-pro-pagination">
                     <span></span>
                     <ul className="ec-pro-pagination-inner">
-                    {
-                      prev != null &&
-                      <li><a className="next" href="#" onClick={()=>{handlePrev()}}><i className="ecicon eci-angle-left" /> Previous</a></li>
-                    }
+                      {
+                        prev != null &&
+                        <li><a className="next" href="#" onClick={() => { handlePrev() }}><i className="ecicon eci-angle-left" /> Previous</a></li>
+                      }
 
-                    {
-                      next != null &&
-                      <li><a className="next" href="#"  onClick={()=>{handleNext()}}>Next <i className="ecicon eci-angle-right" /></a></li>
-                    }
+                      {
+                        next != null &&
+                        <li><a className="next" href="#" onClick={() => { handleNext() }}>Next <i className="ecicon eci-angle-right" /></a></li>
+                      }
                     </ul>
                   </div>
                   {/* Ec Pagination End */}

@@ -52,16 +52,17 @@ import React, { Component, useEffect, useState } from "react";
 import Slider from "react-slick";
 import { baseurl } from "../../../common/Constants";
 
-export default function MainSlider({banners}) {
+export default function MainSlider({ banners }) {
   const [data, setdata] = useState([]);
 
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+    autoplay: true
   };
   return (
     <div>

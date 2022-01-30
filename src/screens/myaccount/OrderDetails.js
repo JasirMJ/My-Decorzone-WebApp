@@ -32,7 +32,7 @@ const OrderDetails = () => {
 
   const [open, setopen] = useState(false)
   const [data, setdata] = useState({});
-  const { userToken } = useContext(AppContext);
+  const { userToken, extraCharges } = useContext(AppContext);
   const [deliveryStatusCode, setdeliveryStatusCode] = useState(0);
 
 
@@ -237,11 +237,9 @@ const OrderDetails = () => {
                               {data.user.address[0].address?.address1 + ' ' + data.user.address[0]?.address?.address2 + ' ' + data.user.address[0]?.address?.city + ' ' + data.user.address[0]?.address?.state + ' ' + data.user.address[0]?.address?.pin}
                             </li>
                           }
-                          {data.other_charges &&
-                            <li className="ec-contact-item"><i className="ecicon eci-map-marker" aria-hidden="true" /><span>Extra charge :</span>
-                              {data.other_charges}
-                            </li>
-                          }
+                          {/* {data.other_charges && */}
+
+                          {/* } */}
                         </ul>
 
                       </div>
@@ -251,16 +249,21 @@ const OrderDetails = () => {
                         <div className="ec-cart-summary">
                           <div>
                             <span className="text-left">Sub-Total</span>
-                            <span className="text-right">{data.amount}</span>
+                            <span className="text-right">₹{data.amount}</span>
                           </div>
                           <div>
                             <span className="text-left">Delivery Charges</span>
-                            <span className="text-right">{data.delivery_charge}</span>
+                            <span className="text-right">₹{data.delivery_charge}</span>
                           </div>
                           <div>
                             <span className="text-left">Discount</span>
-                            <span className="text-right">{data.item_discount}</span>
+                            <span className="text-right">₹{data.item_discount}</span>
                           </div>
+                          <div>
+                            <span className="text-left">Extra charge</span>
+                            <span className="text-right">₹{extraCharges}</span>
+                          </div>
+
 
                           {/* <div className="ec-cart-coupan-content">
                             <form className="ec-cart-coupan-form" name="ec-cart-coupan-form" method="post" action="#">
@@ -270,7 +273,7 @@ const OrderDetails = () => {
                           </div> */}
                           <div className="ec-cart-summary-total">
                             <span className="text-left">Total Amount</span>
-                            <span className="text-right">{data.net_amount}</span>
+                            <span className="text-right">₹{data.net_amount}</span>
                           </div>
                         </div>
                       </div>

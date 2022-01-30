@@ -14,7 +14,7 @@ function FooterNav(data) {
           <div className="ec-nav-panel d-flex justify-content-between ">
             <div className="ec-nav-panel-icons">
               <button
-                onClick={() => data.setopen()}
+                onClick={() => {data.setopen(); }}
               >
                 <a>
                   <i class="fas fa-bars" style={{ fontSize: 'x-large' }}></i>

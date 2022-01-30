@@ -239,7 +239,7 @@ const ProductDetails = () => {
                                         <div className="row">
                                             <div className="single-pro-img">
                                                 <div className="single-product-scroll">
-                                                    <div className="single-product-cover">
+                                                    <div className="single-product-cover" style={{overflow:'unset'}}>
                                                         <div className="single-slide zoom-image-hover">
                                                             {/* <img className="img-responsive" src={data.images[0].image} alt /> */}
                                                             <ImageSlider images={Data.images} />

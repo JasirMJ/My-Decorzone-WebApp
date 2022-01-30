@@ -2,10 +2,18 @@
 import React from 'react';
 import Slider from "react-slick";
 import SimpleImageSlider from "react-simple-image-slider";
+import { addDomainInImage } from '../../common/Functions';
 
 export const ImageSlider = ({ images }) => {
     console.log({ images });
     const settings = {
+        customPaging: function (i) {
+            return (
+                <a>
+                    <img src={images[i].image} />
+                </a>
+            );
+        },
         dots: true,
         infinite: true,
         speed: 500,
@@ -18,7 +26,7 @@ export const ImageSlider = ({ images }) => {
 
                 {images?.map(item => (
                     <div >
-                        <img style={{ height: '22rem', objectFit: 'cover', width: '100%', objectPosition: 'center' }} src={item.image} alt="" srcset="" />
+                        <img style={{ height: '22rem', objectFit: 'cover', width: '100%', objectPosition: 'center' }} src={addDomainInImage(item.image)} alt="" srcset="" />
                     </div>
                 ))}
 

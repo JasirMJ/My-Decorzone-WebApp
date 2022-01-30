@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { baseurl, protocol, AppContext } from '../common/Constants'
 import { unsetDataOnCookie } from '../common/Functions'
-import Logo from '../assets/images/logo.png'
+import Logo from '../assets/images/logo.jpeg'
 
 function Header({ open, setopen }) {
 
-  const { userToken, localStorageName, cartObjs } = useContext(AppContext)
+  const { userToken, localStorageName, cartObjs, serachText, setserachText } = useContext(AppContext)
 
   console.log("TOKEN", userToken);
 
@@ -27,21 +27,23 @@ function Header({ open, setopen }) {
                 </div>
                 {/* Ec Header Logo End */}
                 {/* Ec Header Search Start */}
-                <div className="align-self-center">
-                  <div className="header-search">
-                    {/* <form className="ec-btn-group-form" action="#">
-                      <input className="form-control" placeholder="Enter Your Product Name..." type="text" />
-                      <button className="submit" type="submit"><img src="assets/images/icons/search.svg" className="svg_img header_svg" alt /></button>
-                    </form> */}
+                {window.location.pathname == '/products' &&
+                  <div className="align-self-center">
+                    <div className="header-search">
+                      <form className="ec-btn-group-form" action="#">
+                        <input className="form-control" placeholder="Enter Your Product Name..." type="text" style={{ borderRadius: '6px' }} onChange={e => setserachText(e.target.value)} value={serachText} />
+                        <button className="submit" type='button'><i class="fas fa-search" style={{ color: '#8196dc' }}></i></button>
+                      </form>
+                    </div>
                   </div>
-                </div>
+                }
                 {/* Ec Header Search End */}
                 {/* Ec Header Button Start */}
                 <div className="align-self-center">
                   <div className="ec-header-bottons">
                     {/* Header User Start */}
                     <div className="ec-header-user dropdown">
-                      <button className="dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-user svg_img header_svg" style={{fontSize:'x-large'}}></i></button>
+                      <button className="dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-user svg_img header_svg" style={{ fontSize: 'x-large' }}></i></button>
                       <ul className="dropdown-menu dropdown-menu-right">
                         {
                           userToken == "" &&
@@ -68,7 +70,7 @@ function Header({ open, setopen }) {
                     {/* Header wishlist End */}
                     {/* Header Cart Start */}
                     <a href="/cart" className="ec-header-btn ec-side-toggle">
-                      <div className="header-icon"><i class="fas fa-shopping-cart svg_img header_svg" style={{fontSize:'x-large'}}></i></div>
+                      <div className="header-icon"><i class="fas fa-shopping-cart svg_img header_svg" style={{ fontSize: 'x-large' }}></i></div>
                       <span className="ec-header-count cart-count-lable">{cartObjs.length}</span>
                     </a>
                     {/* Header Cart End */}
@@ -91,14 +93,16 @@ function Header({ open, setopen }) {
               </div>
               {/* Ec Header Logo End */}
               {/* Ec Header Search Start */}
-              <div className="col">
-                <div className="header-search">
-                  {/* <form className="ec-btn-group-form" action="#">
-                    <input className="form-control" placeholder="Enter Your Product Name..." type="text" />
-                    <button className="submit" type="submit"><img src="assets/images/icons/search.svg" className="svg_img header_svg" alt="icon" /></button>
-                  </form> */}
+              {window.location.pathname == '/products' &&
+                <div className="col">
+                  <div className="header-search">
+                    <form className="ec-btn-group-form" action="#">
+                      <input className="form-control" placeholder="Enter Your Product Name..." type="text" style={{ borderRadius: '6px' }} onChange={e => setserachText(e.target.value)} value={serachText} />
+                      <button className="submit" type='button'><i class="fas fa-search" style={{ color: '#8196dc' }}></i></button>
+                    </form>
+                  </div>
                 </div>
-              </div>
+              }
               {/* Ec Header Search End */}
             </div>
           </div>

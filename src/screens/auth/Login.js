@@ -26,7 +26,7 @@ const Login = () => {
 
   const { userToken , localStorageName , setUserToken } = useContext(AppContext)
 
-
+  const [open, setopen] = useState(false)
   const [data, setData] = useState({
     username: "adsalihac",
     password: "123123",
@@ -96,7 +96,7 @@ const Login = () => {
 <div>
   {/* ekka Cart Start */}
   <div className="ec-side-cart-overlay" />
-  <Header />
+  <Header open={open} setopen={() => setopen(!open)} />
   {/* ekka Cart End */}
   {/* Ec breadcrumb start */}
  
@@ -138,6 +138,8 @@ const Login = () => {
     </div>
   </section>
   <Footer />
+  <FooterNav setopen={() => setopen(!open)} />
+
 
 </div>
 

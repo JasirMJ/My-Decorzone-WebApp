@@ -93,6 +93,8 @@ const Contactus = () => {
                     </div>
                 </section>
                 <Footer/>
+                <FooterNav setopen={() => setopen(!open)} />
+
                 </div>
 
         </div>

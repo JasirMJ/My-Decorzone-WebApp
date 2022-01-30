@@ -24,7 +24,7 @@ function Aboutus() {
   return (
     <>
       <div id="ec-overlay"><span className="loader_img" /></div>
-      <Header />
+      <Header open={open} setopen={() => setopen(!open)} />
 
   {/* Ec About Us page */}
   <section className="ec-page-content section-space-p">

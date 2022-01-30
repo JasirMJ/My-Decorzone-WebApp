@@ -76,8 +76,11 @@ export default function CartProduct({ Data }) {
       <td data-label="Product" className="ec-cart-pro-name"><a href="product-left-sidebar.html">
         <img className="ec-cart-pro-img mr-4" src={addDomainInImage(Data.varient.item_status.images.length != 0 ? Data.varient.item_status.images[0].image : "")} alt />
         {Data.varient.item_status.name + "-" + Data.varient.name}</a></td>
-      <td data-label="Price" className="ec-cart-pro-price"><span className="amount">₹{Data.varient.final_rate}</span></td>
+      <td data-label="Price" className="ec-cart-pro-price">
+        <span></span>
+        <span className="amount">₹{Data.varient.final_rate}</span></td>
       <td data-label="Quantity" className="ec-cart-pro-qty" style={{ textAlign: 'center' }}>
+        <div></div>
         <div className="cart-qty-plus-minus">
           <button type='button' 
            onClick={()=>{

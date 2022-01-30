@@ -77,7 +77,7 @@ const MyOrders = () => {
     <div>
       <div>
         {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
-        <Header />
+        <Header open={open} setopen={() => setopen(!open)} />
         {/* ekka Cart Start */}
         <div className="ec-side-cart-overlay" />
 

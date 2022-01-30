@@ -182,7 +182,7 @@ const CategoryProducts = () => {
           </section>
           :
           <div className='d-flex justify-content-center'>
-            <NoData />
+            <NoData text={'No data found'} url={'/categories'} buttonName={'Return to categories '} />
           </div>
         }
       </div>

@@ -28,6 +28,8 @@ function Context() {
    const [cartDiscountTotalAmount, setcartDiscountTotalAmount] = useState(0)
    const [cartTotalAmount, setcartTotalAmount] = useState(0)
 
+   const [serachText, setserachText] = useState('');
+
    // Total Pay Amount
    const [totalPayAmount, settotalPayAmount] = useState(0)
 
@@ -182,6 +184,8 @@ const getCart = (value) => {
           cartDiscountTotalAmount, setcartDiscountTotalAmount,
           extraCharges, setextraCharges, extraDescription ,
           totalPayAmount, settotalPayAmount,
+          serachText, setserachText
+
           }}>
           <Router/>
         </AppContext.Provider>
