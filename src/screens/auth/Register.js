@@ -57,9 +57,9 @@ const Register = () => {
       axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-          setUserToken(response.data.token)
-          setDataOnCookie(localStorageName, response.data);
-          window.location.replace('/')
+          // setUserToken(response.data.token)
+          // setDataOnCookie(localStorageName, response.data);
+          window.location.replace('/login')
       })
       .catch(function (error) {
         console.log(error);

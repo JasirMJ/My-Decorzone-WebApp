@@ -118,7 +118,7 @@ const handleNext = () => {
   return (
     <div>
       <div>
-        <div id="ec-overlay"><span className="loader_img" /></div>
+        {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
         {/* ekka Cart Start */}
         <Header open={open} setopen={() => setopen(!open)} />
 

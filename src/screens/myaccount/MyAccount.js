@@ -24,10 +24,12 @@ import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
 import { baseurl, protocol, AppContext } from '../../common/Constants'
 import user from '../../assets/images/user.png'
+import Preloader from '../../components/Preloader';
 
 
 const MyAccount = () => {
   const [open, setopen] = useState(false)
+  const [loading, setloading] = useState(true)
 
   const { userToken, userDetails } = useContext(AppContext)
   const [userdata, setuserdata] = useState({ username: '', first_name: '', email: '', mobile: '' });
@@ -70,20 +72,32 @@ const MyAccount = () => {
       });
 
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setloading(false)
+    }, 2000);
+  }, [])
+
   return (
     <div>
       <div>
-        <div id="ec-overlay"><span className="loader_img" /></div>
+        {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
         <Header open={open} setopen={() => setopen(!open)} />
         {/* ekka Cart Start */}
-        <div className="ec-side-cart-overlay" />
+        {/* <div className="ec-side-cart-overlay" /> */}
 
         {/* ekka Cart End */}
         {/* Ec breadcrumb start */}
 
         {/* Ec breadcrumb end */}
         {/* User history section */}
-        <section className="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
+        {
+          loading ?
+          <Preloader/>
+          :
+          <>
+          <section className="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
           <div className="container">
             <div className="row">
               {/* Sidebar Area Start */}
@@ -160,6 +174,9 @@ const MyAccount = () => {
         </section>
         <Footer />
         <FooterNav setopen={() => setopen(!open)} />
+          </>
+        }
+      
         {/* End User history section */}
       </div>
 
