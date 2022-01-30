@@ -94,7 +94,7 @@ const Cart = () => {
 
                 cartObjs.length == 0 ?
                   <div className='d-flex justify-content-center'>
-                    <NoData text={'Your cart is currently empty. '}  url={'/products'} buttonName={'Return to shop'}/>
+                    <NoData text={'Your cart is currently empty. '}  url={'/'} buttonName={'Return to Home'}/>
                   </div>
                   :
                   <div className="row">
