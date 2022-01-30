@@ -18,7 +18,7 @@ function CategorySection() {
 
     var config = {
       method: 'get',
-      url: baseurl + '/items/category/',
+      url: baseurl + '/items/category/?ordering=?',
       headers: {
         'Authorization': userToken,
 

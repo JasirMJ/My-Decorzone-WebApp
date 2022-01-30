@@ -221,7 +221,6 @@ function Home() {
       /> */}
       {/* New Product end */}
       {/* ec testmonial Start */}
-      {/* <Testimonial /> */}
       {/* ec testmonial end */}
       {/* Ec Brand Section Start */}
       {/* <BrandSection /> */}
@@ -242,15 +241,8 @@ function Home() {
     <InstagramSection brands={Brands} />
   }
 
-  <div className="row">
-            <div className="col-md-12 text-center"
-            ><div className="section-title">
-                <h2 className="ec-bg-title">My Decorzone</h2>
-                <h2 className="ec-title">My Decorzone</h2>
-                <p style={{marginHorizontal:'140px'}} className="sub-title">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type spinter took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged</p>
-              </div>
-            </div>
-          </div>
+  <Testimonial />
+
 
          {/* Ec Instagram End */}
       {/* Footer Start */}
