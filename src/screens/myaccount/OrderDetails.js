@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react'
 
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
-import MainSlider from '../../components/MainSlider';
 import ProductTabArea from '../../components/ProductTabArea';
 import BannerSection from '../../components/BannerSection';
 import CategorySection from '../../components/CategorySection';

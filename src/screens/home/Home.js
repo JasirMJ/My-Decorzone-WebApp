@@ -2,7 +2,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Header from '../../components/Header'
 import CartComponent from '../../components/CartComponent';
-import MainSlider from '../../components/MainSlider';
+import MainSlider from './components/MainSlider';
 import ProductTabArea from '../../components/ProductTabArea';
 import BannerSection from '../../components/BannerSection';
 import CategorySection from '../../components/CategorySection';
@@ -18,6 +18,8 @@ import TemplateModal from '../../components/TemplateModal';
 import Newsletter from '../../components/Newsletter';
 import FooterNav from '../../components/FooterNav';
 import { baseurl, protocol, AppContext } from '../../common/Constants'
+import NoData from '../NoData/noData';
+import Preloader from '../../components/Preloader';
 
 function Home() {
   const [open, setopen] = useState(false)
@@ -26,12 +28,16 @@ function Home() {
   const [is_new, setis_new] = useState([])
   const [is_recommended, setis_recommended] = useState([])
   const [Brands, setBrands] = useState([]);
+  const [loading, setloading] = useState(true)
+  const [banners, sebanners] = useState([])
+
 
   useEffect(() => {
     getPopularProducts()
     getNewProducts()
     getRecommenderProducts()
     GetBrandsLogos()
+    getBanners()
   }, [])
 
   const getPopularProducts = () => {
@@ -88,6 +94,34 @@ function Home() {
       });
   }
 
+  const getBanners = () => {
+    var axios = require('axios');
+    var FormData = require('form-data');
+    var data = new FormData();
+
+    var config = {
+      method: 'get',
+      url: baseurl + '/landing/banners/',
+      headers: {
+      },
+      data: data
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response.data)
+        setloading(false)
+        if (response.data.results) {
+          sebanners(response.data.results)
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+        setloading(false)
+      });
+
+  }
+
   const GetBrandsLogos = () => {
     var axios = require('axios');
     // var FormData = require('form-data');
@@ -105,26 +139,28 @@ function Home() {
 
     axios(config)
       .then(function (response) {
-        console.log(response.data);
+        console.log("BRANDS",response.data);
         setBrands(response.data.results)
       })
       .catch(function (error) {
         console.log(error);
       });
-
-
   }
 
   return (
     <>
-      <div id="ec-overlay"><span className="loader_img" /></div>
+      {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
       {/* Header start  */}
       <Header open={open} setopen={() => setopen(!open)} />
       {/* Header End  */}
 
-
+      {
+                  loading ?
+                      <Preloader/>
+                      :
+                   <>
       {/* Main Slider Start */}
-      <MainSlider />
+      <MainSlider banners={banners} />
       {/* Main Slider End */}
 
       {/* Product tab Area Start */}
@@ -192,12 +228,31 @@ function Home() {
       {/* Ec Brand Section End */}
       {/* Ec Instagram Start */}
 
-      <section className='container py-5'>
-        <div className="ec-cms-block-inner"><h3 className="ec-cms-block-title">What is the lorem?</h3><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p><p>Lorem Ipsum is simply dummy text of the printing. It has survived not only five centuries, but also the leap into electronic typesetting.</p><p>Also the leap into electronic typesetting printing and typesetting industry. It has survived not only five centuries, but also the leap into electronic typesetting, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
-      </section>
+      
 
-      <InstagramSection brands={Brands} />
-      {/* Ec Instagram End */}
+    
+
+   
+
+      </>
+      }
+  
+  {
+    
+    <InstagramSection brands={Brands} />
+  }
+
+  <div className="row">
+            <div className="col-md-12 text-center"
+            ><div className="section-title">
+                <h2 className="ec-bg-title">My Decorzone</h2>
+                <h2 className="ec-title">My Decorzone</h2>
+                <p style={{marginHorizontal:'140px'}} className="sub-title">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type spinter took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged</p>
+              </div>
+            </div>
+          </div>
+
+         {/* Ec Instagram End */}
       {/* Footer Start */}
       <Footer />
       {/* Footer Area End */}

@@ -50,41 +50,11 @@
 // export default MainSlider
 import React, { Component, useEffect, useState } from "react";
 import Slider from "react-slick";
-import { baseurl } from "../common/Constants";
+import { baseurl } from "../../../common/Constants";
 
-export default function SimpleSlider() {
+export default function MainSlider({banners}) {
   const [data, setdata] = useState([]);
 
-  useEffect(() => {
-    GetData()
-  }, []);
-
-
-  const GetData = () => {
-    var axios = require('axios');
-    var FormData = require('form-data');
-    var data = new FormData();
-
-    var config = {
-      method: 'get',
-      url: baseurl + '/landing/banners/',
-      headers: {
-      },
-      data: data
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(response.data)
-        if (response.data.results) {
-          setdata(response.data.results)
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-  }
 
   const settings = {
     dots: true,
@@ -97,7 +67,7 @@ export default function SimpleSlider() {
     <div>
 
       <Slider {...settings}>
-        {data.map(item => (
+        {banners.map(item => (
           <>
 
             <div className="ec-slide-item swiper-slide d-flex ec-slide-1 swiper-slide-active" style={{ backgroundImage: `url(${item.banner})` }}    >
