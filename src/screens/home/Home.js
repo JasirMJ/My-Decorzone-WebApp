@@ -139,7 +139,7 @@ function Home() {
 
     axios(config)
       .then(function (response) {
-        console.log("BRANDS",response.data);
+        console.log("BRANDS", response.data);
         setBrands(response.data.results)
       })
       .catch(function (error) {
@@ -151,100 +151,99 @@ function Home() {
     <>
       {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
       {/* Header start  */}
-      <Header open={open} setopen={() => setopen(!open)} />
-      {/* Header End  */}
+      {loading ?
+        <Preloader />
+        :
+        <>
+          <Header open={open} setopen={() => setopen(!open)} />
+          {/* Header End  */}
 
-      {
-                  loading ?
-                      <Preloader/>
-                      :
-                   <>
-      {/* Main Slider Start */}
-      <MainSlider banners={banners} />
-      {/* Main Slider End */}
+          {/* Main Slider Start */}
+          <MainSlider banners={banners} />
+          {/* Main Slider End */}
 
-      {/* Product tab Area Start */}
-      {/* <ProductTabArea/> */}
-      {
-        popular.length > 0 &&
-        <NewProduct
-          title={"Our Top Popular Products"}
-          subtitle={"Browse The Collection of Top Popular Products"}
-          Data={popular}
-        />
-      }
+          {/* Product tab Area Start */}
+          {/* <ProductTabArea/> */}
+          {
+            popular.length > 0 &&
+            <NewProduct
+              title={"Our Top Popular Products"}
+              subtitle={"Browse The Collection of Top Popular Products"}
+              Data={popular}
+            />
+          }
 
-      {
-        is_new.length > 0 &&
-        <NewProduct
-          title={"Our Top New Products"}
-          subtitle={"Browse The Collection of Top New Products"}
-          Data={is_new}
-        />
-      }
+          {
+            is_new.length > 0 &&
+            <NewProduct
+              title={"Our Top New Products"}
+              subtitle={"Browse The Collection of Top New Products"}
+              Data={is_new}
+            />
+          }
 
-      {
-        is_recommended.length > 0 &&
-        <NewProduct
-          title={"Our Top Recommended Products"}
-          subtitle={"Browse The Collection of Top Recommended Products"}
-          Data={is_recommended}
-        />
-      }
+          {
+            is_recommended.length > 0 &&
+            <NewProduct
+              title={"Our Top Recommended Products"}
+              subtitle={"Browse The Collection of Top Recommended Products"}
+              Data={is_recommended}
+            />
+          }
 
-      {/* ec Product tab Area End */}
+          {/* ec Product tab Area End */}
 
-      {/* ec Banner Section Start */}
-      {/* <BannerSection /> */}
-      {/* ec Banner Section End */}
+          {/* ec Banner Section Start */}
+          {/* <BannerSection /> */}
+          {/* ec Banner Section End */}
 
-      {/*  Category Section Start */}
-      <CategorySection />
-      {/* Category Section End */}
+          {/*  Category Section Start */}
+          <CategorySection />
+          {/* Category Section End */}
 
-      {/*  Feature & Special Section Start */}
-      {/* <FeatureSection /> */}
-      {/* Feature & Special Section End */}
+          {/*  Feature & Special Section Start */}
+          {/* <FeatureSection /> */}
+          {/* Feature & Special Section End */}
 
-      {/*  services Section Start */}
-      {/* <ServiceSection /> */}
-      {/*services Section End */}
+          {/*  services Section Start */}
+          {/* <ServiceSection /> */}
+          {/*services Section End */}
 
-      {/*  offer Section Start */}
-      {/* <OfferSection /> */}
-      {/* offer Section End */}
-      {/* New Product Start */}
-      {/* <NewProduct
+          {/*  offer Section Start */}
+          {/* <OfferSection /> */}
+          {/* offer Section End */}
+          {/* New Product Start */}
+          {/* <NewProduct
         title={"New Arrivals"}
         subtitle={"Browse The Collection of Top Products"}
         Data={[{}, {}, {}, {}, {}, {}, {}, {}]}
       /> */}
-      {/* New Product end */}
-      {/* ec testmonial Start */}
-      {/* ec testmonial end */}
-      {/* Ec Brand Section Start */}
-      {/* <BrandSection /> */}
-      {/* Ec Brand Section End */}
-      {/* Ec Instagram Start */}
+          {/* New Product end */}
+          {/* ec testmonial Start */}
+          {/* ec testmonial end */}
+          {/* Ec Brand Section Start */}
+          {/* <BrandSection /> */}
+          {/* Ec Brand Section End */}
+          {/* Ec Instagram Start */}
 
-      
 
-    
 
-   
 
-      </>
+
+
+
+        </>
       }
-  
-  {
-    
-    <InstagramSection brands={Brands} />
-  }
 
-  <Testimonial />
+      {
+
+        <InstagramSection brands={Brands} />
+      }
+
+      <Testimonial />
 
 
-         {/* Ec Instagram End */}
+      {/* Ec Instagram End */}
       {/* Footer Start */}
       <Footer />
       {/* Footer Area End */}

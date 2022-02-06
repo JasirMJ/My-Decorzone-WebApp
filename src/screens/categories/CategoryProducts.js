@@ -72,6 +72,8 @@ const CategoryProducts = () => {
       })
       .catch(function (error) {
         console.log(error);
+        setloading(false)
+
       });
 
   }
@@ -95,9 +97,13 @@ const CategoryProducts = () => {
         setData(response.data.results);
         setNext(response.data.next);
         setPrev(response.data.previous);
+        setloading(false)
+
       })
       .catch(function (error) {
         // console.log(error);
+        setloading(false)
+
       });
   };
 
@@ -119,77 +125,87 @@ const CategoryProducts = () => {
         setData(response.data.results);
         setNext(response.data.next);
         setPrev(response.data.previous);
+        setloading(false)
+
       })
       .catch(function (error) {
         // console.log(error);
+        setloading(false)
+
       });
   };
 
   return (
     <div>
-      <div>
-        {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
-        {/* ekka Cart Start */}
-        <Header open={open} setopen={() => setopen(!open)} />
 
-        <div className="ec-side-cart-overlay" />
+      {loading ?
+        <Preloader /> :
+        <>
 
-        {/* Ec Shop page */}
-        {!nodata ?
-          <section className="ec-page-content section-space-p">
-            <div className="container">
-              <div className="row">
-                <div className="ec-shop-rightside col-lg-12 col-md-12">
+          <div>
+            {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
+            {/* ekka Cart Start */}
+            <Header open={open} setopen={() => setopen(!open)} />
 
-                  {/* Shop content Start */}
-                  <div className="shop-pro-content">
-                    <div className="shop-pro-inner">
-                      {
-                        loading ?
-                          <Preloader />
-                          :
-                          Data.length != 0 &&
-                          <div className="row">
+            <div className="ec-side-cart-overlay" />
+
+            {/* Ec Shop page */}
+            {!nodata ?
+              <section className="ec-page-content section-space-p">
+                <div className="container">
+                  <div className="row">
+                    <div className="ec-shop-rightside col-lg-12 col-md-12">
+
+                      {/* Shop content Start */}
+                      <div className="shop-pro-content">
+                        <div className="shop-pro-inner">
+                          {
+                            loading ?
+                              <Preloader />
+                              :
+                              Data.length != 0 &&
+                              <div className="row">
+                                {
+                                  Data.map((item, index) => {
+                                    return <GridProduct key={index} Data={item} />
+                                  })
+                                }
+                              </div>
+                          }
+                        </div>
+                        {/* Ec Pagination Start */}
+                        <div className="ec-pro-pagination">
+                          <span></span>
+                          <ul className="ec-pro-pagination-inner">
                             {
-                              Data.map((item, index) => {
-                                return <GridProduct key={index} Data={item} />
-                              })
+                              prev != null &&
+                              <li><a className="next" href="#" onClick={() => { handlePrev() }}><i className="ecicon eci-angle-left" /> Previous</a></li>
                             }
-                          </div>
-                      }
-                    </div>
-                    {/* Ec Pagination Start */}
-                    <div className="ec-pro-pagination">
-                      <span></span>
-                      <ul className="ec-pro-pagination-inner">
-                        {
-                          prev != null &&
-                          <li><a className="next" href="#" onClick={() => { handlePrev() }}><i className="ecicon eci-angle-left" /> Previous</a></li>
-                        }
 
-                        {
-                          next != null &&
-                          <li><a className="next" href="#" onClick={() => { handleNext() }}>Next <i className="ecicon eci-angle-right" /></a></li>
-                        }
-                      </ul>
+                            {
+                              next != null &&
+                              <li><a className="next" href="#" onClick={() => { handleNext() }}>Next <i className="ecicon eci-angle-right" /></a></li>
+                            }
+                          </ul>
+                        </div>
+                        {/* Ec Pagination End */}
+                      </div>
                     </div>
-                    {/* Ec Pagination End */}
+
                   </div>
                 </div>
-
+              </section>
+              :
+              <div className='d-flex justify-content-center'>
+                <NoData text={'No data found'} url={'/categories'} buttonName={'Return to categories '} />
               </div>
-            </div>
-          </section>
-          :
-          <div className='d-flex justify-content-center'>
-            <NoData text={'No data found'} url={'/categories'} buttonName={'Return to categories '} />
+            }
           </div>
-        }
-      </div>
-      <Footer />
-      {/* Footer navigation panel for responsive display */}
-      <FooterNav setopen={() => setopen(!open)} />
-
+          <Footer />
+          {/* Footer navigation panel for responsive display */}
+          <FooterNav setopen={() => setopen(!open)} />
+        </>
+      }
     </div>
   )
 }

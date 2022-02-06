@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { baseurl, protocol, AppContext } from '../common/Constants'
 import { unsetDataOnCookie } from '../common/Functions'
 import Logo from '../assets/images/logo.jpeg'
+import { Link } from 'react-router-dom'
 
 function Header({ open, setopen }) {
 
@@ -22,7 +23,7 @@ function Header({ open, setopen }) {
                 {/* Ec Header Logo Start */}
                 <div className="align-self-center">
                   <div className="header-logo">
-                    <a href="/"><img src={Logo} alt="Site Logo" /><img className="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style={{ display: 'none' }} /></a>
+                    <Link to="/"><img src={Logo} alt="Site Logo" /><img className="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style={{ display: 'none' }} /></Link>
                   </div>
                 </div>
                 {/* Ec Header Logo End */}
@@ -48,16 +49,16 @@ function Header({ open, setopen }) {
                         {
                           userToken == "" &&
                           <>
-                            <li><a className="dropdown-item" href="/register">Register</a></li>
-                            <li><a className="dropdown-item" href="/login">Login</a></li>
+                            <li><Link className="dropdown-item" to="/register">Register</Link></li>
+                            <li><Link className="dropdown-item" to="/login">Login</Link></li>
                           </>
                         }
 
                         {
                           userToken != "" &&
                           <>
-                            <li><a className="dropdown-item" href="/myaccount">My Account</a></li>
-                            <li><a className="dropdown-item" href="#" onClick={() => { unsetDataOnCookie(localStorageName); window.location.replace('/login') }}>Logout</a></li>
+                            <li><Link className="dropdown-item" to="/myaccount">My Account</Link></li>
+                            <li><Link className="dropdown-item" to="#" onClick={() => { unsetDataOnCookie(localStorageName); window.location.replace('/login') }}>Logout</Link></li>
                           </>
                         }
 
@@ -69,10 +70,10 @@ function Header({ open, setopen }) {
 
                     {/* Header wishlist End */}
                     {/* Header Cart Start */}
-                    <a href="/cart" className="ec-header-btn ec-side-toggle">
+                    <Link to="/cart" className="ec-header-btn ec-side-toggle">
                       <div className="header-icon"><i class="fas fa-shopping-cart svg_img header_svg" style={{ fontSize: 'x-large' }}></i></div>
                       <span className="ec-header-count cart-count-lable">{cartObjs.length}</span>
-                    </a>
+                    </Link>
                     {/* Header Cart End */}
                   </div>
                 </div>
@@ -88,7 +89,7 @@ function Header({ open, setopen }) {
               {/* Ec Header Logo Start */}
               <div className="lg-col">
                 <div className="header-logo d-flex justify-content-center">
-                  <a href="/"><img src={Logo} alt="Site Logo" /><img className="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style={{ display: 'none' }} /></a>
+                  <Link to="/"><img src={Logo} alt="Site Logo" /><img className="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style={{ display: 'none' }} /></Link>
                 </div>
               </div>
               {/* Ec Header Logo End */}
@@ -115,13 +116,13 @@ function Header({ open, setopen }) {
               <div className="col-md-12 align-self-center">
                 <div className="ec-main-menu">
                   <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/categories">Categories</a></li>
-                    <li><a href="/products">Products</a></li>
-                    <li><a href="/offers">Offers</a></li>
-                    <li><a href={userToken == '' ? "/login" : "/myorders"} >My Orders</a></li>
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="contactus">Contact Us</a></li>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/categories">Categories</Link></li>
+                    <li><Link to="/products">Products</Link></li>
+                    <li><Link to="/offers">Offers</Link></li>
+                    <li><Link to={userToken == '' ? "/login" : "/myorders"} >My Orders</Link></li>
+                    <li><Link to="/about">About Us</Link></li>
+                    <li><Link to="contactus">Contact Us</Link></li>
                   </ul>
                 </div>
               </div>
@@ -139,13 +140,13 @@ function Header({ open, setopen }) {
           <div className="ec-menu-inner">
             <div className="ec-menu-content">
               <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/categories">Categories</a></li>
-                <li><a href="/products">Products</a></li>
-                <li><a href="/offers">Offers</a></li>
-                <li><a href={userToken == '' ? "/login" : "/myorders"} >My Orders</a></li>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="contactus">Contact Us</a></li>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/categories">Categories</Link></li>
+                <li><Link to="/products">Products</Link></li>
+                <li><Link to="/offers">Offers</Link></li>
+                <li><Link to={userToken == '' ? "/login" : "/myorders"} >My Orders</Link></li>
+                <li><Link to="/about">About Us</Link></li>
+                <li><Link to="contactus">Contact Us</Link></li>
               </ul>
             </div>
 
@@ -169,36 +170,36 @@ function Header({ open, setopen }) {
             </div>
             <ul className="eccart-pro-items">
               <li>
-                <a href="product-left-sidebar.html" className="sidekka_pro_img"><img src="assets/images/product-image/6_1.jpg" alt="product" /></a>
+                <Link to="product-left-sidebar.html" className="sidekka_pro_img"><img src="assets/images/product-image/6_1.jpg" alt="product" /></Link>
                 <div className="ec-pro-content">
-                  <a href="product-left-sidebar.html" className="cart_pro_title">T-shirt For Women</a>
+                  <Link to="product-left-sidebar.html" className="cart_pro_title">T-shirt For Women</Link>
                   <span className="cart-price"><span>$76.00</span> x 1</span>
                   <div className="qty-plus-minus">
                     <input className="qty-input" type="text" name="ec_qtybtn" defaultValue={1} />
                   </div>
-                  <a href="javascript:void(0)" className="remove">×</a>
+                  <Link to="javascript:void(0)" className="remove">×</Link>
                 </div>
               </li>
               <li>
-                <a href="product-left-sidebar.html" className="sidekka_pro_img"><img src="assets/images/product-image/12_1.jpg" alt="product" /></a>
+                <Link to="product-left-sidebar.html" className="sidekka_pro_img"><img src="assets/images/product-image/12_1.jpg" alt="product" /></Link>
                 <div className="ec-pro-content">
-                  <a href="product-left-sidebar.html" className="cart_pro_title">Women Leather Shoes</a>
+                  <Link to="product-left-sidebar.html" className="cart_pro_title">Women Leather Shoes</Link>
                   <span className="cart-price"><span>$64.00</span> x 1</span>
                   <div className="qty-plus-minus">
                     <input className="qty-input" type="text" name="ec_qtybtn" defaultValue={1} />
                   </div>
-                  <a href="javascript:void(0)" className="remove">×</a>
+                  <Link to="javascript:void(0)" className="remove">×</Link>
                 </div>
               </li>
               <li>
-                <a href="product-left-sidebar.html" className="sidekka_pro_img"><img src="assets/images/product-image/3_1.jpg" alt="product" /></a>
+                <Link to="product-left-sidebar.html" className="sidekka_pro_img"><img src="assets/images/product-image/3_1.jpg" alt="product" /></Link>
                 <div className="ec-pro-content">
-                  <a href="product-left-sidebar.html" className="cart_pro_title">Girls Nylon Purse</a>
+                  <Link to="product-left-sidebar.html" className="cart_pro_title">Girls Nylon Purse</Link>
                   <span className="cart-price"><span>$59.00</span> x 1</span>
                   <div className="qty-plus-minus">
                     <input className="qty-input" type="text" name="ec_qtybtn" defaultValue={1} />
                   </div>
-                  <a href="javascript:void(0)" className="remove">×</a>
+                  <Link to="javascript:void(0)" className="remove">×</Link>
                 </div>
               </li>
             </ul>
@@ -223,8 +224,8 @@ function Header({ open, setopen }) {
               </table>
             </div>
             <div className="cart_btn">
-              <a href="cart.html" className="btn btn-primary">View Cart</a>
-              <a href="checkout.html" className="btn btn-secondary">Checkout</a>
+              <Link to="cart.html" className="btn btn-primary">View Cart</Link>
+              <Link to="checkout.html" className="btn btn-secondary">Checkout</Link>
             </div>
           </div>
         </div>

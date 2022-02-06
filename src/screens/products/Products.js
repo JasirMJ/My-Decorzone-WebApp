@@ -115,27 +115,29 @@ const Products = () => {
 
   return (
     <div>
-      <div>
-        <div id="ec-overlay"><span className="loader_img" /></div>
-        {/* ekka Cart Start */}
-        <Header open={open} setopen={() => setopen(!open)} />
+      {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
+      {/* ekka Cart Start */}
 
-        <div className="ec-side-cart-overlay" />
+      {loading ?
+        <Preloader />
+        :
+        <>
+          <div>
+            <Header open={open} setopen={() => setopen(!open)} />
 
-        {/* Ec Shop page */}
-        <section className="ec-page-content section-space-p">
-          <div className="container">
-            <div className="row">
-              <div className="ec-shop-rightside col-lg-12 col-md-12">
+            <div className="ec-side-cart-overlay" />
 
-                {/* Shop content Start */}
-                <div className="shop-pro-content">
-                  <div className="shop-pro-inner">
-                    {
-                      loading ?
-                        <Preloader />
-                        :
-                        prodcuts.length != 0 ?
+            {/* Ec Shop page */}
+            <section className="ec-page-content section-space-p">
+              <div className="container">
+                <div className="row">
+                  <div className="ec-shop-rightside col-lg-12 col-md-12">
+
+                    {/* Shop content Start */}
+                    <div className="shop-pro-content">
+                      <div className="shop-pro-inner">
+
+                        {prodcuts.length != 0 ?
                           <>
 
                             <div className="row">
@@ -150,35 +152,36 @@ const Products = () => {
                           <div className='d-flex justify-content-center'>
                             <NoData text={'No data found'} url={'/'} buttonName={'Return to Home '} />
                           </div>
-                    }
-                  </div>
-                  {/* Ec Pagination Start */}
-                  <div className="ec-pro-pagination">
-                    <span></span>
-                    <ul className="ec-pro-pagination-inner">
-                      {
-                        prev != null &&
-                        <li><a className="next" href="#" onClick={() => { handlePrev() }}><i className="ecicon eci-angle-left" /> Previous</a></li>
-                      }
+                        }
+                      </div>
+                      {/* Ec Pagination Start */}
+                      <div className="ec-pro-pagination">
+                        <span></span>
+                        <ul className="ec-pro-pagination-inner">
+                          {
+                            prev != null &&
+                            <li><a className="next" href="#" onClick={() => { handlePrev() }}><i className="ecicon eci-angle-left" /> Previous</a></li>
+                          }
 
-                      {
-                        next != null &&
-                        <li><a className="next" href="#" onClick={() => { handleNext() }}>Next <i className="ecicon eci-angle-right" /></a></li>
-                      }
-                    </ul>
+                          {
+                            next != null &&
+                            <li><a className="next" href="#" onClick={() => { handleNext() }}>Next <i className="ecicon eci-angle-right" /></a></li>
+                          }
+                        </ul>
+                      </div>
+                      {/* Ec Pagination End */}
+                    </div>
                   </div>
-                  {/* Ec Pagination End */}
+
                 </div>
               </div>
-
-            </div>
+            </section>
           </div>
-        </section>
-      </div>
-      <Footer />
-      {/* Footer navigation panel for responsive display */}
-      <FooterNav setopen={() => setopen(!open)} />
-
+          <Footer />
+          {/* Footer navigation panel for responsive display */}
+          <FooterNav setopen={() => setopen(!open)} />
+        </>
+      }
     </div>
   )
 }

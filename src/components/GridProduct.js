@@ -116,13 +116,13 @@ console.log({Data});
         <div className="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
             <div className="ec-product-inner">
                 <div className="ec-pro-image-outer">
-                    <a href={`/product/${Data.id}`}>
+                    <Link to={`/product/${Data.id}`}>
                         <div className="ec-pro-image">
-                            <a href={`/product/${Data.id}`} className="image">
+                            <Link to={`/product/${Data.id}`} className="image">
                                 <img className="main-image" src={addDomainInImage(Data.images?.length != 0 ? Data.images[0]?.image : "")} alt="Product" />
                                 <img className="hover-image" src={addDomainInImage(Data.images?.length != 0 ? Data.images[0]?.image : "")} alt="Product" />
 
-                            </a>
+                            </Link>
 
                             {
                                 getOffer(Data.variants) &&
@@ -151,10 +151,10 @@ console.log({Data});
                             }
 
                         </div>
-                    </a>
+                    </Link>
                 </div>
                 <div className="ec-pro-content">
-                    <h5 className="ec-pro-title"><a href={`/product/${Data.id}`}>{Data.name}</a></h5>
+                    <h5 className="ec-pro-title"><Link to={`/product/${Data.id}`}>{Data.name}</Link></h5>
 
                     <div className="ec-pro-list-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dutmmy text ever since the 1500s, when an unknown printer took a galley.</div>
 
@@ -174,9 +174,9 @@ console.log({Data});
                         <div className="ec-pro-size">
                             <span className="ec-pro-opt-label">Size</span>
                             {/* <ul className="ec-opt-size">
-                        <li className="active"><a href="#" className="ec-opt-sz" data-old="$25.00" data-new="$20.00" data-tooltip="Small">S</a></li>
-                        <li><a href="#" className="ec-opt-sz" data-old="$27.00" data-new="$22.00" data-tooltip="Medium">M</a></li>
-                        <li><a href="#" className="ec-opt-sz" data-old="$35.00" data-new="$30.00" data-tooltip="Extra Large">XL</a></li>
+                        <li className="active"><Link to="#" className="ec-opt-sz" data-old="$25.00" data-new="$20.00" data-tooltip="Small">S</Link></li>
+                        <li><Link to="#" className="ec-opt-sz" data-old="$27.00" data-new="$22.00" data-tooltip="Medium">M</Link></li>
+                        <li><Link to="#" className="ec-opt-sz" data-old="$35.00" data-new="$30.00" data-tooltip="Extra Large">XL</Link></li>
                     </ul> */}
                         </div>
                         <div className="ec-single-qty d-flex justify-content-between w-100 align-items-center">

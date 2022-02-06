@@ -23,6 +23,7 @@ import { baseurl, protocol, AppContext } from '../../common/Constants'
 import CartProduct from './components/CartProduct';
 import NoData from '../NoData/noData';
 import Preloader from '../../components/Preloader';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const [open, setopen] = useState(false)
@@ -80,126 +81,126 @@ const Cart = () => {
 
   return (
     <div>
-      <div>
-        {/* ekka Cart Start */}
-        <div className="ec-side-cart-overlay" />
-        <Header open={open} setopen={() => setopen(!open)} />
-        {/* Ec cart page */}
-        <section className="ec-page-content section-space-p">
-          <div className="container">
-            {
-              loading ?
-                <Preloader />
+      {loading ?
+        <Preloader />
+        :
+
+        <div>
+          {/* ekka Cart Start */}
+          <div className="ec-side-cart-overlay" />
+          <Header open={open} setopen={() => setopen(!open)} />
+          {/* Ec cart page */}
+          <section className="ec-page-content section-space-p">
+            <div className="container">
+              {cartObjs.length == 0 ?
+                <div className='d-flex justify-content-center'>
+                  <NoData text={'Your cart is currently empty. '} url={'/'} buttonName={'Return to Home'} />
+                </div>
                 :
+                <div className="row">
+                  <div className="ec-cart-leftside col-lg-8 col-md-12 ">
+                    {/* cart content Start */}
 
-                cartObjs.length == 0 ?
-                  <div className='d-flex justify-content-center'>
-                    <NoData text={'Your cart is currently empty. '}  url={'/'} buttonName={'Return to Home'}/>
-                  </div>
-                  :
-                  <div className="row">
-                    <div className="ec-cart-leftside col-lg-8 col-md-12 ">
-                      {/* cart content Start */}
-
-                      <div className="ec-cart-content">
-                        <div className="ec-cart-inner">
-                          <div className="row">
-                            <form action="#">
-                              <div className="table-content cart-table-content">
-                                <table>
-                                  <thead>
-                                    <tr >
-                                      <th>Product</th>
-                                      <th>Price</th>
-                                      <th style={{ textAlign: 'center' }}>Quantity</th>
-                                      <th>Total</th>
-                                      <th />
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {
-                                      cartObjs.map((item, index) =>
-                                        <CartProduct Data={item} />
-                                      )
-                                    }
+                    <div className="ec-cart-content">
+                      <div className="ec-cart-inner">
+                        <div className="row">
+                          <form action="#">
+                            <div className="table-content cart-table-content">
+                              <table>
+                                <thead>
+                                  <tr >
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th style={{ textAlign: 'center' }}>Quantity</th>
+                                    <th>Total</th>
+                                    <th />
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {
+                                    cartObjs.map((item, index) =>
+                                      <CartProduct Data={item} />
+                                    )
+                                  }
 
 
-                                  </tbody>
-                                </table>
-                              </div>
+                                </tbody>
+                              </table>
+                            </div>
 
-                            </form>
-                          </div>
+                          </form>
                         </div>
                       </div>
-
-
-                      {/*cart content End */}
                     </div>
-                    {/* Sidebar Area Start */}
-
-                    <div className="ec-cart-rightside col-lg-4 col-md-12">
-                      <div className="ec-sidebar-wrap">
-                        {/* Sidebar Summary Block */}
-                        <div className="ec-sidebar-block">
-                          <div className="ec-sb-title">
-                            <h3 className="ec-sidebar-title">Summary</h3>
-                          </div>
-
-                          <div className="ec-sb-block-content">
-                            <div className="ec-cart-summary-bottom">
-                              <div className="ec-cart-summary">
-
-                                <div>
-                                  <span className="text-left">Item Total</span>
-                                  <span className="text-right">₹ {cartTotalAmount}</span>
-                                </div>
-
-                                <div>
-                                  <span className="text-left">Discount</span>
-                                  <span className="text-right">-₹{cartDiscountTotalAmount}</span>
-                                </div>
 
 
-                                <div>
-                                  <span className="text-left">Delivery Charges</span>
-                                  <span className="text-right">₹{deliveryCharge}</span>
-                                </div>
+                    {/*cart content End */}
+                  </div>
+                  {/* Sidebar Area Start */}
 
-                                <div>
-                                  <span className="text-left">Extra Charges</span>
-                                  <span className="text-right">₹{extraCharges}</span>
-                                </div>
+                  <div className="ec-cart-rightside col-lg-4 col-md-12">
+                    <div className="ec-sidebar-wrap">
+                      {/* Sidebar Summary Block */}
+                      <div className="ec-sidebar-block">
+                        <div className="ec-sb-title">
+                          <h3 className="ec-sidebar-title">Summary</h3>
+                        </div>
 
-                                <div className="ec-cart-summary-total">
-                                  <span className="text-left">Total Amount</span>
-                                  <span className="text-right">₹{totalPayAmount}</span>
-                                </div>
+                        <div className="ec-sb-block-content">
+                          <div className="ec-cart-summary-bottom">
+                            <div className="ec-cart-summary">
 
+                              <div>
+                                <span className="text-left">Item Total</span>
+                                <span className="text-right">₹ {cartTotalAmount}</span>
                               </div>
+
+                              <div>
+                                <span className="text-left">Discount</span>
+                                <span className="text-right">-₹{cartDiscountTotalAmount}</span>
+                              </div>
+
+
+                              <div>
+                                <span className="text-left">Delivery Charges</span>
+                                <span className="text-right">₹{deliveryCharge}</span>
+                              </div>
+
+                              <div>
+                                <span className="text-left">Extra Charges</span>
+                                <span className="text-right">₹{extraCharges}</span>
+                              </div>
+
+                              <div className="ec-cart-summary-total">
+                                <span className="text-left">Total Amount</span>
+                                <span className="text-right">₹{totalPayAmount}</span>
+                              </div>
+
                             </div>
                           </div>
-                          <div className="ec-single-cart " style={{ marginTop: 10 }}>
-                            <a onClick={() => {
-                              cartObjs.length != 0 ? window.location.replace('/checkout') : alert("Please add items to cart")
-                            }} className="btn btn-primary w-100">Checkout</a>
-                          </div>
                         </div>
-                        {/* Sidebar Summary Block */}
+                        <div className="ec-single-cart " style={{ marginTop: 10 }}>
+                          <Link to={'/checkout'}  //</div>onClick={() => {
+                            // cartObjs.length != 0 ? window.location.replace('/checkout') : alert("Please add items to cart")}}
+                            className="btn btn-primary w-100">Checkout</Link>
+                        </div>
                       </div>
+                      {/* Sidebar Summary Block */}
                     </div>
-
-
-
-
                   </div>
-            }
-          </div>
-        </section>
-        <Footer />
-        <FooterNav setopen={() => setopen(!open)} />
 
-      </div>
+
+
+
+                </div>
+              }
+            </div>
+          </section>
+          <Footer />
+          <FooterNav setopen={() => setopen(!open)} />
+
+        </div>
+      }
 
     </div>
   )

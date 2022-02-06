@@ -75,81 +75,82 @@ const MyOrders = () => {
 
   return (
     <div>
-      <div>
-        {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
-        <Header open={open} setopen={() => setopen(!open)} />
-        {/* ekka Cart Start */}
-        <div className="ec-side-cart-overlay" />
+      {
+        loading ?
+          <Preloader />
+          :
+          <div>
+            {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
+            <Header open={open} setopen={() => setopen(!open)} />
+            {/* ekka Cart Start */}
+            <div className="ec-side-cart-overlay" />
 
-        <section className="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
-          <div className="container">
-            <div className="row">
-              {/* Sidebar Area Start */}
-              <SideCard />
-              <div className="ec-shop-rightside col-lg-9 col-md-12">
-                <div className="ec-vendor-dashboard-card">
-                  <div className="ec-vendor-card-header">
-                    <h5>My Orders</h5>
-                    {/* <div className="ec-header-btn">
+            <section className="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
+              <div className="container">
+                <div className="row">
+                  {/* Sidebar Area Start */}
+                  <SideCard />
+                  <div className="ec-shop-rightside col-lg-9 col-md-12">
+                    <div className="ec-vendor-dashboard-card">
+                      <div className="ec-vendor-card-header">
+                        <h5>My Orders</h5>
+                        {/* <div className="ec-header-btn">
                         <a className="btn btn-lg btn-primary" href="#">Shop Now</a>
                     </div> */}
-                  </div>
-                  {
-                      loading ?
-                      <Preloader/>
-                      :
-                      data.length == 0 ?
-                   <div className='d-flex justify-content-center'>
-                    <NoData />
-                  </div>
-                  :
-                  <div className="ec-vendor-card-body">
-                    <div className="ec-vendor-card-table">
-                      <table className="table ec-table">
-                        <thead>
-                          <tr>
-                            <th scope="col">ID</th>
-                            {/* <th scope="col">Image</th> */}
-                            {/* <th scope="col">Name</th> */}
-                            <th scope="col">Date</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {data.map(item => (
+                      </div>
 
-                            <tr>
-                              <th scope="row"><span>{item.id}</span></th>
-                              {/* <td><img className="prod-img" src="assets/images/product-image/1.jpg" alt="product image" /></td> */}
-                              {/* <td><span>Stylish baby shoes</span></td> */}
-                              <td><span>{item.date.slice(0, 10)}</span></td>
-                              <td><span>{item.net_amount}</span></td>
-                              <td><span>{item.status.replaceAll('_',' ')}</span></td>
-                              <td><span className="tbl-btn"><Link className="btn btn-lg btn-primary" to={`/orderdetails/${item.id}`}>View</Link></span></td>
-                            </tr>
-                          ))}
+                      {data.length == 0 ?
+                        <div className='d-flex justify-content-center'>
+                          <NoData />
+                        </div>
+                        :
+                        <div className="ec-vendor-card-body">
+                          <div className="ec-vendor-card-table">
+                            <table className="table ec-table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">ID</th>
+                                  {/* <th scope="col">Image</th> */}
+                                  {/* <th scope="col">Name</th> */}
+                                  <th scope="col">Date</th>
+                                  <th scope="col">Price</th>
+                                  <th scope="col">Status</th>
+                                  <th scope="col">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {data.map(item => (
 
-                        </tbody>
-                      </table>
+                                  <tr>
+                                    <th scope="row"><span>{item.id}</span></th>
+                                    {/* <td><img className="prod-img" src="assets/images/product-image/1.jpg" alt="product image" /></td> */}
+                                    {/* <td><span>Stylish baby shoes</span></td> */}
+                                    <td><span>{item.date.slice(0, 10)}</span></td>
+                                    <td><span>{item.net_amount}</span></td>
+                                    <td><span>{item.status.replaceAll('_', ' ')}</span></td>
+                                    <td><span className="tbl-btn"><Link className="btn btn-lg btn-primary" to={`/orderdetails/${item.id}`}>View</Link></span></td>
+                                  </tr>
+                                ))}
+
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      }
                     </div>
                   </div>
-                  }
+
                 </div>
               </div>
+            </section>
+            <Footer />
 
-            </div>
+            <FooterNav setopen={() => setopen(!open)} />
+
+
+            {/* End User history section */}
           </div>
-        </section>
-        <Footer />
-
-        <FooterNav setopen={() => setopen(!open)} />
-
-
-        {/* End User history section */}
-      </div>
-
+      }
     </div>
   )
 }

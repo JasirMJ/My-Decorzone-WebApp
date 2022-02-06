@@ -24,6 +24,8 @@ import { AppContext, baseurl } from '../../common/Constants';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { ImageSlider } from './ImageSlider';
+import ThreeSixty from 'react-360-view'
+import Preloader from '../../components/Preloader';
 
 
 const ProductDetails = () => {
@@ -47,7 +49,7 @@ const ProductDetails = () => {
 
     const [selectVarientId, setselectVarientId] = useState("")
     const [varientDesc, setvarientDesc] = useState("");
-
+    const [Loading, setLoading] = useState(true);
 
 
     useEffect(() => {
@@ -72,6 +74,7 @@ const ProductDetails = () => {
                 console.log("PRODUCT DETAILS", response.data);
                 if (response.data) {
                     setData(response.data)
+                    setLoading(false)
                     if (response.data.variants.length > 0) {
                         setselectVarientId(response.data.variants[0].id)
                         setprice(response.data.variants[0].rate)
@@ -83,6 +86,7 @@ const ProductDetails = () => {
             })
             .catch(function (error) {
                 console.log(error);
+                setLoading(false)
             });
 
     }
@@ -218,241 +222,268 @@ const ProductDetails = () => {
     return (
         <div>
             <div>
-                <div id="ec-overlay"><span className="loader_img" /></div>
-                <Header open={open} setopen={() => setopen(!open)} />
+                {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
+                {Loading ?
+                    <Preloader /> :
+                    <>
 
-                {/* ekka Cart Start */}
-                <div className="ec-side-cart-overlay" />
+                        <Header open={open} setopen={() => setopen(!open)} />
 
-                {/* ekka Cart End */}
-                {/* Ec breadcrumb start */}
+                        {/* ekka Cart Start */}
+                        <div className="ec-side-cart-overlay" />
 
-                {/* Ec breadcrumb end */}
-                {/* Sart Single product */}
-                <section className="ec-page-content section-space-p">
-                    <div className="container">
-                        <div className="row">
-                            <div className="ec-pro-rightside ec-common-rightside col-lg-9 order-lg-last col-md-12 order-md-first">
-                                {/* Single product content Start */}
-                                <div className="single-pro-block">
-                                    <div className="single-pro-inner">
-                                        <div className="row">
-                                            <div className="single-pro-img">
-                                                <div className="single-product-scroll">
-                                                    <div className="single-product-cover" style={{overflow:'unset'}}>
-                                                        <div className="single-slide zoom-image-hover">
-                                                            {/* <img className="img-responsive" src={data.images[0].image} alt /> */}
-                                                            <ImageSlider images={Data.images} />
+                        {/* ekka Cart End */}
+                        {/* Ec breadcrumb start */}
+
+                        {/* Ec breadcrumb end */}
+                        {/* Sart Single product */}
+                        <section className="ec-page-content section-space-p">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="ec-pro-rightside ec-common-rightside col-lg-9 order-lg-last col-md-12 order-md-first">
+                                        {/* Single product content Start */}
+                                        <div className="single-pro-block">
+                                            <div className="single-pro-inner">
+                                                <div className="row">
+                                                    <div className="single-pro-img">
+                                                        <div className="single-product-scroll">
+                                                            <div className="single-product-cover" style={{ overflow: 'unset' }}>
+                                                                <div className="single-slide zoom-image-hover">
+                                                                    {/* <img className="img-responsive" src={data.images[0].image} alt /> */}
+                                                                    <ImageSlider images={Data.images} />
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div className="single-pro-desc">
-                                                <div className="single-pro-content">
-                                                    <h5 className="ec-single-title mb-0">{Data.name}</h5>
-                                                    <div className="ec-single-stoke d-flex justify-content-between align-items-center  mb-4">
-                                                        <div className=''>
+                                                    <div className="single-pro-desc">
+                                                        <div className="single-pro-content">
+                                                            <h5 className="ec-single-title mb-0">{Data.name}</h5>
+                                                            <div className="ec-single-stoke d-flex justify-content-between align-items-center  mb-4">
+                                                                <div className=''>
 
-                                                            {
-                                                                Data.is_popular == true &&
-                                                                <b className="ec-single-ps-title " style={{ fontSize: 'x-small' }}>POPULAR <span className='mx-1'>|</span></b>
-                                                            }
-
-                                                            {
-                                                                Data.is_recommended == true &&
-                                                                <b className="ec-single-ps-title " style={{ fontSize: 'x-small' }}>RECOMMEDED <span className='mx-1'>|</span></b>
-
-                                                            }
-
-                                                            {
-                                                                Data.is_new == true &&
-                                                                <b className="ec-single-ps-title " style={{ fontSize: 'x-small' }}>NEW <span className='mx-1'></span></b>
-                                                            }
-
-                                                        </div>
-
-                                                        <span class="flags " style={{ fontSize: 'smaller' }}><span class="new" style={Data.is_out_of_stock == true ? { color: 'red', fontWeight: '500' } : { color: 'green', fontWeight: '500' }}>{Data.is_out_of_stock == true ? 'OUT OF STOCK' : 'IN STOCK'}</span></span>
-
-
-                                                    </div>
-
-                                                    <div className="ec-single-desc">{Data.description}</div>
-
-                                                    <div className="ec-single-price-stoke">
-                                                        <div className="ec-single-price">
-                                                            <span className="ec-single-ps-title">Price</span>
-
-                                                            {
-                                                                Data.variants?.length > 0 &&
-                                                                <span className="ec-price">
                                                                     {
-                                                                    }
-                                                                    {
-                                                                        offer_enabled == true ?
-                                                                            <>
-                                                                                <span className="new-price mr-2">₹{offerprice}</span>
-                                                                                <del>
-                                                                                    <span className="old-price" style={{ marginRight: '5px' }}>₹{price}</span>
-                                                                                </del>
-                                                                            </>
-                                                                            :
-                                                                            <span className=" new-price">₹{price}</span>
-                                                                    }
-                                                                </span>
-                                                            }
-                                                        </div>
-
-
-
-                                                    </div>
-
-
-                                                    <div className="ec-pro-variation">
-                                                        <div className="ec-pro-variation-inner ec-pro-variation-size">
-                                                            <span>Select Variant</span>
-                                                            <div className="ec-pro-variation-content">
-                                                                <ul>
-                                                                    {
-                                                                        Data.variants?.map((item, index) =>
-                                                                            <li className={selectVarientId == item.id && "active"} onClick={() => { selectVarient(item)  }} style={{ padding: '2px 8px' }}><span>{item.name}</span></li>
-                                                                        )
+                                                                        Data.is_popular == true &&
+                                                                        <b className="ec-single-ps-title " style={{ fontSize: 'x-small' }}>POPULAR <span className='mx-1'>|</span></b>
                                                                     }
 
-                                                                
-                                                                </ul>
+                                                                    {
+                                                                        Data.is_recommended == true &&
+                                                                        <b className="ec-single-ps-title " style={{ fontSize: 'x-small' }}>RECOMMEDED <span className='mx-1'>|</span></b>
+
+                                                                    }
+
+                                                                    {
+                                                                        Data.is_new == true &&
+                                                                        <b className="ec-single-ps-title " style={{ fontSize: 'x-small' }}>NEW <span className='mx-1'></span></b>
+                                                                    }
+
+                                                                </div>
+
+                                                                <span class="flags " style={{ fontSize: 'smaller' }}><span class="new" style={Data.is_out_of_stock == true ? { color: 'red', fontWeight: '500' } : { color: 'green', fontWeight: '500' }}>{Data.is_out_of_stock == true ? 'OUT OF STOCK' : 'IN STOCK'}</span></span>
+
+
+                                                            </div>
+
+                                                            <div className="ec-single-desc">{Data.description}</div>
+
+                                                            <div className="ec-single-price-stoke">
+                                                                <div className="ec-single-price">
+                                                                    <span className="ec-single-ps-title">Price</span>
+
+                                                                    {
+                                                                        Data.variants?.length > 0 &&
+                                                                        <span className="ec-price">
+                                                                            {
+                                                                            }
+                                                                            {
+                                                                                offer_enabled == true ?
+                                                                                    <>
+                                                                                        <span className="new-price mr-2">₹{offerprice}</span>
+                                                                                        <del>
+                                                                                            <span className="old-price" style={{ marginRight: '5px' }}>₹{price}</span>
+                                                                                        </del>
+                                                                                    </>
+                                                                                    :
+                                                                                    <span className=" new-price">₹{price}</span>
+                                                                            }
+                                                                        </span>
+                                                                    }
+                                                                </div>
+
+
+
                                                             </div>
 
 
-                                                        </div>
+                                                            <div className="ec-pro-variation">
+                                                                <div className="ec-pro-variation-inner ec-pro-variation-size">
+                                                                    <span>Select Variant</span>
+                                                                    <div className="ec-pro-variation-content">
+                                                                        <ul>
+                                                                            {
+                                                                                Data.variants?.map((item, index) =>
+                                                                                    <li className={selectVarientId == item.id && "active"} onClick={() => { selectVarient(item) }} style={{ padding: '2px 8px' }}><span>{item.name}</span></li>
+                                                                                )
+                                                                            }
 
+
+                                                                        </ul>
+                                                                    </div>
+
+
+                                                                </div>
+
+                                                            </div>
+                                                            <div className="ec-single-qty">
+                                                                <div className="qty-plus-minus">
+                                                                    <button
+                                                                        onClick={() => {
+                                                                            setquantity((r) => {
+                                                                                if (r > 0) {
+                                                                                    return r - 1;
+                                                                                }
+                                                                                return r;
+                                                                            });
+                                                                        }}
+                                                                    ><i class="fas fa-minus"></i></button>
+                                                                    <input className="qty-input" type="text" name="ec_qtybtn" value={quantity} />
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            setquantity(pre => pre + 1)}
+                                                                    > <i class="fas fa-plus"></i></button>
+                                                                </div>
+                                                                <div className="ec-single-cart ">
+                                                                    <button onClick={() => { { cartUpdate(quantity) } }} className="btn btn-primary">
+
+                                                                        {ButtonLoading &&
+                                                                            <div class="spinner-border spinner-border-sm text-light mr-1" role="status">
+                                                                                <span class="sr-only">Loading...</span>
+                                                                            </div>}
+                                                                        Add To Cart</button>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
                                                     </div>
-                                                    <div className="ec-single-qty">
-                                                        <div className="qty-plus-minus">
-                                                            <button
-                                                                onClick={() => {
-                                                                    setquantity((r) => {
-                                                                        if (r > 0) {
-                                                                            return r - 1;
-                                                                        }
-                                                                        return r;
-                                                                    });
-                                                                }}
-                                                            ><i class="fas fa-minus"></i></button>
-                                                            <input className="qty-input" type="text" name="ec_qtybtn" value={quantity} />
-                                                            <button
-                                                                onClick={() =>
-                                                                    setquantity(pre => pre + 1)}
-                                                            > <i class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/*Single product content End */}
+                                        {/* Single product tab start */}
+                                        <div className="ec-single-pro-tab">
+                                            <div className="ec-single-pro-tab-wrapper">
+                                                <div className="ec-single-pro-tab-nav">
+                                                    <ul className="nav nav-tabs">
+                                                        <li className="nav-item">
+                                                            <a className="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-details" role="tablist">Detail</a>
+                                                        </li>
+                                                        <li className="nav-item">
+                                                            <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-info" role="tablist">More Information</a>
+                                                        </li>
+                                                        <li className="nav-item">
+                                                            <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-rtrn" role="tablist">{'Return & Exchange Policy'}</a>
+                                                        </li>
+                                                        <li className="nav-item">
+                                                            <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-360v" role="tablist">{'360 View'}</a>
+                                                        </li>
+                                                        <li className="nav-item">
+                                                            <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-wtch" role="tablist">{'Watch Video'}</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div className="tab-content  ec-single-pro-tab-content">
+                                                    <div id="ec-spt-nav-details" className="tab-pane fade show active">
+                                                        <div className="ec-single-pro-tab-desc">
+                                                            <p>{Data.description}</p>
+                                                            <p>{varientDesc} </p>
                                                         </div>
-                                                        <div className="ec-single-cart ">
-                                                            <button onClick={() => { { cartUpdate(quantity) } }} className="btn btn-primary">
-
-                                                                {ButtonLoading &&
-                                                                    <div class="spinner-border spinner-border-sm text-light mr-1" role="status">
-                                                                        <span class="sr-only">Loading...</span>
-                                                                    </div>}
-                                                                Add To Cart</button>
+                                                    </div>
+                                                    <div id="ec-spt-nav-info" className="tab-pane fade">
+                                                        <div className="ec-single-pro-tab-desc">
+                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                                                Lorem Ipsum has been the industry's standard dummy text ever since the
+                                                                1500s, when an unknown printer took a galley of type and scrambled it to
+                                                                make a type specimen book. It has survived not only five centuries, but also
+                                                                the leap into electronic typesetting, remaining essentially unchanged.
+                                                            </p>
                                                         </div>
+                                                    </div>
 
+                                                    <div id="ec-spt-nav-rtrn" className="tab-pane fade">
+                                                        <div className="ec-single-pro-tab-desc">
+                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                                                Lorem Ipsum has been the industry's standard dummy text ever since the
+                                                                1500s, when an unknown printer took a galley of type and scrambled it to
+                                                                make a type specimen book. It has survived not only five centuries, but also
+                                                                the leap into electronic typesetting, remaining essentially unchanged.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div id="ec-spt-nav-360v" className="tab-pane fade">
+                                                        <div className="ec-single-pro-tab-desc">
+                                                            <ThreeSixty
+                                                                amount={36}
+                                                                imagePath="https://scaleflex.cloudimg.io/width/600/q35/https://scaleflex.ultrafast.io/https://scaleflex.airstore.io/demo/chair-360-36"
+                                                                fileName="chair_{index}.jpg?v1"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div id="ec-spt-nav-wtch" className="tab-pane fade">
+                                                        <div className="ec-single-pro-tab-desc">
+                                                            <iframe width={'100%'} height={315} src="https://www.youtube.com/embed/uNVJQCGxqb0" title="YouTube video player" frameBorder={0} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+
+                                                        </div>
                                                     </div>
 
                                                 </div>
                                             </div>
                                         </div>
+                                        {/* product details description area end */}
                                     </div>
-                                </div>
-                                {/*Single product content End */}
-                                {/* Single product tab start */}
-                                <div className="ec-single-pro-tab">
-                                    <div className="ec-single-pro-tab-wrapper">
-                                        <div className="ec-single-pro-tab-nav">
-                                            <ul className="nav nav-tabs">
-                                                <li className="nav-item">
-                                                    <a className="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-details" role="tablist">Detail</a>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-info" role="tablist">More Information</a>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-rtrn" role="tablist">{'Return & Exchange Policy'}</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div className="tab-content  ec-single-pro-tab-content">
-                                            <div id="ec-spt-nav-details" className="tab-pane fade show active">
-                                                <div className="ec-single-pro-tab-desc">
-                                                    <p>{Data.description}</p>
-                                                    <p>{varientDesc} </p>
-                                                </div>
-                                            </div>
-                                            <div id="#ec-spt-nav-info" className="tab-pane fade">
-                                                <div className="ec-single-pro-tab-desc">
-                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                        Lorem Ipsum has been the industry's standard dummy text ever since the
-                                                        1500s, when an unknown printer took a galley of type and scrambled it to
-                                                        make a type specimen book. It has survived not only five centuries, but also
-                                                        the leap into electronic typesetting, remaining essentially unchanged.
-                                                    </p>
-                                                </div>
-                                            </div>
+                                    {/* Sidebar Area Start */}
 
-                                            <div id="#ec-spt-nav-rtrn" className="tab-pane fade">
-                                                <div className="ec-single-pro-tab-desc">
-                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                        Lorem Ipsum has been the industry's standard dummy text ever since the
-                                                        1500s, when an unknown printer took a galley of type and scrambled it to
-                                                        make a type specimen book. It has survived not only five centuries, but also
-                                                        the leap into electronic typesetting, remaining essentially unchanged.
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* product details description area end */}
-                            </div>
-                            {/* Sidebar Area Start */}
-
-                            {/* Sidebar Area Start */}
-                        </div>
-                    </div>
-                </section>
-                {/* End Single product */}
-                {/* Related Product Start */}
-                <section className="section ec-releted-product section-space-p">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-12 text-center">
-                                <div className="section-title">
-                                    <h2 className="ec-bg-title">Related products</h2>
-                                    <h2 className="ec-title">Related products</h2>
-                                    <p className="sub-title">Browse The Collection of Top Products</p>
+                                    {/* Sidebar Area Start */}
                                 </div>
                             </div>
-                        </div>
-                        <div className="row margin-minus-b-30">
-                            {
-                                products.length > 0 &&
+                        </section>
+                        {/* End Single product */}
+                        {/* Related Product Start */}
+                        <section className="section ec-releted-product section-space-p">
+                            <div className="container">
                                 <div className="row">
+                                    <div className="col-md-12 text-center">
+                                        <div className="section-title">
+                                            <h2 className="ec-bg-title">Related products</h2>
+                                            <h2 className="ec-title">Related products</h2>
+                                            <p className="sub-title">Browse The Collection of Top Products</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row margin-minus-b-30">
                                     {
-                                        products.map((item, index) => {
-                                            return <GridProduct key={index} Data={item} />
-                                        })
+                                        products.length > 0 &&
+                                        <div className="row">
+                                            {
+                                                products.map((item, index) => {
+                                                    return <GridProduct key={index} Data={item} />
+                                                })
+                                            }
+                                        </div>
                                     }
                                 </div>
-                            }
-                        </div>
-                    </div>
-                </section>
+                            </div>
+                        </section>
 
-                <Footer />
-                {/* Footer navigation panel for responsive display */}
-                <FooterNav setopen={() => setopen(!open)} />
-
+                        <Footer />
+                        {/* Footer navigation panel for responsive display */}
+                        <FooterNav setopen={() => setopen(!open)} />
+                    </>
+                }
                 {/* Footer navigation panel for responsive display end */}
             </div>
         </div>
+
     )
 }
 

@@ -44,3 +44,18 @@ code {
   display: block;
   padding: 0;
 }
+
+
+.v360-viewport {
+  background-color: #FFF;
+  width: 65% !important;
+  height: auto !important;
+  overflow: hidden;
+  position: relative !important;
+  left: 0;
+  transition: width 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}

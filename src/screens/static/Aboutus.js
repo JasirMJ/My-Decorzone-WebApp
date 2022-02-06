@@ -23,7 +23,7 @@ function Aboutus() {
   const [open, setopen] = useState(false)
   return (
     <>
-      <div id="ec-overlay"><span className="loader_img" /></div>
+      {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
       <Header open={open} setopen={() => setopen(!open)} />
 
   {/* Ec About Us page */}
