@@ -28,7 +28,7 @@ function Header({ open, setopen }) {
                 </div>
                 {/* Ec Header Logo End */}
                 {/* Ec Header Search Start */}
-                {window.location.pathname == '/products' &&
+                {!window.location.pathname == '/login' || '/checkout' || '/cart' || '/myorders' &&
                   <div className="align-self-center">
                     <div className="header-search">
                       <form className="ec-btn-group-form" action="#">

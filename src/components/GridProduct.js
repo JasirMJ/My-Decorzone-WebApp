@@ -113,9 +113,9 @@ console.log({Data});
 
     // console.log({ newtag });
     return (
-        <div className="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
-            <div className="ec-product-inner">
-                <div className="ec-pro-image-outer">
+        <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-6 ">
+            <div className="ec-product-inner ">
+                <div className="ec-pro-image-outer ">
                     <Link to={`/product/${Data.id}`}>
                         <div className="ec-pro-image">
                             <Link to={`/product/${Data.id}`} className="image">
@@ -153,7 +153,7 @@ console.log({Data});
                         </div>
                     </Link>
                 </div>
-                <div className="ec-pro-content">
+                <div className="ec-pro-content  ">
                     <h5 className="ec-pro-title"><Link to={`/product/${Data.id}`}>{Data.name}</Link></h5>
 
                     <div className="ec-pro-list-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dutmmy text ever since the 1500s, when an unknown printer took a galley.</div>

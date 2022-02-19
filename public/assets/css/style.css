@@ -19760,6 +19760,7 @@ button.btn-close.qty_close {
   transition: all 0.3s ease 0s;
   z-index: 8;
   position: relative;
+  width: 100%;
 }
 .ec-product-inner:hover a.quickview {
   -webkit-transform: translateY(0px);
@@ -19787,6 +19788,7 @@ button.btn-close.qty_close {
   opacity: 1;
 }
 .ec-product-inner .ec-pro-content {
+  width: 100%;
   position: relative;
   z-index: 7;
   display: -webkit-box;
