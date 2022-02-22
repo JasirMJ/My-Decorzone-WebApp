@@ -8,7 +8,43 @@ function Header({ open, setopen }) {
 
   const { userToken, localStorageName, cartObjs, serachText, setserachText } = useContext(AppContext)
 
+  const [products, setproducts] = useState([])
   console.log("TOKEN", userToken);
+
+  useEffect(() => {
+    // console.log('api calling')
+
+    getproduct()
+  }, [serachText])
+
+
+  const getproduct = () => {
+    var axios = require('axios');
+
+    var config = {
+      method: 'get',
+      url: baseurl + '/items/items/?ordering=?&' + `search=${serachText}`,
+      headers: {}
+    };
+
+    axios(config)
+      .then(function (response) {
+        // setloading(false)
+        console.log('prdts', response.data);
+        if (response.data.results) {
+          setproducts(response.data.results)
+
+          console.log(response.data.results)
+        }
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
+
 
   return (
     <>
@@ -28,7 +64,7 @@ function Header({ open, setopen }) {
                 </div>
                 {/* Ec Header Logo End */}
                 {/* Ec Header Search Start */}
-                {!window.location.pathname == '/login' || '/checkout' || '/cart' || '/myorders' &&
+                {window.location.pathname != ('/login' || '/checkout' || '/cart' || '/myorders') &&
                   <div className="align-self-center">
                     <div className="header-search">
                       <form className="ec-btn-group-form" action="#">
@@ -94,16 +130,46 @@ function Header({ open, setopen }) {
               </div>
               {/* Ec Header Logo End */}
               {/* Ec Header Search Start */}
-              {window.location.pathname == '/products' &&
+              {window.location.pathname != ('/login' || '/checkout' || '/cart' || '/myorders') &&
                 <div className="col">
                   <div className="header-search">
                     <form className="ec-btn-group-form" action="#">
                       <input className="form-control" placeholder="Enter Your Product Name..." type="text" style={{ borderRadius: '6px' }} onChange={e => setserachText(e.target.value)} value={serachText} />
                       <button className="submit" type='button'><i class="fas fa-search" style={{ color: '#8196dc' }}></i></button>
                     </form>
+
+                    {/* serach result component start */}
+                    {serachText.length > 0 &&
+                      <div className='w-100 p-2' style={{
+                        position: 'absolute',
+                        background: 'rgb(244 244 244 / 75%)',
+                        top: '48px',
+                        maxHeight: '10rem',
+                        minHeight: '16rem',
+                        zIndex: '10',
+                        boxShadow: '0 5px 4px lightgrey',
+                        borderRadius: '7px',
+                        overflow:'scroll'
+                      }}>
+                        {products.map(item => (
+                          <div className='py-1'>
+                            <a href={`/product/${item.id}`}  >{item.name}</a>
+                            <div style={{ borderBottom: '1px solid #ccc' }}></div>
+                          </div>
+                        ))}
+
+                      </div>
+                    }
+                    {/* serach result component en*/}
+
+
+
                   </div>
+
                 </div>
               }
+
+
               {/* Ec Header Search End */}
             </div>
           </div>
