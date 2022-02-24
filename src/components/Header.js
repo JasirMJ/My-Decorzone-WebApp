@@ -1,14 +1,20 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import { baseurl, protocol, AppContext } from '../common/Constants'
 import { unsetDataOnCookie } from '../common/Functions'
 import Logo from '../assets/images/logo.jpeg'
 import { Link } from 'react-router-dom'
+import ScrollContainer from 'react-indiana-drag-scroll'
 
 function Header({ open, setopen }) {
 
   const { userToken, localStorageName, cartObjs, serachText, setserachText } = useContext(AppContext)
 
+  const ref = useRef(null)
+
   const [products, setproducts] = useState([])
+  const [data, setdata] = useState([])
+  const [widthOver, setWidthOver] = useState(false)
+
   console.log("TOKEN", userToken);
 
   useEffect(() => {
@@ -17,6 +23,12 @@ function Header({ open, setopen }) {
     getproduct()
   }, [serachText])
 
+  useEffect(() => {
+    getCategories()
+  }, [])
+
+
+  // console.log(ref.current.clientWidth > window.innerWidth)
 
   const getproduct = () => {
     var axios = require('axios');
@@ -43,6 +55,42 @@ function Header({ open, setopen }) {
       });
 
   }
+  const getCategories = () => {
+    var axios = require('axios');
+    var FormData = require('form-data');
+    var data = new FormData();
+
+    var config = {
+      method: 'get',
+      url: baseurl + '/items/category/',
+      headers: {
+      },
+      data: data
+    };
+
+    axios(config)
+      .then(function (response) {
+        // setLoading(false)
+        console.log('categories----', response.data);
+        setdata(response.data.results);
+        // setNext(response.data.next);
+        // setPrev(response.data.previous);
+      })
+      .catch(function (error) {
+        // setLoading(false)
+        console.log(error);
+      });
+
+  }
+
+  useEffect(() => {
+    addEventListener('resize', () => {
+      if (ref?.current?.clientWidth < window?.innerWidth) {
+        setWidthOver(true)
+      }
+
+    })
+  }, [])
 
 
 
@@ -71,6 +119,31 @@ function Header({ open, setopen }) {
                         <input className="form-control" placeholder="Enter Your Product Name..." type="text" style={{ borderRadius: '6px' }} onChange={e => setserachText(e.target.value)} value={serachText} />
                         <button className="submit" type='button'><i class="fas fa-search" style={{ color: '#8196dc' }}></i></button>
                       </form>
+
+                      {/* serach result component start */}
+                      {serachText.length > 0 &&
+                        <div className='w-100 p-2' style={{
+                          position: 'absolute',
+                          background: '#f4f4f4',
+                          top: '48px',
+                          maxHeight: '10rem',
+                          minHeight: '16rem',
+                          zIndex: '10',
+                          boxShadow: '0 5px 4px lightgrey',
+                          borderRadius: '7px',
+                          overflowY: 'scroll'
+                        }}>
+                          {products.map(item => (
+                            <div className='py-1'>
+                              <a href={`/product/${item.id}`}  >{item.name}</a>
+                              <div style={{ borderBottom: '1px solid #ccc' }}></div>
+                            </div>
+                          ))}
+
+                        </div>
+                      }
+                      {/* serach result component en*/}
+
                     </div>
                   </div>
                 }
@@ -149,7 +222,7 @@ function Header({ open, setopen }) {
                         zIndex: '10',
                         boxShadow: '0 5px 4px lightgrey',
                         borderRadius: '7px',
-                        overflow:'scroll'
+                        overflow: 'scroll'
                       }}>
                         {products.map(item => (
                           <div className='py-1'>
@@ -196,6 +269,32 @@ function Header({ open, setopen }) {
           </div>
         </div>
         {/* Ec Main Menu End */}
+
+
+        {/* small screen category slider */}
+        {window.location.pathname != ('/login' || '/checkout' || '/cart' || '/myorders') &&
+          <div className="d-block">
+            <ScrollContainer horizontal={true} className={widthOver && 'd-flex justify-content-center'}>
+              <div style={{ display: 'inline-flex', marginTop: '10px' }} ref={ref}>
+                {data.map(item => (
+                  <a href={`/category/${item.id}`} style={{
+                    width: '7rem',
+                    justifyContent: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                  }}>
+                    <img style={{ width: '5rem', height: '5rem', objectFit: 'cover', borderRadius: '4px' }} src={item.image} alt="" />
+                    <p style={{ fontSize: '10px', marginTop: '5px' }}>{item.name}</p>
+                  </a>
+
+                ))}
+              </div>
+            </ScrollContainer>
+          </div>
+        }
+
+        {/* small screen category slider */}
 
         {/* ekka Mobile Menu Start */}
         <div id="ec-mobile-menu" className={`ec-side-cart ec-mobile-menu ${open ? 'ec-open' : ""}`}>
