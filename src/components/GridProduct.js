@@ -4,7 +4,7 @@ import { baseurl, protocol, AppContext } from '../common/Constants'
 import { Link } from 'react-router-dom'
 
 const GridProduct = ({ Data }) => {
-// console.log({Data});
+    // console.log({Data});
     const { userToken, setCartObjs, cartObjs, isLogined, totalPayAmount, cartDiscountTotalAmount, cartTotalAmount, extraCharges, deliveryCharge, userAddressId } = useContext(AppContext)
 
     const [quantity, setquantity] = useState(1)
@@ -60,7 +60,7 @@ const GridProduct = ({ Data }) => {
     }
 
     const cartUpdate = (count) => {
-        setButtonLoading(true) 
+        setButtonLoading(true)
         if (isLogined) {
             var item = [{
                 "varient": Data.variants[0].id,
@@ -220,17 +220,26 @@ const GridProduct = ({ Data }) => {
                                     <div className="ec-single-cart ">
                                         <button className="btn btn-primary"
                                             onClick={() => { cartUpdate(quantity) }}>
-                                              {ButtonLoading &&
-                                            <div class="spinner-border spinner-border-sm text-light mr-1" role="status">
-                                                <span class="sr-only">Loading...</span>
-                                            </div>}
+                                            {ButtonLoading &&
+                                                <div class="spinner-border spinner-border-sm text-light mr-1" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>}
                                             Add To Cart</button>
                                     </div>
                                 </>
                             }
+
                         </div>
+
+
+
+                    </div>
+
+                    <div className='mt-2 d-md-none'>
+                        <p style={{fontSize: 'smaller'}}>{Data.description.length > 150 ? Data.description.slice(0 , 150)+ '...':Data.description}</p>
                     </div>
                 </div>
+
             </div>
         </div >
     )
