@@ -350,7 +350,8 @@ const ProductDetails = () => {
                                                                     <button
                                                                         onClick={() =>
                                                                             setquantity(pre => pre + 1)}
-                                                                    > <i class="fas fa-plus"></i></button>
+                                                                    > 
+                                                                    <i class="fas fa-plus"></i></button>
                                                                 </div>
                                                                 <div className="ec-single-cart ">
                                                                     <button onClick={() => { { cartUpdate(quantity) } }} className="btn btn-primary">
@@ -384,12 +385,12 @@ const ProductDetails = () => {
                                                         <li className="nav-item">
                                                             <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-rtrn" role="tablist">{'Return & Exchange Policy'}</a>
                                                         </li>
-                                                        <li className="nav-item">
+                                                        {/* <li className="nav-item">
                                                             <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-360v" role="tablist">{'360 View'}</a>
                                                         </li>
                                                         <li className="nav-item">
                                                             <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-wtch" role="tablist">{'Watch Video'}</a>
-                                                        </li>
+                                                        </li> */}
                                                     </ul>
                                                 </div>
                                                 <div className="tab-content  ec-single-pro-tab-content">
@@ -420,7 +421,7 @@ const ProductDetails = () => {
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div id="ec-spt-nav-360v" className="tab-pane fade">
+                                                    {/* <div id="ec-spt-nav-360v" className="tab-pane fade">
                                                         <div className="ec-single-pro-tab-desc">
                                                             <ThreeSixty
                                                                 amount={36}
@@ -428,13 +429,13 @@ const ProductDetails = () => {
                                                                 fileName="chair_{index}.jpg?v1"
                                                             />
                                                         </div>
-                                                    </div>
-                                                    <div id="ec-spt-nav-wtch" className="tab-pane fade">
+                                                    </div> */}
+                                                    {/* <div id="ec-spt-nav-wtch" className="tab-pane fade">
                                                         <div className="ec-single-pro-tab-desc">
                                                             <iframe width={'100%'} height={315} src="https://www.youtube.com/embed/uNVJQCGxqb0" title="YouTube video player" frameBorder={0} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
 
                                                         </div>
-                                                    </div>
+                                                    </div> */}
 
                                                 </div>
                                             </div>

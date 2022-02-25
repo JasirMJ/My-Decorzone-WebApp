@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import { baseurl, protocol, AppContext } from '../common/Constants'
 import { unsetDataOnCookie } from '../common/Functions'
-import Logo from '../assets/images/logo.jpeg'
+import Logo from '../assets/images/logo.png'
 import { Link } from 'react-router-dom'
 import ScrollContainer from 'react-indiana-drag-scroll'
 
