@@ -51,7 +51,7 @@ function Home() {
     axios(config)
       .then(function (response) {
         setpopular(response.data)
-        console.log(JSON.stringify(response.data));
+        // console.log(response.data)
       })
       .catch(function (error) {
         console.log(error);
@@ -69,7 +69,7 @@ function Home() {
     axios(config)
       .then(function (response) {
         setis_new(response.data)
-        console.log(JSON.stringify(response.data));
+        console.log(response.data)
       })
       .catch(function (error) {
         console.log(error);
@@ -87,7 +87,7 @@ function Home() {
     axios(config)
       .then(function (response) {
         setis_recommended(response.data)
-        console.log(JSON.stringify(response.data));
+        console.log(response.data)
       })
       .catch(function (error) {
         console.log(error);

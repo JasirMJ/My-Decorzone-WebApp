@@ -4,6 +4,9 @@ import { unsetDataOnCookie } from '../common/Functions'
 import Logo from '../assets/images/logo.png'
 import { Link } from 'react-router-dom'
 import ScrollContainer from 'react-indiana-drag-scroll'
+import Slider from "react-slick";
+
+
 
 function Header({ open, setopen }) {
 
@@ -13,7 +16,7 @@ function Header({ open, setopen }) {
 
   const [products, setproducts] = useState([])
   const [data, setdata] = useState([])
-  const [widthOver, setWidthOver] = useState(false)
+  const [widthOver, setWidthOver] = useState()
 
   console.log("TOKEN", userToken);
 
@@ -83,16 +86,46 @@ function Header({ open, setopen }) {
 
   }
 
-  useEffect(() => {
-    addEventListener('resize', () => {
-      if (ref?.current?.clientWidth < window?.innerWidth) {
-        setWidthOver(true)
+
+
+  const settings = {
+    className: "center",
+    infinite: false,
+    centerPadding: "60px",
+    slidesToShow: 8,
+    swipeToSlide: true,
+    afterChange: function (index) {
+      console.log(
+        `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
+      );
+    },
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 8,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: false
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1
+        }
       }
-
-    })
-  }, [])
-
-
+    ]
+  };
 
   return (
     <>
@@ -274,27 +307,20 @@ function Header({ open, setopen }) {
         {/* small screen category slider */}
         {window.location.pathname != ('/login' || '/checkout' || '/cart' || '/myorders') &&
           <div className="d-block">
-            <ScrollContainer horizontal={true} className={widthOver && 'd-flex justify-content-center'}>
-              <div style={{ display: 'inline-flex', marginTop: '10px' }} ref={ref}>
-                {data.map(item => (
-                  <a href={`/category/${item.id}`} style={{
-                    width: '7rem',
-                    justifyContent: 'center',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center'
-                  }}>
-                    <img style={{ width: '5rem', height: '5rem', objectFit: 'cover', borderRadius: '4px' }} src={item.image} alt="" />
-                    <p style={{ fontSize: '10px', marginTop: '5px' }}>{item.name}</p>
-                  </a>
+            {/* <ScrollContainer horizontal={true} className={`d-flex justify-content-${widthOver ? 'center' : 'start'}`}> */}
+            {/* <div style={{ display: 'inline-flex', marginTop: '10px' }} ref={ref}> */}
+            <Slider {...settings}>
 
-                ))}
-              </div>
-            </ScrollContainer>
+              {data.map(item => (
+                <a href={`/category/${item.id}`} className={'category__slides'} >
+                  <img style={{ width: '5rem', height: '5rem', objectFit: 'cover', borderRadius: '4px' }} src={item.image} alt="" />
+                  <p style={{ fontSize: '10px', marginTop: '5px' }}>{item.name}</p>
+                </a>
+
+              ))}
+            </Slider>
           </div>
         }
-
-        {/* small screen category slider */}
 
         {/* ekka Mobile Menu Start */}
         <div id="ec-mobile-menu" className={`ec-side-cart ec-mobile-menu ${open ? 'ec-open' : ""}`}>

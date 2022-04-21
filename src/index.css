@@ -18,7 +18,8 @@ code {
   overflow: hidden;
   object-position: center;
 }
-.h-64{
+
+.h-64 {
   height: 22rem;
 }
 
@@ -32,6 +33,7 @@ code {
   margin-top: 10px !important;
   cursor: pointer;
 }
+
 .slick-dots {
   margin-top: -20px !important;
   width: 100%;
@@ -39,7 +41,10 @@ code {
   list-style: none;
   text-align: center;
 }
-.slick-dots, .slick-next, .slick-prev {
+
+.slick-dots,
+.slick-next,
+.slick-prev {
   position: unset !important;
   display: block;
   padding: 0;
@@ -61,30 +66,35 @@ code {
 }
 
 @media only screen and (max-width:600px) {
-  .ec-product-inner { 
+  .ec-product-inner {
     display: flex;
   }
-  .ec-product-inner .ec-pro-content  {
+
+  .ec-product-inner .ec-pro-content {
     padding-left: 1rem;
   }
 }
 
-::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0);
-	border-radius: 10px;
-	background-color: #ffffff00;
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0);
+  border-radius: 10px;
+  background-color: #ffffff00;
 }
 
-::-webkit-scrollbar
-{
-	width: 6px;
-	background-color: #ffffff00;
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: #ffffff00;
 }
 
-::-webkit-scrollbar-thumb
-{
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0);
-	background-color: #f4f4f4;
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0);
+  background-color: #f4f4f4;
+}
+
+.category__slides {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
