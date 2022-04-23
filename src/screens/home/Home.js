@@ -20,6 +20,7 @@ import FooterNav from '../../components/FooterNav';
 import { baseurl, protocol, AppContext } from '../../common/Constants'
 import NoData from '../NoData/noData';
 import Preloader from '../../components/Preloader';
+import AppDownloadSection from '../../components/AppDownloadSection';
 
 function Home() {
   const [open, setopen] = useState(false)
@@ -242,7 +243,7 @@ function Home() {
 
       <Testimonial />
 
-
+      <AppDownloadSection />
       {/* Ec Instagram End */}
       {/* Footer Start */}
       <Footer />

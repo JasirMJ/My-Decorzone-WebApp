@@ -32578,3 +32578,7 @@ input[type=email]:focus::-webkit-input-placeholder {
 .labels .ec-line-offer .ec-line-offer-info .offer-btn .btn-shop-now:hover {
   border: 1px solid #777;
 }
+
+/* .slick-track{
+transform: unset !important;
+} */

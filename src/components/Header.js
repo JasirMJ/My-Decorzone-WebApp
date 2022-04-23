@@ -30,8 +30,24 @@ function Header({ open, setopen }) {
     getCategories()
   }, [])
 
+  // useEffect(() => {
+  //   let slickSlider = document.querySelector('.slick-track')
+  //   slickSlider.style.transform = '0'
+  //   // console.log({slickSlider})
+  // }, [])
 
-  // console.log(ref.current.clientWidth > window.innerWidth)
+  useEffect(() => {
+
+
+    console.log(ref.current.clientWidth, window.innerWidth)
+    console.log(ref.current.clientWidth > window.innerWidth)
+
+    if (ref.current.clientWidth > window.innerWidth) {
+      setWidthOver(true)
+    } else {
+      setWidthOver(false)
+    }
+  }, [ref.current])
 
   const getproduct = () => {
     var axios = require('axios');
@@ -89,10 +105,11 @@ function Header({ open, setopen }) {
 
 
   const settings = {
-    className: "center",
+    className: "",
     infinite: false,
     centerPadding: "60px",
     slidesToShow: 8,
+    initialSlide: 0,
     swipeToSlide: true,
     afterChange: function (index) {
       console.log(
@@ -104,26 +121,21 @@ function Header({ open, setopen }) {
         breakpoint: 1024,
         settings: {
           slidesToShow: 8,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: false
         }
       },
       {
-        breakpoint: 600,
+        breakpoint: 768,
         settings: {
           slidesToShow: 6,
-          slidesToScroll: 2,
-          initialSlide: 2
+          initialSlide: 2,
         }
       },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1
-        }
-      }
+      // {
+      //   breakpoint: 480,
+      //   settings: {
+      //     slidesToShow: 3,
+      //   }
+      // }
     ]
   };
 
@@ -306,19 +318,30 @@ function Header({ open, setopen }) {
 
         {/* small screen category slider */}
         {window.location.pathname != ('/login' || '/checkout' || '/cart' || '/myorders') &&
-          <div className="d-block">
+          <div className="d-block mt-3" style={{
+            width: '100%',
+            overflowX: 'overlay'
+          }}>
             {/* <ScrollContainer horizontal={true} className={`d-flex justify-content-${widthOver ? 'center' : 'start'}`}> */}
             {/* <div style={{ display: 'inline-flex', marginTop: '10px' }} ref={ref}> */}
-            <Slider {...settings}>
+            {/* <Slider {...settings}> */}
+            <div className='d-flex pr-3 scroller' ref={ref} style={{
+              width: '100%',
+              justifyContent: 'start' ,
+
+              overflowX: 'scroll',
+              flexGrow: '1'
+            }}>
 
               {data.map(item => (
-                <a href={`/category/${item.id}`} className={'category__slides'} >
+                <a href={`/category/${item.id}`} className={'category__slides '} >
                   <img style={{ width: '5rem', height: '5rem', objectFit: 'cover', borderRadius: '4px' }} src={item.image} alt="" />
                   <p style={{ fontSize: '10px', marginTop: '5px' }}>{item.name}</p>
                 </a>
 
               ))}
-            </Slider>
+            </div>
+            {/* </Slider> */}
           </div>
         }
 

@@ -3,7 +3,7 @@ import React from 'react'
 function Testimonial() {
     return (
         <>
-         <section className="section ec-test-section section-space-ptb-100 section-space-m">
+         <section className="section ec-test-section section-space-ptb-100 section-space-m m-0">
         <div className="container">
           <div className="row">
             <div className="col-md-12 text-center">
