@@ -43,8 +43,8 @@ function Footer() {
                     <div className="ec-footer-links">
                       <ul className="align-items-center">
                         <li className="ec-footer-link"><a href="/about">About us</a></li>
-                        <li className="ec-footer-link"><a href="/">Terms & Conditions</a></li>
-                        <li className="ec-footer-link"><a href="/">Privacy Policy</a></li>
+                        <li className="ec-footer-link"><a href="/termsandcondition.html">Terms & Conditions</a></li>
+                        <li className="ec-footer-link"><a href="/privacypolicy.html">Privacy Policy</a></li>
                         <li className="ec-footer-link"><a href="/contactus">Contact us</a></li>
                       </ul>
                     </div>
