@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Logo from '../assets/images/logo.png'
-import { version } from '../common/Constants'
+import { AppContext, version } from '../common/Constants'
+import Context from '../common/Context'
+
 function Footer() {
+  const {AdminMobile, AdminMail} = useContext(AppContext)
   return (
     <>
 
@@ -23,47 +26,51 @@ function Footer() {
 
                   </div>
                 </div>
-                <div className="col-sm-12 col-lg-3 ec-footer-info">
+                <div className="col-sm-12 col-lg-3 ec-footer-info my-3">
                   <div className="ec-footer-widget">
                     <h4 className="ec-footer-heading">Contact us</h4>
                     {/* <div class="ec-heading-res"><i class="ecicon eci-angle-down"></i></div> */}
                     <div className="ec-footer-links">
                       <ul className="align-items-center">
-                        <li className="ec-footer-link">71 Pilgrim Avenue Chevy Chase, east california.</li>
-                        <li className="ec-footer-link"><span>Call Us:</span><a href="tel:+440123456789">+44
-                          0123 456 789</a></li>
-                        <li className="ec-footer-link"><span>Email:</span><a ><span className="__cf_email__" >mydecorzone@gmail.com</span></a></li>
+                        <li className="ec-footer-link">57 13th Cross, Baldwins Road, Koramangala, Bengaluru, Karnataka 560030</li>
+                        <li className="ec-footer-link"><span>Call Us:</span><a href={'tel:91'+AdminMobile}>{AdminMobile}</a></li>
+                        <li className="ec-footer-link"><span>Email:</span><a ><span className="__cf_email__" >{AdminMail}</span></a></li>
                       </ul>
                     </div>
                   </div>
                 </div>
-                <div className="col-sm-12 col-lg-2 ec-footer-info">
+                <div className="col-sm-12 col-lg-2 ec-footer-info my-3">
                   <div className="ec-footer-widget">
                     <h4 className="ec-footer-heading">Information</h4>
                     <div className="ec-footer-links">
                       <ul className="align-items-center">
-                        <li className="ec-footer-link"><a href="/about">About us</a></li>
+
                         <li className="ec-footer-link"><a href="/termsandcondition.html">Terms & Conditions</a></li>
                         <li className="ec-footer-link"><a href="/privacypolicy.html">Privacy Policy</a></li>
-                        <li className="ec-footer-link"><a href="/contactus">Contact us</a></li>
+                        <li className="ec-footer-link"><a href="/Returnpolicymydecorzon.html">Return policy </a></li>
+                        <li className="ec-footer-link"><a href="/Deliveryandshippingpolicy.html">Delivery and shipping policy</a></li>
+                        <li className="ec-footer-link"><a href="/CancellationsandModificationsPolicy.html">Cancellations and Modifications Policy</a></li>
                       </ul>
                     </div>
                   </div>
                 </div>
-                <div className="col-sm-12 col-lg-2 ec-footer-account">
+                <div className="col-sm-12 col-lg-2 ec-footer-account my-3">
                   <div className="ec-footer-widget">
                     <h4 className="ec-footer-heading">Account</h4>
                     <div className="ec-footer-links">
                       <ul className="align-items-center">
                         <li className="ec-footer-link"><a href="/myaccount">My Account</a></li>
                         <li className="ec-footer-link"><a href="/myorders">Order History</a></li>
+                        <li className="ec-footer-link"><a href="/about">About us</a></li>
+                        <li className="ec-footer-link"><a href="/contactus">Contact us</a></li>
+
                         {/* <li className="ec-footer-link"><a href="/cart">Cart</a></li> */}
                         {/* <li className="ec-footer-link"><a href="/offers">Offers</a></li> */}
                       </ul>
                     </div>
                   </div>
                 </div>
-                <div className="col-sm-12 col-lg-2 ec-footer-service">
+                <div className="col-sm-12 col-lg-2 ec-footer-service my-3">
                   <div className="ec-footer-widget">
                     <h4 className="ec-footer-heading">Services</h4>
                     <div className="ec-footer-links">
@@ -77,7 +84,7 @@ function Footer() {
                     </div>
                   </div>
                 </div>
-                <div className="col-sm-12 col-lg-3 ec-footer-news">
+                <div className="col-sm-12 col-lg-3 ec-footer-news my-3">
                   <div className="ec-footer-widget">
                     <div className="ec-footer-links">
 

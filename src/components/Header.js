@@ -36,18 +36,17 @@ function Header({ open, setopen }) {
   //   // console.log({slickSlider})
   // }, [])
 
-  useEffect(() => {
 
+  // useEffect(() => {
+  //   // console.log(ref.current.clientWidth, window.innerWidth)
+  //   // console.log(ref.current.clientWidth > window.innerWidth)
 
-    console.log(ref.current.clientWidth, window.innerWidth)
-    console.log(ref.current.clientWidth > window.innerWidth)
-
-    if (ref.current.clientWidth > window.innerWidth) {
-      setWidthOver(true)
-    } else {
-      setWidthOver(false)
-    }
-  }, [ref.current])
+  //   if (ref.current.clientWidth > window.innerWidth) {
+  //     setWidthOver(true)
+  //   } else {
+  //     setWidthOver(false)
+  //   }
+  // }, [ref.current])
 
   const getproduct = () => {
     var axios = require('axios');
@@ -239,9 +238,9 @@ function Header({ open, setopen }) {
         {/* Header responsive Bottom  Start */}
         <div className="ec-header-bottom d-lg-none">
           <div className="container position-relative">
-            <div className="row ">
+            <div className="row " style={{ alignItems: 'center' }}>
               {/* Ec Header Logo Start */}
-              <div className="lg-col">
+              <div className="col-3  col-md-2">
                 <div className="header-logo d-flex justify-content-center">
                   <Link to="/"><img src={Logo} alt="Site Logo" /><img className="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style={{ display: 'none' }} /></Link>
                 </div>
@@ -249,9 +248,9 @@ function Header({ open, setopen }) {
               {/* Ec Header Logo End */}
               {/* Ec Header Search Start */}
               {window.location.pathname != ('/login' || '/checkout' || '/cart' || '/myorders') &&
-                <div className="col">
+                <div className="col-md-10 col-9">
                   <div className="header-search">
-                    <form className="ec-btn-group-form" action="#">
+                    <form className="ec-btn-group-form m-0" action="#">
                       <input className="form-control" placeholder="Enter Your Product Name..." type="text" style={{ borderRadius: '6px' }} onChange={e => setserachText(e.target.value)} value={serachText} />
                       <button className="submit" type='button'><i class="fas fa-search" style={{ color: '#8196dc' }}></i></button>
                     </form>
@@ -317,7 +316,7 @@ function Header({ open, setopen }) {
 
 
         {/* small screen category slider */}
-        {window.location.pathname != ('/login' || '/checkout' || '/cart' || '/myorders') &&
+        {!['/myaccount', '/login', '/checkout', '/cart' , '/myorders','/about','/contactus','/categories','/register','/product/' ].includes(window.location.pathname) &&
           <div className="d-block mt-3" style={{
             width: '100%',
             overflowX: 'overlay'
@@ -327,7 +326,7 @@ function Header({ open, setopen }) {
             {/* <Slider {...settings}> */}
             <div className='d-flex pr-3 scroller' ref={ref} style={{
               width: '100%',
-              justifyContent: 'start' ,
+              justifyContent: 'start',
 
               overflowX: 'scroll',
               flexGrow: '1'
@@ -335,7 +334,7 @@ function Header({ open, setopen }) {
 
               {data.map(item => (
                 <a href={`/category/${item.id}`} className={'category__slides '} >
-                  <img style={{ width: '5rem', height: '5rem', objectFit: 'cover', borderRadius: '4px' }} src={item.image} alt="" />
+                  <img className={'category__img'} src={item.image} alt="" />
                   <p style={{ fontSize: '10px', marginTop: '5px' }}>{item.name}</p>
                 </a>
 

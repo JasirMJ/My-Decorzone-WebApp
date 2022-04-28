@@ -1,12 +1,20 @@
 import Cookies from "js-cookie";
-import { store } from "react-notifications-component";
 import {baseurl , protocol , AppContext} from "../common/Constants";
 import noimagesqaure from '../assets/images/noimagesqaure.png'
+import { Store } from "react-notifications-component";
 
-export const showMessage = (message, type, title, insert, container, duration) => {
+
+export const showMessage = (
+  message,
+  type,
+  title,
+  insert,
+  container,
+  duration
+) => {
   // reusable funciton
   // console.log("showMessage worked", message);
-  store.addNotification({
+  Store.addNotification({
     title: title,
     message: message,
     type: type, //success, default, warning, info, danger
@@ -16,14 +24,13 @@ export const showMessage = (message, type, title, insert, container, duration) =
     animationIn: ["animate__animated", "animate__fadeIn"],
     animationOut: ["animate__animated", "animate__fadeOut"],
     dismiss: {
-      duration: duration ? duration : type === "danger" ? 5000 : 2000,
+      duration: type === "danger" ? 5000 : 2000,
       //duration: 0,
       //click: true,
       //onScreen: true
     },
   });
 };
-
  // Get Offer Price max offer % in product
  export const getOffer = (Varients) => {
   if(Varients) {

@@ -27,10 +27,11 @@ import Preloader from '../../components/Preloader';
 
 
 const MyAccount = () => {
+  
   const [open, setopen] = useState(false)
   const [loading, setloading] = useState(true)
 
-  const { userToken, userDetails } = useContext(AppContext)
+  const {AdminMail, AdminMobile, userToken, userDetails } = useContext(AppContext)
   const [userdata, setuserdata] = useState({ username: '', first_name: '', email: '', mobile: '' });
 
   console.log({ userDetails });
@@ -138,6 +139,45 @@ const MyAccount = () => {
                                         <h6>Contact nubmer<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"></a></h6>
                                         <ul>
                                           <li>{userDetails.mobile}</li>
+                                          {/* <li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890</li> */}
+                                        </ul>
+                                      </div>
+                                    </div>
+                                    {/* <div className="col-md-6 col-sm-12">
+                                <div className="ec-vendor-detail-block ec-vendor-block-address mar-b-30">
+                                  <h6>Address<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" className="svg_img pro_svg" alt="edit" /></a></h6>
+                                  <ul>
+                                    <li><strong>Home : </strong>123, 2150 Sycamore Street, dummy text of
+                                      the, San Jose, California - 95131.</li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div className="col-md-6 col-sm-12">
+                                <div className="ec-vendor-detail-block ec-vendor-block-address">
+                                  <h6>Shipping Address<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" className="svg_img pro_svg" alt="edit" /></a></h6>
+                                  <ul>
+                                    <li><strong>Office : </strong>123, 2150 Sycamore Street, dummy text of
+                                      the, San Jose, California - 95131.</li>
+                                  </ul>
+                                </div>
+                              </div> */}
+                                  </div>
+                                  <h5>Contact Us</h5>
+                                  <div className="row">
+                                    <div className="col-md-6 col-sm-12">
+                                      <div className="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
+                                        <h6>E-mail address <a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"></a></h6>
+                                        <ul>
+                                          <li><a className="__cf_email__" data-cfemail="1a696f6a6a75686e2b5a7f627b6a77767f34797577">{AdminMail}</a></li>
+                                          {/* <li><strong>Email 2 : </strong><a href="https://loopinfosol.in/cdn-cgi/l/email-protection" className="__cf_email__" data-cfemail="b5c6c0c5c5dac7c187f5d0cdd4c5d8d9d09bd6dad8">[email&nbsp;protected]</a></li> */}
+                                        </ul>
+                                      </div>
+                                    </div>
+                                    <div className="col-md-6 col-sm-12">
+                                      <div className="ec-vendor-detail-block ec-vendor-block-contact space-bottom-30">
+                                        <h6>Contact nubmer<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"></a></h6>
+                                        <ul>
+                                          <li>{AdminMobile}</li>
                                           {/* <li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890</li> */}
                                         </ul>
                                       </div>

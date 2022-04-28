@@ -27,7 +27,8 @@ function Context() {
    const [cartObjs, setCartObjs] = useState([]);
    const [cartDiscountTotalAmount, setcartDiscountTotalAmount] = useState(0)
    const [cartTotalAmount, setcartTotalAmount] = useState(0)
-
+const [AdminMobile, setAdminMobile] = useState('')
+const [AdminMail, setAdminMail] = useState('')
    const [serachText, setserachText] = useState('');
 
    // Total Pay Amount
@@ -99,7 +100,12 @@ const getSettings = () => {
       } else if (item.param_name == 'Extra_charge') {
         extracharge = item.param_value
         // setextraCharges(item.param_value)
-      } 
+      } else if (item.param_name === 'contact_number') {
+        setAdminMobile(item.param_value)
+      
+      } else if (item.param_name === 'contact_email') {
+        setAdminMail(item.param_value)
+      }
     })
     if(enableextracharge == "false") {
       setextraCharges(0)
@@ -184,7 +190,8 @@ const getCart = (value) => {
           cartDiscountTotalAmount, setcartDiscountTotalAmount,
           extraCharges, setextraCharges, extraDescription ,
           totalPayAmount, settotalPayAmount,
-          serachText, setserachText
+          serachText, setserachText,
+          AdminMail, AdminMobile
 
           }}>
           <Router/>

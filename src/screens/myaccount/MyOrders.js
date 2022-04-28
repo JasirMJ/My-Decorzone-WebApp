@@ -101,7 +101,7 @@ const MyOrders = () => {
 
                       {data.length == 0 ?
                         <div className='d-flex justify-content-center'>
-                          <NoData />
+                          <NoData  text={'No orders found'} />
                         </div>
                         :
                         <div className="ec-vendor-card-body">
