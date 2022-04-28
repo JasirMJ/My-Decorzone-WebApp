@@ -28,8 +28,8 @@ const Login = () => {
 
   const [open, setopen] = useState(false)
   const [data, setData] = useState({
-    username: "adsalihac",
-    password: "123123",
+    username: "",
+    password: "",
   });
 
   const login = () => {
