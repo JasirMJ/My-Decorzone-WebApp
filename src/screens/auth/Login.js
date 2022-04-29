@@ -31,8 +31,10 @@ const Login = () => {
     username: "",
     password: "",
   });
+  const [btnloading, setbtnloading] = useState(false)
 
   const login = () => {
+    setbtnloading(true)
     // alert("ok")
     var axios = require('axios');
     var FormData = require('form-data');
@@ -50,6 +52,7 @@ const Login = () => {
 
     axios(config)
       .then(function (response) {
+        setbtnloading(false)
         console.log(JSON.stringify(response.data));
         if (response.data.Status === true) {
           setUserToken(response.data.token)
@@ -67,6 +70,7 @@ const Login = () => {
         }
       })
       .catch(function (error) {
+        setbtnloading(false)
         console.log(error);
         showMessage(
           "Login Failed , Check Username / Password",
@@ -128,7 +132,13 @@ const Login = () => {
                 </span> */}
                     <span className="ec-login-wrap ec-login-btn">
                       {/* <a href={()=>login()} className="btn btn-primary">Login</a> */}
-                      <button onClick={(e) => login(e)} className="btn btn-primary" >Login</button>
+                      <button onClick={(e) => login(e)} className="btn btn-primary"  disabled={btnloading}>
+                        {btnloading &&
+                          <div class="spinner-border spinner-border-sm text-light mr-2" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        }
+                        Login</button>
                       <a href="/register" className="btn btn-secondary" type="submit">Register</a>
                     </span>
                   </div>

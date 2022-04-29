@@ -34,9 +34,10 @@ const Register = () => {
     email: "",
   });
   const [open, setopen] = useState(false)
-
+  const [btnloading, setbtnloading] = useState(false)
 
   const register = () => {
+    setbtnloading(true)
     var axios = require('axios');
     var FormData = require('form-data');
     var fdata = new FormData();
@@ -57,12 +58,14 @@ const Register = () => {
 
     axios(config)
       .then(function (response) {
+        setbtnloading(false)
         console.log(JSON.stringify(response.data));
         // setUserToken(response.data.token)
         // setDataOnCookie(localStorageName, response.data);
         window.location.replace('/login')
       })
       .catch(function (error) {
+        setbtnloading(false)
         console.log(error);
         showMessage(
           "Login Failed , Check Username / Password",
@@ -139,7 +142,13 @@ const Register = () => {
 
 
                     <span className="ec-register-wrap ec-register-btn">
-                      <button onClick={(e) => register(e)} className="btn btn-primary" >Register</button>
+                      <button onClick={(e) => register(e)} className="btn btn-primary"  disabled={btnloading}>
+                      {btnloading &&
+                          <div class="spinner-border spinner-border-sm text-light mr-2" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        }
+                      Register</button>
                     </span>
                   </div>
                 </div>
