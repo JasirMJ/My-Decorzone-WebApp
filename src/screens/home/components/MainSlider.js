@@ -62,7 +62,8 @@ export default function MainSlider({ banners }) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true
+    autoplay: true,
+    arrows:false,
   };
   return (
     <div>

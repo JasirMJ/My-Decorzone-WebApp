@@ -317,7 +317,7 @@ function Header({ open, setopen }) {
 
         {/* small screen category slider */}
         {!['/myaccount', '/login', '/checkout', '/cart' , '/myorders','/about','/contactus','/categories','/register','/product/' ].includes(window.location.pathname) &&
-          <div className="d-block mt-3" style={{
+          <div className="d-block mt-1" style={{
             width: '100%',
             overflowX: 'overlay'
           }}>
