@@ -36,6 +36,15 @@
     transform: rotate(360deg);
   }
 }
+/* 
+.add-to-cart-btn{
+  font-size: 20px !important;
+}
 
+@media only screen and (max-width: 500px) {
+  .add-to-cart-btn{
+    font-size: 10px !important;
+  }
+}
 
-
+ */

@@ -121,13 +121,10 @@ const GridProduct = ({ Data }) => {
                             <Link to={`/product/${Data.id}`} className="image">
                                 <img className="main-image" src={addDomainInImage(Data.images?.length != 0 ? Data.images[0]?.image : "")} alt="Product" />
                                 <img className="hover-image" src={addDomainInImage(Data.images?.length != 0 ? Data.images[0]?.image : "")} alt="Product" />
-
                             </Link>
-
                             {
                                 getOffer(Data.variants) &&
                                 <span className="percentage">{getOffer(Data.variants)}%</span>
-
                             }
                             {/* <span className="percentage">20%</span> */}
                             {
@@ -157,7 +154,9 @@ const GridProduct = ({ Data }) => {
                     <h5 className="ec-pro-title"><Link to={`/product/${Data.id}`}>{Data.name}</Link></h5>
 
                     <div className="ec-pro-list-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dutmmy text ever since the 1500s, when an unknown printer took a galley.</div>
-
+                    <div className='mt-2 d-md-none'>
+                        <p style={{fontSize: 'smaller'}}>{Data.description.length > 150 ? Data.description.slice(0 , 150)+ '...':Data.description}</p>
+                    </div>
                     {
                         Data.variants?.length > 0 &&
                             Data.variants[0]?.offer_enabled == true ?
@@ -179,7 +178,7 @@ const GridProduct = ({ Data }) => {
                         <li><Link to="#" className="ec-opt-sz" data-old="$35.00" data-new="$30.00" data-tooltip="Extra Large">XL</Link></li>
                     </ul> */}
                         </div>
-                        <div className="ec-single-qty d-flex justify-content-between w-100 align-items-center">
+                        <div className="ec-single-qty d-flex justify-content-between w-100 align-items-center" style={{marginRight:'5px'}}>
                             {
                                 (Data.is_out_of_stock == false) &&
                                 Data.variants.length != 0 &&
@@ -207,7 +206,7 @@ const GridProduct = ({ Data }) => {
                                                 margin: 0,
                                                 padding: 0,
                                                 textAlign: 'center',
-                                                width: '40px',
+                                                width: '30px',
                                                 outline: 'none',
                                                 fontWeight: 700,
                                             }}
@@ -217,27 +216,35 @@ const GridProduct = ({ Data }) => {
                                             onClick={() =>
                                                 setquantity(pre => pre + 1)} > <i class="fas fa-plus"></i></button>
                                     </div>
-                                    <div className="ec-single-cart ">
-                                        <button className="btn btn-primary"
-                                            onClick={() => { cartUpdate(quantity) }}>
-                                            {ButtonLoading &&
-                                                <div class="spinner-border spinner-border-sm text-light mr-1" role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>}
-                                            Add To Cart</button>
-                                    </div>
+                                   
                                 </>
                             }
 
                         </div>
 
+                        <div className="ec-single-qty d-flex justify-content-between w-100 align-items-center">
+                        <div className="ec-single-cart " >
+                                        <button className="btn btn-primary add-to-cart-btn"  
+                                            onClick={() => { cartUpdate(quantity) }} 
+                                            style={{
+                                                fontSize: window.screen.width>500 ?'15px': '8px',
+                                                padding: '0px !important', 
+                                            }}
+                                            
+                                            >
+                                            {ButtonLoading &&
+                                                <div class="spinner-border spinner-border-sm text-light mr-1" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>}
+                                            Add to Cart</button>
+                                    </div>
+                            </div>
+
 
 
                     </div>
 
-                    <div className='mt-2 d-md-none'>
-                        <p style={{fontSize: 'smaller'}}>{Data.description.length > 150 ? Data.description.slice(0 , 150)+ '...':Data.description}</p>
-                    </div>
+
                 </div>
 
             </div>

@@ -2,10 +2,10 @@ import React from 'react'
 import GridProduct from '../components/GridProduct'
 
 
-function NewProduct({title, subtitle , Data}) {
-    return (
-        <>
-         <section className="section ec-new-product section-space-p">
+function NewProduct({ title, subtitle, Data }) {
+  return (
+    <>
+      <section className="section ec-new-product section-space-p">
         <div className="container">
           <div className="row">
             <div className="col-md-12 text-center">
@@ -21,7 +21,7 @@ function NewProduct({title, subtitle , Data}) {
             {
               Data.map((item, index) => {
                 return <GridProduct key={index} Data={item} />
-            })
+              })
             }
             {/* <GridProduct />
                <GridProduct />
@@ -35,13 +35,13 @@ function NewProduct({title, subtitle , Data}) {
                <GridProduct />
                <GridProduct />
                <GridProduct /> */}
-        
-      
+
+
           </div>
         </div>
-      </section>   
-        </>
-    )
+      </section>
+    </>
+  )
 }
 
 export default NewProduct
