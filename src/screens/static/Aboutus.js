@@ -46,16 +46,15 @@ function Aboutus() {
             <div className="col-md-12 ec-cms-block ec-abcms-block text-center">
               <div className="ec-cms-block-inner">
                 <h3 className="ec-cms-block-title">What is the My Decorzone?</h3>
-                <p>Electronic typesetting text of the printing and typesetting industry. when an unknown printer took a galley of type
-                  and scrambled it to make a type specimen book. Lorem Ipsum is
-                  simply dutmmy text ever since the 1500s, It has survived not only,
-                  but also the leap into electronic typesetting.</p>
-                <p>Lorem Ipsum is simply dummy text of the printing. It has survived not only five centuries,
-                  but also the leap into electronic typesetting.</p>
-                <p>Also the leap into electronic typesetting printing and typesetting industry. It has survived not only five centuries,
-                  but also the leap into electronic typesetting, when an unknown printer took a galley of type
-                  and scrambled it to make a type specimen book. It has survived not only five centuries,
-                  but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                <p>
+                Mydecorzone is an online retailer of modern and elegant Home, Office, Business and other Space decor and lifestyle products. We aim to curate a collection which can be used to decorate and accessorise your home and other spaces to bring the best out of your interiors. So start decorating your space now.
+                </p>
+                <p>
+                Our Categories include Modern Lights, Furnitures, Bathroom Fittings, Sanitaries,  Wooden Fittings, Wall Sealing and Floor decor items ,Smart Electrical and Plumbing Fittings, Security Systems, Solar power systems, Kitchen Appliances and Exterior Decor Items etc.
+                </p>
+                <p>
+                We continuously strive to give our customers excellent customer service through quality products, timely delivery and a competitive price. For this we handpick the products that are sold on our website and each product goes through a rigorous quality check before making it to the website. Also we have tied up with leading logistics partners such as Fed ex  and others to ensure a smooth delivery experience for our customers.
+                </p>
               </div>
             </div>
           </div>
@@ -64,7 +63,7 @@ function Aboutus() {
     </div>
   </section>
   
-  <ServiceSection/>
+  {/* <ServiceSection/> */}
 
 
       <Footer />

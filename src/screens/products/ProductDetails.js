@@ -334,7 +334,10 @@ const ProductDetails = () => {
                                                                 </div>
 
                                                             </div>
-                                                            <div className="ec-single-qty">
+                                                          {  
+                                                            (Data.is_out_of_stock == false) &&
+                                Data.variants.length != 0 &&
+                                                              <div className="ec-single-qty">
                                                                 <div className="qty-plus-minus">
                                                                     <button
                                                                         onClick={() => {
@@ -363,7 +366,7 @@ const ProductDetails = () => {
                                                                         Add To Cart</button>
                                                                 </div>
 
-                                                            </div>
+                                                            </div>}
 
                                                         </div>
                                                     </div>
@@ -379,12 +382,12 @@ const ProductDetails = () => {
                                                         <li className="nav-item">
                                                             <a className="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-details" role="tablist">Detail</a>
                                                         </li>
-                                                        <li className="nav-item">
+                                                        {/* <li className="nav-item">
                                                             <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-info" role="tablist">More Information</a>
                                                         </li>
                                                         <li className="nav-item">
                                                             <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-rtrn" role="tablist">{'Return & Exchange Policy'}</a>
-                                                        </li>
+                                                        </li> */}
                                                         {/* <li className="nav-item">
                                                             <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-360v" role="tablist">{'360 View'}</a>
                                                         </li>

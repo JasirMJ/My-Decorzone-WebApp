@@ -18,10 +18,14 @@ import PurchasePopup from '../../components/PurchasePopup';
 import CartFloatingButton from '../../components/CartFloatingButton';
 import WhatsappButton from '../../components/WhatsappButton';
 import FeatureTools from '../../components/FeatureTools';
-import { useState } from 'react';
+import { useState , useContext} from 'react';
+import { baseurl, protocol, AppContext } from '../../common/Constants';
 
 const Contactus = () => {
     const [open, setopen] = useState(false)
+
+  const {AdminMobile, AdminMail} = useContext(AppContext)
+
     return (
         <div>
             <div>
@@ -80,11 +84,22 @@ const Contactus = () => {
                             <div className="ec_contact_info">
                             <h1 className="ec_contact_info_head">Contact us</h1>
                             <ul className="align-items-center">
-                                <li className="ec-contact-item"><i className="ecicon eci-map-marker" aria-hidden="true" /><span>Address :</span>71 Pilgrim Avenue Chevy Chase, east california. east california. MD
-                                20815, USA</li>
-                                <li className="ec-contact-item align-items-center"><i className="ecicon eci-phone" aria-hidden="true" /><span>Call Us :</span><a href="tel:+440123456789">+44 0123
-                                    456 789</a></li>
-                                <li className="ec-contact-item align-items-center"><i className="ecicon eci-envelope" aria-hidden="true" /><span>Email :</span><a ><span className="__cf_email__" >mydecorzone@gmail.com</span></a></li>
+                                <li className="ec-contact-item">
+                                <i className="ecicon eci-map-marker" aria-hidden="true" />
+                                <span>Address :</span>
+                                57 13th Cross, Baldwins Road, Koramangala, Bengaluru, Karnataka 560030
+                                </li>
+                                <li className="ec-contact-item align-items-center">
+                                <i className="ecicon eci-phone" aria-hidden="true" />
+                                    <span>Call Us:</span>
+                                    <a href={'tel:91'+AdminMobile}>{AdminMobile}</a>
+                                </li>
+                                <li className="ec-contact-item align-items-center">
+                                <i className="ecicon eci-envelope" aria-hidden="true" />
+                                    <span>Email:</span><a >
+                                    <span className="__cf_email__" >{AdminMail}</span>
+                                    </a>
+                                    </li>
                             </ul>
                             </div>
                         </div>

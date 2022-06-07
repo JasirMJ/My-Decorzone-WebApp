@@ -169,6 +169,9 @@ const GridProduct = ({ Data }) => {
                             :
                             <span className="old-price">₹{Data.variants[0]?.rate}</span>
                     }
+                    {
+                                (Data.is_out_of_stock == false) &&
+                                Data.variants.length != 0 &&
                     <div className="ec-pro-option">
                         <div className="ec-pro-size">
                             <span className="ec-pro-opt-label">Size</span>
@@ -179,9 +182,7 @@ const GridProduct = ({ Data }) => {
                     </ul> */}
                         </div>
                         <div className="ec-single-qty d-flex justify-content-between w-100 align-items-center" style={{marginRight:'5px'}}>
-                            {
-                                (Data.is_out_of_stock == false) &&
-                                Data.variants.length != 0 &&
+                          
                                 <>
                                     <div className="qty-plus-minus d-flex justify-content-center" style={{ border: '1px solid #eeeeee' }}>
                                         <button style={{ height: '2rem' }}
@@ -218,7 +219,6 @@ const GridProduct = ({ Data }) => {
                                     </div>
                                    
                                 </>
-                            }
 
                         </div>
 
@@ -243,6 +243,7 @@ const GridProduct = ({ Data }) => {
 
 
                     </div>
+                }
 
 
                 </div>

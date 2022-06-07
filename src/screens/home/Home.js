@@ -241,7 +241,7 @@ function Home() {
         <InstagramSection brands={Brands} />
       }
 
-      <Testimonial />
+      {/* <Testimonial /> */}
 
       <AppDownloadSection />
       {/* Ec Instagram End */}
