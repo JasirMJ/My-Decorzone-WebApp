@@ -379,12 +379,6 @@ function Header({ open, setopen }) {
               <p style={{ fontSize: '10px', marginTop: '5px' }}>{item.name}</p>
             </a>
           ))}
-          {data.map((item,index) => (
-            <a key={index+10} href={`/category/${item.id}`} className={'category__slides '} >
-              <img className={'category__img'} src={item.image} alt="" />
-              <p style={{ fontSize: '10px', marginTop: '5px' }}>{item.name}</p>
-            </a>
-          ))}
         </Carousel>
               </div></div>}
         
