@@ -6,7 +6,32 @@ import { Link } from 'react-router-dom'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import Slider from "react-slick";
 
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
+
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 12,
+    slidesToSlide: 1
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 8,
+    slidesToSlide: 1
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 4
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 3,
+    slidesToSlide: 1
+  }
+};
 
 function Header({ open, setopen }) {
 
@@ -273,6 +298,7 @@ function Header({ open, setopen }) {
                             <a href={`/product/${item.id}`}  >{item.name}</a>
                             <div style={{ borderBottom: '1px solid #ccc' }}></div>
                           </div>
+
                         ))}
 
                       </div>
@@ -313,17 +339,62 @@ function Header({ open, setopen }) {
           </div>
         </div>
         {/* Ec Main Menu End */}
-
+       {!['/myaccount', '/login', '/checkout', '/cart', '/myorders', '/about', '/contactus', '/categories', '/register', '/product/'].includes(window.location.pathname) &&
+        <div className="d-flex justify-content-center zmt-1" style={{
+            width: '100%',
+            // backgroundColor:'grey',
+            // overflowX: 'overlay'
+          }}>
+            <div className='xd-flex '  
+            style={{
+              width: '100%',
+              // backgroundColor:'red',
+              // overflowX: 'scroll',
+              // flexGrow: '1'
+            }}>
+<Carousel
+ centerMode={true}
+          swipeable={true}
+          draggable={false}
+          // showDots={true}
+          responsive={responsive}
+          ssr={true} // means to render carousel on server-side.
+          infinite={true}
+          // autoPlay={this.props.deviceType !== "mobile" ? true : false}
+          autoPlay={true}
+          autoPlaySpeed={2000}
+          keyBoardControl={true}
+          // customTransition="all .5"
+          customTransition="transform 500ms ease-in-out"
+          transitionDuration={1000}
+          containerClass="carousel-container"
+          removeArrowOnDeviceType={["tablet", "mobile",'web']}
+          deviceType={'web'}
+          dotListClass="custom-dot-list-style"
+          itemClass="carousel-item-padding-40-px"
+        >
+          {data.map((item,index) => (
+            <a key={index} href={`/category/${item.id}`} className={'category__slides '} >
+              <img className={'category__img'} src={item.image} alt="" />
+              <p style={{ fontSize: '10px', marginTop: '5px' }}>{item.name}</p>
+            </a>
+          ))}
+          {data.map((item,index) => (
+            <a key={index+10} href={`/category/${item.id}`} className={'category__slides '} >
+              <img className={'category__img'} src={item.image} alt="" />
+              <p style={{ fontSize: '10px', marginTop: '5px' }}>{item.name}</p>
+            </a>
+          ))}
+        </Carousel>
+              </div></div>}
+        
 
         {/* small screen category slider */}
-        {!['/myaccount', '/login', '/checkout', '/cart' , '/myorders','/about','/contactus','/categories','/register','/product/' ].includes(window.location.pathname) &&
+        {/* {!['/myaccount', '/login', '/checkout', '/cart', '/myorders', '/about', '/contactus', '/categories', '/register', '/product/'].includes(window.location.pathname) &&
           <div className="d-block mt-1" style={{
             width: '100%',
             overflowX: 'overlay'
           }}>
-            {/* <ScrollContainer horizontal={true} className={`d-flex justify-content-${widthOver ? 'center' : 'start'}`}> */}
-            {/* <div style={{ display: 'inline-flex', marginTop: '10px' }} ref={ref}> */}
-            {/* <Slider {...settings}> */}
             <div className='d-flex pr-3 scroller' ref={ref} style={{
               width: '100%',
               justifyContent: 'start',
@@ -331,18 +402,15 @@ function Header({ open, setopen }) {
               overflowX: 'scroll',
               flexGrow: '1'
             }}>
-
               {data.map(item => (
                 <a href={`/category/${item.id}`} className={'category__slides '} >
                   <img className={'category__img'} src={item.image} alt="" />
                   <p style={{ fontSize: '10px', marginTop: '5px' }}>{item.name}</p>
                 </a>
-
               ))}
             </div>
-            {/* </Slider> */}
           </div>
-        }
+        } */}
 
         {/* ekka Mobile Menu Start */}
         <div id="ec-mobile-menu" className={`ec-side-cart ec-mobile-menu ${open ? 'ec-open' : ""}`}>
