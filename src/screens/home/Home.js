@@ -1,137 +1,160 @@
 // import './App.css';
-import React, { useState, useContext, useEffect } from 'react'
-import Header from '../../components/Header'
-import CartComponent from '../../components/CartComponent';
-import MainSlider from './components/MainSlider';
-import ProductTabArea from '../../components/ProductTabArea';
-import BannerSection from '../../components/BannerSection';
-import CategorySection from '../../components/CategorySection';
-import FeatureSection from '../../components/FeatureSection';
-import ServiceSection from '../../components/ServiceSection';
-import OfferSection from '../../components/OfferSection';
-import NewProduct from '../../components/NewProduct';
-import Testimonial from '../../components/Testimonial';
-import BrandSection from '../../components/BrandSection';
-import InstagramSection from '../../components/InstagramSection';
-import Footer from '../../components/Footer';
-import TemplateModal from '../../components/TemplateModal';
-import Newsletter from '../../components/Newsletter';
-import FooterNav from '../../components/FooterNav';
-import { baseurl, protocol, AppContext } from '../../common/Constants'
-import NoData from '../NoData/noData';
-import Preloader from '../../components/Preloader';
-import AppDownloadSection from '../../components/AppDownloadSection';
+import React, { useState, useContext, useEffect } from "react";
+import Header from "../../components/Header";
+import CartComponent from "../../components/CartComponent";
+import MainSlider from "./components/MainSlider";
+import ProductTabArea from "../../components/ProductTabArea";
+import BannerSection from "../../components/BannerSection";
+import CategorySection from "../../components/CategorySection";
+import FeatureSection from "../../components/FeatureSection";
+import ServiceSection from "../../components/ServiceSection";
+import OfferSection from "../../components/OfferSection";
+import NewProduct from "../../components/NewProduct";
+import Testimonial from "../../components/Testimonial";
+import BrandSection from "../../components/BrandSection";
+import InstagramSection from "../../components/InstagramSection";
+import Footer from "../../components/Footer";
+import TemplateModal from "../../components/TemplateModal";
+import Newsletter from "../../components/Newsletter";
+import FooterNav from "../../components/FooterNav";
+import { baseurl, protocol, AppContext } from "../../common/Constants";
+import NoData from "../NoData/noData";
+import Preloader from "../../components/Preloader";
+import AppDownloadSection from "../../components/AppDownloadSection";
 
 function Home() {
-  const [open, setopen] = useState(false)
+  const [open, setopen] = useState(false);
 
-  const [popular, setpopular] = useState([])
-  const [is_new, setis_new] = useState([])
-  const [is_recommended, setis_recommended] = useState([])
+  const [popular, setpopular] = useState([]);
+  const [is_new, setis_new] = useState([]);
+  const [is_recommended, setis_recommended] = useState([]);
   const [Brands, setBrands] = useState([]);
-  const [loading, setloading] = useState(true)
-  const [banners, sebanners] = useState([])
-
+  const [loading, setloading] = useState(true);
+  const [banners, setbanners] = useState({
+    is_hero: [],
+    category_banner: [],
+    offer_items_banner: [],
+    top_selling_items_banner: [],
+    new_items_banner: [],
+  });
 
   useEffect(() => {
-    getPopularProducts()
-    getNewProducts()
-    getRecommenderProducts()
-    GetBrandsLogos()
-    getBanners()
-  }, [])
+    getPopularProducts();
+    getNewProducts();
+    getRecommenderProducts();
+    GetBrandsLogos();
+    getBanners();
+  }, []);
 
   const getPopularProducts = () => {
-    var axios = require('axios');
+    var axios = require("axios");
     var config = {
-      method: 'get',
-      url: baseurl + '/items/items/?ordering=?&pagination=false&is_popular=true',
-      headers: {}
+      method: "get",
+      url:
+        baseurl + "/items/items/?ordering=?&pagination=false&is_popular=true",
+      headers: {},
     };
 
     axios(config)
       .then(function (response) {
-        setpopular(response.data)
+        setpopular(response.data);
         // console.log(response.data)
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
+  };
 
   const getNewProducts = () => {
-    var axios = require('axios');
+    var axios = require("axios");
     var config = {
-      method: 'get',
-      url: baseurl + '/items/items/?ordering=?&pagination=false&is_new=true',
-      headers: {}
+      method: "get",
+      url: baseurl + "/items/items/?ordering=?&pagination=false&is_new=true",
+      headers: {},
     };
 
     axios(config)
       .then(function (response) {
-        setis_new(response.data)
-        console.log(response.data)
+        setis_new(response.data);
+        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
+  };
 
   const getRecommenderProducts = () => {
-    var axios = require('axios');
+    var axios = require("axios");
     var config = {
-      method: 'get',
-      url: baseurl + '/items/items/?ordering=?&pagination=false&is_recommended=true',
-      headers: {}
+      method: "get",
+      url:
+        baseurl +
+        "/items/items/?ordering=?&pagination=false&is_recommended=true",
+      headers: {},
     };
 
     axios(config)
       .then(function (response) {
-        setis_recommended(response.data)
-        console.log(response.data)
+        setis_recommended(response.data);
+        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
+  };
 
   const getBanners = () => {
-    var axios = require('axios');
-    var FormData = require('form-data');
+    var axios = require("axios");
+    var FormData = require("form-data");
     var data = new FormData();
 
     var config = {
-      method: 'get',
-      url: baseurl + '/landing/banners/',
-      headers: {
-      },
-      data: data
+      method: "get",
+      url: baseurl + "/landing/banners/",
+      headers: {},
+      data: data,
     };
 
     axios(config)
       .then(function (response) {
-        console.log(response.data)
-        setloading(false)
+        console.log(response.data);
+        setloading(false);
         if (response.data.results) {
-          sebanners(response.data.results)
+          setbanners({
+            ...banners,
+            is_hero: response.data.results.filter(
+              (item) => item.is_hero == true
+            ),
+            category_banner: response.data.results.filter(
+              (item) => item.category_banner == true
+            ),
+            offer_items_banner: response.data.results.filter(
+              (item) => item.offer_items_banner == true
+            ),
+            top_selling_items_banner: response.data.results.filter(
+              (item) => item.top_selling_items_banner == true
+            ),
+            new_items_banner: response.data.results.filter(
+              (item) => item.new_items_banner == true
+            ),
+          });
         }
       })
       .catch(function (error) {
         console.log(error);
-        setloading(false)
+        setloading(false);
       });
-
-  }
+  };
 
   const GetBrandsLogos = () => {
-    var axios = require('axios');
+    var axios = require("axios");
     // var FormData = require('form-data');
     // var data = new FormData();
     // data.append('name', 'test');
 
     var config = {
-      method: 'get',
-      url: baseurl + '/items/brand/',
+      method: "get",
+      url: baseurl + "/items/brand/",
       // headers: {
 
       // },
@@ -141,56 +164,62 @@ function Home() {
     axios(config)
       .then(function (response) {
         console.log("BRANDS", response.data);
-        setBrands(response.data.results)
+        setBrands(response.data.results);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
+  };
 
   return (
     <>
       {/* <div id="ec-overlay"><span className="loader_img" /></div> */}
       {/* Header start  */}
-      {loading ?
+      {loading ? (
         <Preloader />
-        :
+      ) : (
         <>
           <Header open={open} setopen={() => setopen(!open)} />
           {/* Header End  */}
 
-          {/* Main Slider Start */}
-          <MainSlider banners={banners} />
+          {/* Main Slider Hero Banner */}
+          <MainSlider banners={banners.is_hero} />
           {/* Main Slider End */}
 
           {/* Product tab Area Start */}
           {/* <ProductTabArea/> */}
-          {
-            popular.length > 0 &&
+          {popular.length > 0 && (
             <NewProduct
               title={"Our Top Popular Products"}
               subtitle={"Browse The Collection of Top Popular Products"}
               Data={popular}
             />
-          }
+          )}
 
-          {
-            is_new.length > 0 &&
+          {/* top_selling_items_banner */}
+          <MainSlider banners={banners.top_selling_items_banner} />
+
+          {is_new.length > 0 && (
             <NewProduct
               title={"Our Top New Products"}
               subtitle={"Browse The Collection of Top New Products"}
               Data={is_new}
             />
-          }
+          )}
 
-          {
-            is_recommended.length > 0 &&
+          {/* offer_items_banner */}
+          <MainSlider banners={banners.offer_items_banner} />
+
+          {is_recommended.length > 0 && (
             <NewProduct
               title={"Our Top Recommended Products"}
               subtitle={"Browse The Collection of Top Recommended Products"}
               Data={is_recommended}
             />
-          }
+          )}
+
+          {/* category_banner */}
+          <MainSlider banners={banners.category_banner} />
 
           {/* ec Product tab Area End */}
 
@@ -226,20 +255,13 @@ function Home() {
           {/* <BrandSection /> */}
           {/* Ec Brand Section End */}
           {/* Ec Instagram Start */}
-
-
-
-
-
-
-
         </>
-      }
+      )}
 
-      {
+      {/* new_items_banner */}
+      <MainSlider banners={banners.new_items_banner} />
 
-        <InstagramSection brands={Brands} />
-      }
+      {<InstagramSection brands={Brands} />}
 
       {/* <Testimonial /> */}
 
@@ -271,8 +293,6 @@ function Home() {
       {/* Feature tools */}
       {/* <FeatureTools/> */}
       {/* Feature tools end */}
-
-
     </>
   );
 }
