@@ -38,7 +38,7 @@ const Login = () => {
     var axios = require("axios");
     var FormData = require("form-data");
     var fdata = new FormData();
-    fdata.append("username", data.username);
+    fdata.append("email", data.username);
     fdata.append("password", data.password);
 
     var config = {
