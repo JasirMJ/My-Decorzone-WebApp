@@ -1,74 +1,70 @@
-import React, { useState, useContext, useEffect } from 'react'
-import Header from '../../components/Header'
-import CartComponent from '../../components/CartComponent';
-import ProductTabArea from '../../components/ProductTabArea';
-import BannerSection from '../../components/BannerSection';
-import CategorySection from '../../components/CategorySection';
-import FeatureSection from '../../components/FeatureSection';
-import ServiceSection from '../../components/ServiceSection';
-import OfferSection from '../../components/OfferSection';
-import NewProduct from '../../components/NewProduct';
-import Testimonial from '../../components/Testimonial';
-import BrandSection from '../../components/BrandSection';
-import InstagramSection from '../../components/InstagramSection';
-import Footer from '../../components/Footer';
-import TemplateModal from '../../components/TemplateModal';
-import Newsletter from '../../components/Newsletter';
-import FooterNav from '../../components/FooterNav';
-import PurchasePopup from '../../components/PurchasePopup';
-import CartFloatingButton from '../../components/CartFloatingButton';
-import WhatsappButton from '../../components/WhatsappButton';
-import FeatureTools from '../../components/FeatureTools';
-import { baseurl, protocol, AppContext } from '../../common/Constants'
-import { setDataOnCookie, showMessage } from '../../common/Functions'
+import React, { useState, useContext, useEffect } from "react";
+import Header from "../../components/Header";
+import CartComponent from "../../components/CartComponent";
+import ProductTabArea from "../../components/ProductTabArea";
+import BannerSection from "../../components/BannerSection";
+import CategorySection from "../../components/CategorySection";
+import FeatureSection from "../../components/FeatureSection";
+import ServiceSection from "../../components/ServiceSection";
+import OfferSection from "../../components/OfferSection";
+import NewProduct from "../../components/NewProduct";
+import Testimonial from "../../components/Testimonial";
+import BrandSection from "../../components/BrandSection";
+import InstagramSection from "../../components/InstagramSection";
+import Footer from "../../components/Footer";
+import TemplateModal from "../../components/TemplateModal";
+import Newsletter from "../../components/Newsletter";
+import FooterNav from "../../components/FooterNav";
+import PurchasePopup from "../../components/PurchasePopup";
+import CartFloatingButton from "../../components/CartFloatingButton";
+import WhatsappButton from "../../components/WhatsappButton";
+import FeatureTools from "../../components/FeatureTools";
+import { baseurl, protocol, AppContext } from "../../common/Constants";
+import { setDataOnCookie, showMessage } from "../../common/Functions";
 
 const Register = () => {
-
-  const { userToken, localStorageName, setUserToken } = useContext(AppContext)
+  const { userToken, localStorageName, setUserToken } = useContext(AppContext);
 
   const [data, setData] = useState({
     name: "",
     password: "",
     mobile: "",
-    username: '',
+    username: "",
     email: "",
   });
-  const [open, setopen] = useState(false)
-  const [btnloading, setbtnloading] = useState(false)
+  const [open, setopen] = useState(false);
+  const [btnloading, setbtnloading] = useState(false);
 
   const register = () => {
-    setbtnloading(true)
-    var axios = require('axios');
-    var FormData = require('form-data');
+    setbtnloading(true);
+    var axios = require("axios");
+    var FormData = require("form-data");
     var fdata = new FormData();
-    fdata.append('first_name', data.name);
-    fdata.append('password', data.password);
-    fdata.append('mobile', data.mobile);
-    fdata.append('username', data.username);
-    fdata.append('email', data.email);
+    fdata.append("first_name", data.name);
+    fdata.append("password", data.password);
+    fdata.append("mobile", data.mobile);
+    fdata.append("email", data.email);
 
     var config = {
-      method: 'post',
-      url: baseurl + '/users/',
-      headers: {
-
-      },
-      data: fdata
+      method: "post",
+      url: baseurl + "/users/",
+      headers: {},
+      data: fdata,
     };
 
     axios(config)
       .then(function (response) {
-        setbtnloading(false)
+        setbtnloading(false);
         console.log(JSON.stringify(response.data));
         // setUserToken(response.data.token)
         // setDataOnCookie(localStorageName, response.data);
-        window.location.replace('/login')
+        window.location.replace("/login");
       })
       .catch(function (error) {
-        setbtnloading(false)
+        setbtnloading(false);
         console.log(error);
         showMessage(
-          "Login Failed , Check Username / Password",
+          "Registration Failed , Check Enter details",
           "danger",
           "Loading error",
           "top",
@@ -76,19 +72,19 @@ const Register = () => {
           0
         );
       });
-  }
+  };
 
   const onChangeFun = (e) => {
-    console.log("Target ", e.target)
-    let field_name = e.target.name
+    console.log("Target ", e.target);
+    let field_name = e.target.name;
 
     if (field_name === "is_active") {
       console.log("Check box : " + field_name + " - " + e.target.checked);
-      setData({ ...data, [e.target.name]: e.target.checked })
+      setData({ ...data, [e.target.name]: e.target.checked });
     } else {
-      setData({ ...data, [e.target.name]: e.target.value })
+      setData({ ...data, [e.target.name]: e.target.value });
     }
-  }
+  };
 
   return (
     <div>
@@ -108,7 +104,9 @@ const Register = () => {
                 <div className="section-title">
                   <h2 className="ec-bg-title">Register</h2>
                   <h2 className="ec-title">Register</h2>
-                  <p className="sub-title mb-3">Best place to buy and sell digital products</p>
+                  <p className="sub-title mb-3">
+                    Best place to buy and sell digital products
+                  </p>
                 </div>
               </div>
               <div className="ec-register-wrapper">
@@ -116,39 +114,73 @@ const Register = () => {
                   <div className="ec-register-form">
                     <span className="ec-register-wrap ec-register-half">
                       <label>Name*</label>
-                      <input type="text" name="name" value={data.name} onChange={(e) => onChangeFun(e)} placeholder="Enter your name" required />
+                      <input
+                        type="text"
+                        name="name"
+                        value={data.name}
+                        onChange={(e) => onChangeFun(e)}
+                        placeholder="Enter your name"
+                        required
+                      />
                     </span>
 
-                    <span className="ec-register-wrap ec-register-half">
+                    {/* <span className="ec-register-wrap ec-register-half">
                       <label>Username*</label>
                       <input type="text" name="username" value={data.username} onChange={(e) => onChangeFun(e)} placeholder="Enter your username" required />
-                    </span>
+                    </span> */}
 
                     <span className="ec-register-wrap ec-register-half">
                       <label>Email*</label>
-                      <input type="email" name="email" value={data.email} onChange={(e) => onChangeFun(e)} placeholder="Enter your email" required />
+                      <input
+                        type="email"
+                        name="email"
+                        value={data.email}
+                        onChange={(e) => onChangeFun(e)}
+                        placeholder="Enter your email"
+                        required
+                      />
                     </span>
 
                     <span className="ec-register-wrap ec-register-half">
                       <label>Phone Number*</label>
-                      <input type="number" name="mobile" value={data.mobile} onChange={(e) => onChangeFun(e)} placeholder="Enter your phone number" required />
+                      <input
+                        type="number"
+                        name="mobile"
+                        value={data.mobile}
+                        onChange={(e) => onChangeFun(e)}
+                        placeholder="Enter your phone number"
+                        required
+                      />
                     </span>
 
                     <span className="ec-register-wrap ec-register-half">
                       <label>Password*</label>
-                      <input type="text" name="password" value={data.password} onChange={(e) => onChangeFun(e)} placeholder="Enter your password" required />
+                      <input
+                        type="text"
+                        name="password"
+                        value={data.password}
+                        onChange={(e) => onChangeFun(e)}
+                        placeholder="Enter your password"
+                        required
+                      />
                     </span>
 
-
-
                     <span className="ec-register-wrap ec-register-btn">
-                      <button onClick={(e) => register(e)} className="btn btn-primary"  disabled={btnloading}>
-                      {btnloading &&
-                          <div class="spinner-border spinner-border-sm text-light mr-2" role="status">
+                      <button
+                        onClick={(e) => register(e)}
+                        className="btn btn-primary"
+                        disabled={btnloading}
+                      >
+                        {btnloading && (
+                          <div
+                            class="spinner-border spinner-border-sm text-light mr-2"
+                            role="status"
+                          >
                             <span class="sr-only">Loading...</span>
                           </div>
-                        }
-                      Register</button>
+                        )}
+                        Register
+                      </button>
                     </span>
                   </div>
                 </div>
@@ -160,10 +192,8 @@ const Register = () => {
         <Footer />
         <FooterNav setopen={() => setopen(!open)} />
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Register
-
+export default Register;
