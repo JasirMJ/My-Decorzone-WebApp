@@ -42,7 +42,7 @@
 //             <div className="swiper-button-prev" />
 //           </div>
 //         </div>
-//       </div>  
+//       </div>
 //         </>
 //     )
 // }
@@ -55,7 +55,6 @@ import { baseurl } from "../../../common/Constants";
 export default function MainSlider({ banners }) {
   const [data, setdata] = useState([]);
 
-
   const settings = {
     dots: false,
     infinite: true,
@@ -63,16 +62,35 @@ export default function MainSlider({ banners }) {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    arrows:false,
+    arrows: false,
   };
+
+  const selectbanner = (banner) => {
+    if (banner.products != null) {
+      // href={`/product/${banner.products}`}
+      location.href = "/product/";
+      // location.href = "/product/" + banner.products;
+    } else if (banner.categorys != null) {
+      location.href = "/category/";
+    } else {
+      // alert("static")
+      console.log("static");
+    }
+  };
+
   return (
     <div>
-
       <Slider {...settings}>
-        {banners.map(item => (
-          <>
-
-            <div className="ec-slide-item swiper-slide d-flex ec-slide-1 swiper-slide-active" style={{ backgroundImage: `url(${item.banner})` }}    >
+        {banners.map((item) => (
+          <a
+            onClick={() => {
+              selectbanner(item);
+            }}
+          >
+            <div
+              className="ec-slide-item swiper-slide d-flex ec-slide-1 swiper-slide-active"
+              style={{ backgroundImage: `url(${item.banner})` }}
+            >
               <div className="container align-self-center">
                 <div className="row">
                   <div className="col-xl-6 col-lg-7 col-md-7 col-sm-7 align-self-center">
@@ -86,13 +104,9 @@ export default function MainSlider({ banners }) {
                 </div>
               </div>
             </div>
-          </>
-
-
+          </a>
         ))}
-
       </Slider>
     </div>
   );
-
 }
