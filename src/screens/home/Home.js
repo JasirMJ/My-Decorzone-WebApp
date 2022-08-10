@@ -110,7 +110,7 @@ function Home() {
 
     var config = {
       method: "get",
-      url: baseurl + "/landing/banners/",
+      url: baseurl + "/landing/banners/?pagination=false",
       headers: {},
       data: data,
     };
@@ -119,22 +119,20 @@ function Home() {
       .then(function (response) {
         console.log(response.data);
         setloading(false);
-        if (response.data.results) {
+        if (response.data) {
           setbanners({
             ...banners,
-            is_hero: response.data.results.filter(
-              (item) => item.is_hero == true
-            ),
-            category_banner: response.data.results.filter(
+            is_hero: response.data.filter((item) => item.is_hero == true),
+            category_banner: response.data.filter(
               (item) => item.category_banner == true
             ),
-            offer_items_banner: response.data.results.filter(
+            offer_items_banner: response.data.filter(
               (item) => item.offer_items_banner == true
             ),
-            top_selling_items_banner: response.data.results.filter(
+            top_selling_items_banner: response.data.filter(
               (item) => item.top_selling_items_banner == true
             ),
-            new_items_banner: response.data.results.filter(
+            new_items_banner: response.data.filter(
               (item) => item.new_items_banner == true
             ),
           });
