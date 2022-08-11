@@ -67,54 +67,60 @@ export default function MainSlider({ banners }) {
   };
 
   const selectbanner = (banner) => {
-    let prop_data = {}
-    let url_path = ""
-    let send_data = ""
+    let prop_data = {};
+    let url_path = "";
+    let send_data = "";
 
     if (banner.products != null) {
       // href={`/product/${banner.products}`}
-      url_path = "/product/";
+      url_path = "/products/";
       send_data = banner.products;
       // navigate(`/product/`, { replace: true })
       // location.href = "/product/" + banner.products;
     } else if (banner.categorys != null) {
-     url_path = "/category/";
+      url_path = "/categories/";
       send_data = banner.categorys;
       // navigate(`/category/`, { replace: true })
     } else {
       // alert("static")
-      url_path = ""
+      url_path = "";
       send_data = "";
       console.log("static");
     }
     prop_data = {
       url_path: url_path,
       send_data: send_data,
-    }
+    };
 
-    history.push(prop_data)
+    history.push(prop_data);
     // alert(JSON.stringify(prop_data))
   };
-
-
 
   return (
     <div>
       <Slider {...settings}>
         {banners.map((item) => (
           <Link
-          
-          to ={{
-            pathname: item.products != null ? `/product/` : item.categorys != null ? `/category/` : `/`,
-            state: {
-              send_data: item.products != null ? item.products : item.categorys != null ? item.categorys : `/`,
-            }
-              
-          }}
-          // to="/product/"
-          // to={selectbanner(item)}
+            to={{
+              pathname:
+                item.products != null
+                  ? `/products/`
+                  : item.categorys != null
+                  ? `/categories/`
+                  : `/`,
+              state: {
+                send_data:
+                  item.products != null
+                    ? item.products
+                    : item.categorys != null
+                    ? item.categorys
+                    : `/`,
+              },
+            }}
+            // to="/product/"
+            // to={selectbanner(item)}
 
-          // to={()=>selectbanner(item)}
+            // to={()=>selectbanner(item)}
             // onClick={() => {
             //   selectbanner(item);
             // }}
@@ -127,7 +133,9 @@ export default function MainSlider({ banners }) {
                 <div className="row">
                   <div className="col-xl-6 col-lg-7 col-md-7 col-sm-7 align-self-center">
                     <div className="ec-slide-content slider-animation">
-                      <h1 className="ec-slide-title">{item.id}:::{item.title}</h1>
+                      <h1 className="ec-slide-title">
+                        {item.id}:::{item.title}
+                      </h1>
                       {/* <h2 className="ec-slide-stitle">Sale Offer</h2> */}
                       <p>{item.description}</p>
                       {/* <a href="#" className="btn btn-lg btn-secondary">Order Now</a> */}

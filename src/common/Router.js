@@ -7,10 +7,8 @@ import {
 } from "react-router-dom";
 import Home from "./../screens/home/Home";
 import Categories from "./../screens/categories/Categories";
-import Category from "./../screens/categories/Category";
 import CategoryProducts from "./../screens/categories/CategoryProducts";
 import Products from "./../screens/products/Products";
-import Product from "./../screens/products/Product";
 import Offers from "./../screens/offers/Offers";
 import ProductDetails from "./../screens/products/ProductDetails";
 import Login from "./../screens/auth/Login";
@@ -32,9 +30,6 @@ function RouterSet() {
         <Switch>
           <Route path={`/categories`}>
             <Categories />
-          </Route>
-          <Route path={`/category`}>
-            <Category />
           </Route>
           <Route path={`/category/:id`}>
             <CategoryProducts />
@@ -66,9 +61,6 @@ function RouterSet() {
           </Route>
           <Route exact path={`/products`}>
             <Products />
-          </Route>
-          <Route exact path={`/product`}>
-            <Product />
           </Route>
           <Route exact path={`/offers`}>
             <Offers />
