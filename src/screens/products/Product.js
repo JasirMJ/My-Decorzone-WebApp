@@ -23,9 +23,11 @@ import GridProduct from "../../components/GridProduct";
 import { baseurl, protocol, AppContext } from "../../common/Constants";
 import Preloader from "../../components/Preloader";
 import NoData from "../NoData/noData";
+import { useLocation, useHistory } from "react-router-dom";
 
 const Product = () => {
   // const { link } = useParams();
+  const location = useLocation();
 
   const [open, setopen] = useState(false);
   const [prodcuts, setprodcuts] = useState([]);
@@ -44,9 +46,22 @@ const Product = () => {
   const getproduct = () => {
     var axios = require("axios");
 
+    let url_product = ""
+    if(location.state){
+      if(location.state.send_data){
+        url_product = baseurl +  location.state.send_data + "&ordering=?&"+ `search=${param}`;
+      }
+      else{
+        url_product = baseurl + "/items/items/?ordering=?&" + `search=${param}`;
+      }
+    }
+    else{
+      url_product = baseurl + "/items/items/?ordering=?&" + `search=${param}`;
+    }
+
     var config = {
       method: "get",
-      url: baseurl + "/items/items/?ordering=?&" + `search=${param}`,
+      url: url_product,
       headers: {},
     };
 
@@ -57,6 +72,7 @@ const Product = () => {
         setprodcuts(response.data.results);
         setNext(response.data.next);
         setPrev(response.data.previous);
+        window.history.replaceState({}, document.title);
       })
       .catch(function (error) {
         console.log(error);

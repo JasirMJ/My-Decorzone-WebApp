@@ -49,12 +49,13 @@
 
 // export default MainSlider
 import React, { Component, useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import Slider from "react-slick";
 import { baseurl } from "../../../common/Constants";
 
 export default function MainSlider({ banners }) {
   const [data, setdata] = useState([]);
-
+  const navigate = useHistory();
   const settings = {
     dots: false,
     infinite: true,
@@ -66,26 +67,57 @@ export default function MainSlider({ banners }) {
   };
 
   const selectbanner = (banner) => {
+    let prop_data = {}
+    let url_path = ""
+    let send_data = ""
+
     if (banner.products != null) {
       // href={`/product/${banner.products}`}
-      location.href = "/product/";
+      url_path = "/product/";
+      send_data = banner.products;
+      // navigate(`/product/`, { replace: true })
       // location.href = "/product/" + banner.products;
     } else if (banner.categorys != null) {
-      location.href = "/category/";
+     url_path = "/category/";
+      send_data = banner.categorys;
+      // navigate(`/category/`, { replace: true })
     } else {
       // alert("static")
+      url_path = ""
+      send_data = "";
       console.log("static");
     }
+    prop_data = {
+      url_path: url_path,
+      send_data: send_data,
+    }
+
+    history.push(prop_data)
+    // alert(JSON.stringify(prop_data))
   };
+
+
 
   return (
     <div>
       <Slider {...settings}>
         {banners.map((item) => (
-          <a
-            onClick={() => {
-              selectbanner(item);
-            }}
+          <Link
+          
+          to ={{
+            pathname: item.products != null ? `/product/` : item.categorys != null ? `/category/` : `/`,
+            state: {
+              send_data: item.products != null ? item.products : item.categorys != null ? item.categorys : `/`,
+            }
+              
+          }}
+          // to="/product/"
+          // to={selectbanner(item)}
+
+          // to={()=>selectbanner(item)}
+            // onClick={() => {
+            //   selectbanner(item);
+            // }}
           >
             <div
               className="ec-slide-item swiper-slide d-flex ec-slide-1 swiper-slide-active"
@@ -95,7 +127,7 @@ export default function MainSlider({ banners }) {
                 <div className="row">
                   <div className="col-xl-6 col-lg-7 col-md-7 col-sm-7 align-self-center">
                     <div className="ec-slide-content slider-animation">
-                      <h1 className="ec-slide-title">{item.title}</h1>
+                      <h1 className="ec-slide-title">{item.id}:::{item.title}</h1>
                       {/* <h2 className="ec-slide-stitle">Sale Offer</h2> */}
                       <p>{item.description}</p>
                       {/* <a href="#" className="btn btn-lg btn-secondary">Order Now</a> */}
@@ -104,7 +136,7 @@ export default function MainSlider({ banners }) {
                 </div>
               </div>
             </div>
-          </a>
+          </Link>
         ))}
       </Slider>
     </div>

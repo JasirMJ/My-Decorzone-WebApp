@@ -24,8 +24,12 @@ import { addDomainInImage } from "../../common/Functions";
 import axios from "axios";
 import Preloader from "../../components/Preloader";
 
+
+import { useLocation, useHistory } from "react-router-dom";
+
 const Category = () => {
   const { userToken } = useContext(AppContext);
+  const location = useLocation();
 
   const [open, setopen] = useState(false);
 
@@ -43,9 +47,23 @@ const Category = () => {
     var FormData = require("form-data");
     var data = new FormData();
 
+
+    let url_category = ""
+    if(location.state){
+      if(location.state.send_data){
+        url_category = baseurl +  location.state.send_data ;
+      }
+      else{
+        url_category = baseurl + "/items/category/" ;
+      }
+    }
+    else{
+      url_category = baseurl + "/items/category/" ;
+    }
+
     var config = {
       method: "get",
-      url: baseurl + "/items/category/",
+      url: url_category,
       headers: {},
       data: data,
     };
@@ -57,6 +75,7 @@ const Category = () => {
         setData(response.data.results);
         setNext(response.data.next);
         setPrev(response.data.previous);
+        window.history.replaceState({}, document.title);
       })
       .catch(function (error) {
         setLoading(false);

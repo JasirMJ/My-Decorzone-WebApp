@@ -257,7 +257,7 @@ function Home() {
       )}
 
       {/* new_items_banner */}
-      <MainSlider banners={banners.new_items_banner} />
+      {/* <MainSlider banners={banners.new_items_banner} /> */}
 
       {<InstagramSection brands={Brands} />}
 
