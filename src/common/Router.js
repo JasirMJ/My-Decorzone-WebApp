@@ -23,6 +23,10 @@ import Checkout from "../screens/Checkout/checkout";
 import { Alerts } from "../components/Alert";
 
 function RouterSet() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Alerts />
