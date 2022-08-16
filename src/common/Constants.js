@@ -14,6 +14,6 @@ const baseurl = protocol + host;
 
 // const token = Cookies.getJSON(localStorageName) ? Cookies.getJSON(localStorageName).token : "";
 
-const version = "1.05";
+const version = "1.06";
 
 export { AppContext, baseurl, version, protocol };
