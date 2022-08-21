@@ -182,6 +182,19 @@ function Home() {
 
           {/* Main Slider Hero Banner */}
           <MainSlider banners={banners.is_hero} />
+
+          {/* top_selling_items_banner */}
+          <MainSlider banners={banners.top_selling_items_banner} />
+
+          {/* offer_items_banner */}
+          <MainSlider banners={banners.offer_items_banner} />
+
+          {/* category_banner */}
+          <MainSlider banners={banners.category_banner} />
+
+          {/* new_items_banner  */}
+          <MainSlider banners={banners.new_items_banner} />
+
           {/* Main Slider End */}
 
           {/* Product tab Area Start */}
@@ -194,9 +207,6 @@ function Home() {
             />
           )}
 
-          {/* top_selling_items_banner */}
-          <MainSlider banners={banners.top_selling_items_banner} />
-
           {is_new.length > 0 && (
             <NewProduct
               title={"Our Top New Products"}
@@ -205,9 +215,6 @@ function Home() {
             />
           )}
 
-          {/* offer_items_banner */}
-          <MainSlider banners={banners.offer_items_banner} />
-
           {is_recommended.length > 0 && (
             <NewProduct
               title={"Our Top Recommended Products"}
@@ -215,9 +222,6 @@ function Home() {
               Data={is_recommended}
             />
           )}
-
-          {/* category_banner */}
-          <MainSlider banners={banners.category_banner} />
 
           {/* ec Product tab Area End */}
 
@@ -255,9 +259,6 @@ function Home() {
           {/* Ec Instagram Start */}
         </>
       )}
-
-      {/* new_items_banner */}
-      {/* <MainSlider banners={banners.new_items_banner} /> */}
 
       {<InstagramSection brands={Brands} />}
 
